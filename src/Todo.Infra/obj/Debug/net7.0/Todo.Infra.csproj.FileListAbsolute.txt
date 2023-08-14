@@ -1,0 +1,17 @@
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Infra\bin\Debug\net7.0\Todo.Infra.deps.json
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Infra\bin\Debug\net7.0\Todo.Infra.runtimeconfig.json
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Infra\bin\Debug\net7.0\Todo.Infra.dll
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Infra\bin\Debug\net7.0\Todo.Infra.pdb
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Infra\bin\Debug\net7.0\Todo.Domain.dll
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Infra\bin\Debug\net7.0\Todo.Domain.pdb
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Infra\obj\Debug\net7.0\Todo.Infra.csproj.AssemblyReference.cache
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Infra\obj\Debug\net7.0\Todo.Infra.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Infra\obj\Debug\net7.0\Todo.Infra.AssemblyInfoInputs.cache
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Infra\obj\Debug\net7.0\Todo.Infra.AssemblyInfo.cs
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Infra\obj\Debug\net7.0\Todo.Infra.csproj.CoreCompileInputs.cache
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Infra\obj\Debug\net7.0\Todo.Infra.csproj.CopyComplete
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Infra\obj\Debug\net7.0\Todo.Infra.dll
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Infra\obj\Debug\net7.0\refint\Todo.Infra.dll
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Infra\obj\Debug\net7.0\Todo.Infra.pdb
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Infra\obj\Debug\net7.0\Todo.Infra.genruntimeconfig.cache
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Infra\obj\Debug\net7.0\ref\Todo.Infra.dll
