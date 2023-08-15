@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Todo.API.Configuration;
 using Todo.Infra.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 var serverVersion = new MySqlServerVersion(new Version(10, 4, 27));
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+builder.Services.ResolveDependecies();
+builder.Services.AddIdentityConfiguration(builder.Configuration);
 builder.Services.AddDbContext<TodoDbContext>(options => options.UseMySql(connectionString, serverVersion));
 
 builder.Services.AddControllers();
@@ -22,6 +25,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
