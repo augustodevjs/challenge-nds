@@ -11,7 +11,7 @@ using Todo.Infra.Context;
 namespace Todo.Infra.Migrations
 {
     [DbContext(typeof(TodoDbContext))]
-    [Migration("20230814224205_Initial")]
+    [Migration("20230815180458_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
