@@ -16,39 +16,41 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
         DbSet = db.Set<TEntity>();
     }
     
-    public Task Add(TEntity entity)
+    public virtual async Task<List<TEntity>> GetAll()
     {
-        throw new NotImplementedException();
+        return await DbSet.ToListAsync();
     }
 
-    public Task<TEntity> GetById(Guid id)
+    public virtual async Task<TEntity> GetById(Guid id)
     {
-        throw new NotImplementedException();
+        return await DbSet.FindAsync(id);
     }
 
-    public Task<List<TEntity>> GetAll()
+    public virtual async Task Add(TEntity entity)
     {
-        throw new NotImplementedException();
+        DbSet.Add(entity);
+        await SaveChanges();
     }
 
-    public Task Update(TEntity entity)
+    public virtual async Task Update(TEntity entity)
     {
-        throw new NotImplementedException();
+        DbSet.Update(entity);
+        await SaveChanges();
     }
 
-    public Task Delete(Guid id)
+    public virtual async Task Delete(Guid id)
     {
-        throw new NotImplementedException();
+        DbSet.Remove(new TEntity { Id = id });
+        await SaveChanges();
     }
 
-    public Task<int> SaveChanges()
+    public async Task<int> SaveChanges()
     {
-        throw new NotImplementedException();
+        return await Db.SaveChangesAsync();
     }
-    
     
     public void Dispose()
     {
-        throw new NotImplementedException();
+        Db?.Dispose();
     }
 }
