@@ -8,7 +8,6 @@ var serverVersion = new MySqlServerVersion(new Version(10, 4, 27));
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.ResolveDependecies();
-builder.Services.AddIdentityConfiguration(builder.Configuration);
 builder.Services.AddDbContext<TodoDbContext>(options => options.UseMySql(connectionString, serverVersion));
 
 builder.Services.AddControllers();
