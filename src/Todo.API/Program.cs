@@ -7,12 +7,14 @@ var builder = WebApplication.CreateBuilder(args);
 var serverVersion = new MySqlServerVersion(new Version(10, 4, 27));
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.ResolveDependecies();
 builder.Services.AddDbContext<TodoDbContext>(options => options.UseMySql(connectionString, serverVersion));
+
+builder.Services.AddAuthentication(builder);
+builder.Services.ResolveDependecies(builder);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwagger();
 
 var app = builder.Build();
 
