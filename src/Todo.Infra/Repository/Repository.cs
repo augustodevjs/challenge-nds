@@ -26,7 +26,7 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
         return await DbSet.FindAsync(id);
     }
 
-    public virtual async Task Add(TEntity entity)
+    public virtual async Task Create(TEntity entity)
     {
         DbSet.Add(entity);
         await SaveChanges();

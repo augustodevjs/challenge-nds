@@ -12,6 +12,8 @@ builder.Services.AddDbContext<TodoDbContext>(options => options.UseMySql(connect
 builder.Services.AddAuthentication(builder);
 builder.Services.ResolveDependecies(builder);
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwagger();

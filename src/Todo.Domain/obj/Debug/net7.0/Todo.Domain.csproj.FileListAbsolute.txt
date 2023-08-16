@@ -9,3 +9,4 @@ C:\Users\joaoa\source\repos\todo-api\src\Todo.Domain\obj\Debug\net7.0\Todo.Domai
 C:\Users\joaoa\source\repos\todo-api\src\Todo.Domain\obj\Debug\net7.0\refint\Todo.Domain.dll
 C:\Users\joaoa\source\repos\todo-api\src\Todo.Domain\obj\Debug\net7.0\Todo.Domain.pdb
 C:\Users\joaoa\source\repos\todo-api\src\Todo.Domain\obj\Debug\net7.0\ref\Todo.Domain.dll
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Domain\obj\Debug\net7.0\Todo.Domain.csproj.AssemblyReference.cache

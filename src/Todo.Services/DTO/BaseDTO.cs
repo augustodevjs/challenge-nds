@@ -2,5 +2,5 @@
 
 public class BaseDTO
 {
-    public long Id { get; set; }
+    public Guid Id { get; set; }
 }

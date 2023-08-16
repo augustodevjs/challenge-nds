@@ -1,12 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Todo.API.ViewModels;
+﻿namespace Todo.API.ViewModels;
 
 public class LoginViewModel
 {
-    [Required(ErrorMessage = "O login não pode vazio.")]
-    public string Login { get; set; }
-
-    [Required(ErrorMessage = "A senha não pode vazio.")]
+    public string Email { get; set; }
     public string Password { get; set; }    
 }

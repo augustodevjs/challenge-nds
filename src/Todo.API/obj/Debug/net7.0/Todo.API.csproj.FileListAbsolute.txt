@@ -60,3 +60,8 @@ C:\Users\joaoa\source\repos\todo-api\src\Todo.API\bin\Debug\net7.0\System.Identi
 C:\Users\joaoa\source\repos\todo-api\src\Todo.API\bin\Debug\net7.0\System.Security.Permissions.dll
 C:\Users\joaoa\source\repos\todo-api\src\Todo.API\bin\Debug\net7.0\Todo.Core.dll
 C:\Users\joaoa\source\repos\todo-api\src\Todo.API\bin\Debug\net7.0\Todo.Core.pdb
+C:\Users\joaoa\source\repos\todo-api\src\Todo.API\bin\Debug\net7.0\AutoMapper.dll
+C:\Users\joaoa\source\repos\todo-api\src\Todo.API\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\joaoa\source\repos\todo-api\src\Todo.API\bin\Debug\net7.0\Todo.Services.dll
+C:\Users\joaoa\source\repos\todo-api\src\Todo.API\bin\Debug\net7.0\Todo.Services.pdb
+C:\Users\joaoa\source\repos\todo-api\src\Todo.API\bin\Debug\net7.0\FluentValidation.dll

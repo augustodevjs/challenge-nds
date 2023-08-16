@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Up8XC3u7ua5Z4yuOv0n+2vdtiI2TibtzDF29OWpaKKEzFCGGmO5NLCBxOLQ83TQgyjLvm3I9rR5dwvyxu8gRPg==",
+  "dgSpecHash": "KNGnVN9i6ASKz6ESCRw674Lgx4ilkrtLOZmvJOgQUnKH5pnX/HGNEcGiEj7zOavY5613fUoaoEuqNlXtI6nriQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Infra\\Todo.Infra.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\joaoa\\.nuget\\packages\\fluentvalidation\\11.7.1\\fluentvalidation.11.7.1.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.10\\microsoft.entityframeworkcore.7.0.10.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.10\\microsoft.entityframeworkcore.abstractions.7.0.10.nupkg.sha512",
