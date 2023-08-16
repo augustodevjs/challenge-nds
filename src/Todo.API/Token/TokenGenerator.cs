@@ -18,16 +18,16 @@ public class TokenGenerator : ITokenGenerator
     {
         var tokenHandler = new JwtSecurityTokenHandler();
 
-        var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
+        var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"] ?? string.Empty);
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new Claim[]
             {
-                new Claim(ClaimTypes.Name, _configuration["Jwt:Email"]),
-                new Claim(ClaimTypes.Role, "User")
+                new(ClaimTypes.Name, _configuration["Jwt:Email"] ?? string.Empty),
+                new(ClaimTypes.Role, "User")
             }),
-            Expires = DateTime.UtcNow.AddHours(int.Parse(_configuration["Jwt:HoursToExpire"])),
+            Expires = DateTime.UtcNow.AddHours(int.Parse(_configuration["Jwt:HoursToExpire"] ?? string.Empty)),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
 

@@ -12,7 +12,7 @@ public static class DependecyInjectionConfig
 {
     public static void ResolveDependecies(this IServiceCollection services, WebApplicationBuilder builder)
     {
-        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<INotificator, Notificator>();
         services.AddSingleton(_ => builder.Configuration);
         services.AddScoped<IUserRepository, UserRepository>();

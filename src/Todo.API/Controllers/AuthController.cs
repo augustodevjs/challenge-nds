@@ -8,24 +8,24 @@ using Todo.Services.Interfaces;
 
 namespace Todo.API.Controllers;
 
-[Route("api")]
+[Route("api/v1")]
 public class AuthController : MainController
 {
     private readonly IMapper _mapper;
-    private readonly IUserService _userService;
+    private readonly IAuthService _authService;
     private readonly IConfiguration _configuration;
     private readonly ITokenGenerator _tokenGenerator;
 
     public AuthController(
         IMapper mapper,
-        IUserService userService,
+        IAuthService authService,
         INotificator notificador,
         IConfiguration configuration,
         ITokenGenerator tokenGenerator
     ) : base(notificador)
     {
         _mapper = mapper;
-        _userService = userService;
+        _authService = authService;
         _configuration = configuration;
         _tokenGenerator = tokenGenerator;
     }
@@ -34,19 +34,20 @@ public class AuthController : MainController
     [Route("login")]
     public async Task<ActionResult> Login(LoginViewModel loginViewModel)
     {
-        var tokenEmail = _configuration["Jwt:Email"];
-        var tokenPassword = _configuration["Jwt:Password"];
+        var user = _mapper.Map<UserDTO>(loginViewModel);
 
-        if (loginViewModel.Email == tokenEmail && loginViewModel.Password == tokenPassword)
+        var isLogged = await _authService.Login(user);
+
+        if (isLogged)
         {
             return CustomResponse(new
             {
                 Token = _tokenGenerator.GenerateToken(),
-                TokenExpires = DateTime.UtcNow.AddHours(int.Parse(_configuration["Jwt:HoursToExpire"]))
+                TokenExpires = DateTime.UtcNow
+                    .AddHours(int.Parse(_configuration["Jwt:HoursToExpire"] ?? string.Empty))
             });
         }
 
-        NotificarErro("Usuário ou senha estão incorretas.");
         return CustomResponse(loginViewModel);
     }
 
@@ -54,11 +55,11 @@ public class AuthController : MainController
     [Route("register")]
     public async Task<ActionResult> Register(UserDTO userDto)
     {
-        await _userService.Create(userDto);
+        await _authService.Create(userDto);
 
         return CustomResponse(new
         {
-            userDto.Name,   
+            userDto.Name,
             userDto.Email,
         });
     }

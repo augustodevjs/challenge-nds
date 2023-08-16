@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Todo.API.ViewModels;
 using Todo.Domain.Models;
 using Todo.Services.DTO;
 
@@ -8,6 +9,7 @@ public class AutoMapperConfig : Profile
 {
     public AutoMapperConfig()
     {
+        CreateMap<LoginViewModel, UserDTO>();
         CreateMap<User, UserDTO>().ReverseMap();
     }
 }
