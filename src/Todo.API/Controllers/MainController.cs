@@ -1,9 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Todo.Core.Interfaces;
+﻿using Todo.Core.Interfaces;
 using Todo.Core.Notifications;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Todo.API.Controllers;
+
+public sealed class BadRequestResponse
+{
+    public List<string> Erros { get; set; } = new();
+}
 
 [ApiController]
 public abstract class MainController : ControllerBase
@@ -27,9 +32,9 @@ public abstract class MainController : ControllerBase
             return Ok(result);
         }
 
-        return BadRequest(new
+        return BadRequest(new BadRequestResponse
         {
-            errors = _notificador.ObterNotificacoes().Select(n => n.Mensagem)
+            Erros = _notificador.ObterNotificacoes().Select(n => n.Mensagem).ToList()
         });
     }
 

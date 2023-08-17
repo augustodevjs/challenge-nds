@@ -8,6 +8,7 @@ public static class SwaggerConfiguration
     {
         services.AddSwaggerGen(c =>
         {
+            c.EnableAnnotations();
             c.SwaggerDoc("v1", new OpenApiInfo()
             {
                 Title = "Todo API",
@@ -22,10 +23,12 @@ public static class SwaggerConfiguration
 
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
+                Description =
+                    @"JWT Authorization header using the Bearer scheme. Enter 'Bearer' [space] and then your token in the text input below Example: 'Bearer 1231asd'",
                 In = ParameterLocation.Header,
-                Description = "Por favor utilize Bearer <TOKEN>",
                 Name = "Authorization",
-                Type = SecuritySchemeType.ApiKey
+                Type = SecuritySchemeType.ApiKey,
+                Scheme = "Bearer"
             });
             c.AddSecurityRequirement(new OpenApiSecurityRequirement
             {

@@ -7,9 +7,9 @@ using Todo.Infra.Interfaces;
 using Todo.Domain.Validators;
 using System.Security.Claims;
 using Todo.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 
 namespace Todo.Services.Services;
@@ -35,23 +35,25 @@ public class AuthService : BaseService, IAuthService
         _passwordHasher = passwordHasher;
     }
 
-    public async Task Create(UserDTO userDto)
+    public async Task<RegisterDTO?> Create(UserDTO userDto)
     {
         var userMapper = _mapper.Map<User>(userDto);
 
-        if (!ExecutarValidacao(new UserValidator(), userMapper)) return;
+        if (!ExecutarValidacao(new UserValidator(), userMapper)) return null;
 
         var getUser = await _userRepository.GetByEmail(userDto.Email);
 
         if (getUser != null)
         {
             Notificar("Já existe um usuário cadastrado com o email informado.");
-            return;
+            return null;
         }
 
         userMapper.Password = _passwordHasher.HashPassword(userMapper, userDto.Password);
 
         await _userRepository.Create(userMapper);
+
+        return _mapper.Map<RegisterDTO>(userDto);
     }
 
     public async Task<TokenDTO?> Login(LoginDTO loginDto)
@@ -62,7 +64,8 @@ public class AuthService : BaseService, IAuthService
 
         var user = await _userRepository.GetByEmail(loginDto.Email);
 
-        if (user == null || _passwordHasher.VerifyHashedPassword(user, user.Password, loginDto.Password) != PasswordVerificationResult.Success)
+        if (user == null || _passwordHasher.VerifyHashedPassword(user, user.Password, loginDto.Password) !=
+            PasswordVerificationResult.Success)
         {
             Notificar("Usuário ou senha estão incorretos.");
             return null;

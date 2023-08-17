@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "FlzVeTQrfZO7L5cqTOyfLKQzXdSowlnHJnpaVZxngxN5/v/GyXXJLYADgJikHG2rfZTAfzI8cm5MYTehlPCcpA==",
+  "dgSpecHash": "4mPOuAG5ern4vpbmgQHu+NLfYtp7r0cA5ZFaBi1iQS8JllaJT3hJH/DAgVWcxuF9lsDkv7W/KYFMoVSM+0M7bg==",
   "success": true,
   "projectFilePath": "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.API\\Todo.API.csproj",
   "expectedPackageFiles": [
@@ -63,6 +63,7 @@
     "C:\\Users\\joaoa\\.nuget\\packages\\scottbrady91.aspnetcore.identity.argon2passwordhasher\\1.4.0\\scottbrady91.aspnetcore.identity.argon2passwordhasher.1.4.0.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\sodium.core\\1.2.3\\sodium.core.1.2.3.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
+    "C:\\Users\\joaoa\\.nuget\\packages\\swashbuckle.aspnetcore.annotations\\6.5.0\\swashbuckle.aspnetcore.annotations.6.5.0.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.5.0\\swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.5.0\\swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512",

@@ -1,7 +1,7 @@
 ﻿using System.Text;
+using Todo.API.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Todo.API.Extensions;
 
 namespace Todo.API.Configuration;
 
