@@ -56,17 +56,13 @@ public class AuthService : BaseService, IAuthService
 
     public async Task<TokenDTO?> Login(LoginDTO loginDto)
     {
+        var userMapper = _mapper.Map<User>(loginDto);
+
+        if (!ExecutarValidacao(new LoginValidator(), userMapper)) return null;
+
         var user = await _userRepository.GetByEmail(loginDto.Email);
 
-        if (user == null)
-        {
-            Notificar("Usuário ou senha estão incorretos.");
-            return null;
-        }
-
-        var passwordVerificationResult = _passwordHasher.VerifyHashedPassword(user, user.Password, loginDto.Password);
-
-        if (passwordVerificationResult != PasswordVerificationResult.Success)
+        if (user == null || _passwordHasher.VerifyHashedPassword(user, user.Password, loginDto.Password) != PasswordVerificationResult.Success)
         {
             Notificar("Usuário ou senha estão incorretos.");
             return null;
