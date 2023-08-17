@@ -581,6 +581,7 @@
       "Todo.Services/1.0.0": {
         "dependencies": {
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.10",
           "Todo.Core": "1.0.0",
           "Todo.Infra": "1.0.0"
         },

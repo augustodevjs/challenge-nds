@@ -1,11 +1,6 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
+﻿using Todo.Services.DTO;
 using Todo.Core.Interfaces;
-using Todo.Services.DTO;
+using Microsoft.AspNetCore.Mvc;
 using Todo.Services.Interfaces;
 
 namespace Todo.API.Controllers;
@@ -29,18 +24,15 @@ public class AuthController : MainController
     [HttpPost("login")]
     public async Task<ActionResult> Login(LoginDTO loginDto)
     {
-        var userLogged = await _authService.Login(loginDto);
+        var userToken = await _authService.Login(loginDto);
+        var expireToken = TimeSpan.FromHours(int.Parse(_configuration["AppSettings:ExpirationHours"] ?? string.Empty))
+            .TotalSeconds;
 
-        if (userLogged != null)
+        return CustomResponse(new
         {
-            return CustomResponse(new
-            {
-                Token = GenerateToken(userLogged.Name),
-                ExpiresIn = TimeSpan.FromHours(int.Parse(_configuration["AppSettings:ExpirationHours"] ?? string.Empty)).TotalSeconds
-            });
-        }
-
-        return CustomResponse(loginDto);
+            Token = userToken,
+            ExpiresIn = expireToken
+        });
     }
 
     [HttpPost("register")]
@@ -53,31 +45,5 @@ public class AuthController : MainController
             userDto.Name,
             userDto.Email,
         });
-    }
-
-    private string GenerateToken(string name)
-    {
-        var tokenHandler = new JwtSecurityTokenHandler();
-
-        var key = Encoding.ASCII.GetBytes(_configuration["AppSettings:Secret"] ?? string.Empty);
-
-        var tokenDescriptor = new SecurityTokenDescriptor
-        {
-            Subject = new ClaimsIdentity(new Claim[]
-            {
-                new(ClaimTypes.Name, name),
-                new(ClaimTypes.Role, "User")
-            }),
-            SigningCredentials =
-                new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
-            Expires =
-                DateTime.UtcNow.AddHours(int.Parse(_configuration["AppSettings:ExpirationHours"] ?? string.Empty)),
-            Issuer = _configuration["AppSettings:Issuer"],
-            Audience = _configuration["AppSettings:ValidOn"]
-        };
-
-        var token = tokenHandler.CreateToken(tokenDescriptor);
-
-        return tokenHandler.WriteToken(token);
     }
 }
