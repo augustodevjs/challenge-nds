@@ -35,6 +35,7 @@ public class AuthController : MainController
     [ProducesResponseType( typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> Register(UserDTO userDto)
     {
-        return CustomResponse(await _authService.Create(userDto));
+        var registerUser = await _authService.Create(userDto);
+        return CustomResponse(registerUser);
     }
 }
