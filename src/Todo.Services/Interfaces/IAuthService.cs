@@ -6,5 +6,5 @@ namespace Todo.Services.Interfaces;
 public interface IAuthService
 {
     Task Create(UserDTO userDto);
-    Task<string?> Login(LoginDTO loginDto);
+    Task<TokenDTO?> Login(LoginDTO loginDto);
 }

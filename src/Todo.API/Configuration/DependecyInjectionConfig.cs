@@ -1,8 +1,11 @@
-﻿using Todo.Core.Interfaces;
+﻿using Microsoft.AspNetCore.Identity;
+using ScottBrady91.AspNetCore.Identity;
+using Todo.Core.Interfaces;
 using Todo.Infra.Repository;
 using Todo.Infra.Interfaces;
 using Todo.Services.Services;
 using Todo.Core.Notifications;
+using Todo.Domain.Models;
 using Todo.Services.Interfaces;
 
 namespace Todo.API.Configuration;
@@ -16,5 +19,7 @@ public static class DependecyInjectionConfig
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<INotificator, Notificator>();
         services.AddScoped<IUserRepository, UserRepository>();
+        
+        builder.Services.AddScoped<IPasswordHasher<User>, Argon2PasswordHasher<User>>();
     }
 }

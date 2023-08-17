@@ -9,30 +9,20 @@ namespace Todo.API.Controllers;
 public class AuthController : MainController
 {
     private readonly IAuthService _authService;
-    private readonly IConfiguration _configuration;
 
     public AuthController(
         IAuthService authService,
-        INotificator notificador,
-        IConfiguration configuration
+        INotificator notificador
     ) : base(notificador)
     {
         _authService = authService;
-        _configuration = configuration;
     }
 
     [HttpPost("login")]
     public async Task<ActionResult> Login(LoginDTO loginDto)
     {
         var userToken = await _authService.Login(loginDto);
-        var expireToken = TimeSpan.FromHours(int.Parse(_configuration["AppSettings:ExpirationHours"] ?? string.Empty))
-            .TotalSeconds;
-
-        return CustomResponse(new
-        {
-            Token = userToken,
-            ExpiresIn = expireToken
-        });
+        return CustomResponse(userToken);
     }
 
     [HttpPost("register")]

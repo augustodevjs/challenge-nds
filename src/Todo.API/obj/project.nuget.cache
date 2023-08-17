@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "uuwi9n63MAVjk+xLvIzTebjZN0nGR5FeimE/cD8I+TU65NzRgMC0gZauGdVS2K/57JP/vQnhIkpt0o0f5TLCMA==",
+  "dgSpecHash": "FlzVeTQrfZO7L5cqTOyfLKQzXdSowlnHJnpaVZxngxN5/v/GyXXJLYADgJikHG2rfZTAfzI8cm5MYTehlPCcpA==",
   "success": true,
   "projectFilePath": "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.API\\Todo.API.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\joaoa\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\fluentvalidation\\11.7.1\\fluentvalidation.11.7.1.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\joaoa\\.nuget\\packages\\libsodium\\1.0.18\\libsodium.1.0.18.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\microsoft.aspnetcore.authentication.core\\2.2.0\\microsoft.aspnetcore.authentication.core.2.2.0.nupkg.sha512",
@@ -59,6 +60,8 @@
     "C:\\Users\\joaoa\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\mysqlconnector\\2.2.5\\mysqlconnector.2.2.5.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\pomelo.entityframeworkcore.mysql\\7.0.0\\pomelo.entityframeworkcore.mysql.7.0.0.nupkg.sha512",
+    "C:\\Users\\joaoa\\.nuget\\packages\\scottbrady91.aspnetcore.identity.argon2passwordhasher\\1.4.0\\scottbrady91.aspnetcore.identity.argon2passwordhasher.1.4.0.nupkg.sha512",
+    "C:\\Users\\joaoa\\.nuget\\packages\\sodium.core\\1.2.3\\sodium.core.1.2.3.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.5.0\\swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
@@ -73,7 +76,8 @@
     "C:\\Users\\joaoa\\.nuget\\packages\\system.security.permissions\\4.5.0\\system.security.permissions.4.5.0.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\system.security.principal.windows\\4.5.0\\system.security.principal.windows.4.5.0.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
-    "C:\\Users\\joaoa\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512"
+    "C:\\Users\\joaoa\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512",
+    "C:\\Users\\joaoa\\.nuget\\packages\\system.valuetuple\\4.5.0\\system.valuetuple.4.5.0.nupkg.sha512"
   ],
   "logs": []
 }
