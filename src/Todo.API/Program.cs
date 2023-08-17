@@ -9,7 +9,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<TodoDbContext>(options => options.UseMySql(connectionString, serverVersion));
 
-builder.Services.AddAuthentication(builder);
+builder.Services.AddAuthentication(builder.Configuration);
 builder.Services.ResolveDependecies(builder);
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

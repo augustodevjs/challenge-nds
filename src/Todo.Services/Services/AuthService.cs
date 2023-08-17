@@ -25,35 +25,35 @@ public class AuthService : BaseService, IAuthService
 
     public async Task Create(UserDTO userDto)
     {
-        var user = _mapper.Map<User>(userDto);
+        var userMapper = _mapper.Map<User>(userDto);
 
-        if (!ExecutarValidacao(new UserValidator(), user)) return;
+        if (!ExecutarValidacao(new UserValidator(), userMapper)) return;
 
-        var userExists = await _userRepository.GetByEmail(userDto.Email);
+        var getUser = await _userRepository.GetByEmail(userDto.Email);
 
-        if (userExists != null)
+        if (getUser != null)
         {
             Notificar("Já existe um usuário cadastrado com o email informado.");
             return;
         }
 
-        await _userRepository.Create(user);
+        await _userRepository.Create(userMapper);
     }
 
-    public async Task<bool> Login(UserDTO userDto)
+    public async Task<User?> Login(LoginDTO loginDto)
     {
-        var user = _mapper.Map<User>(userDto);
+        var userMapper = _mapper.Map<User>(loginDto);
 
-        if (!ExecutarValidacao(new LoginValidator(), user)) return false; 
+        if (!ExecutarValidacao(new LoginValidator(), userMapper)) return null; 
         
-        var userByEmail = await _userRepository.GetByEmail(userDto.Email);
+        var getUser = await _userRepository.GetByEmail(loginDto.Email);
 
-        if (userByEmail == null || userDto.Password != userByEmail.Password)
+        if (getUser == null || loginDto.Password != getUser.Password)
         {
             Notificar("Usuário ou senha estão incorretos.");
-            return false;
+            return null;
         }
 
-        return true;
+        return getUser;
     }
 }
