@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Todo.API.Configuration;
 using Todo.Infra.Context;
@@ -6,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 var serverVersion = new MySqlServerVersion(new Version(10, 4, 27));
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.Configure<ApiBehaviorOptions>(o => o.SuppressModelStateInvalidFilter = true);
 
 builder.Services.AddDbContext<TodoDbContext>(options => options.UseMySql(connectionString, serverVersion));
 

@@ -3,14 +3,13 @@ using System.Text;
 using Todo.Domain.Models;
 using Todo.Core.Interfaces;
 using Todo.Infra.Interfaces;
-using Todo.Domain.Validators;
 using System.Security.Claims;
+using Todo.Services.DTO.Auth;
 using Todo.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
-using Todo.Services.DTO.Auth;
 
 namespace Todo.Services.Services;
 
@@ -37,10 +36,6 @@ public class AuthService : BaseService, IAuthService
     
     public async Task<TokenDto?> Login(LoginDto loginDto)
     {
-        var userMapper = _mapper.Map<User>(loginDto);
-
-        if (!ExecutarValidacao(new LoginValidator(), userMapper)) return null;
-
         var user = await _userRepository.GetByEmail(loginDto.Email);
 
         if (user == null || _passwordHasher.VerifyHashedPassword(user, user.Password, loginDto.Password) !=
@@ -53,25 +48,27 @@ public class AuthService : BaseService, IAuthService
         return GenerateToken(user);
     }
 
-    public async Task<RegisterDto?> Create(UserDto userDto)
+    public async Task<UserDto?> Register(RegisterDto registerDto)
     {
-        var userMapper = _mapper.Map<User>(userDto);
-
-        if (!ExecutarValidacao(new UserValidator(), userMapper)) return null;
-
-        var getUser = await _userRepository.GetByEmail(userDto.Email);
-
+        var userMapper = _mapper.Map<User>(registerDto);
+        
+        var getUser = await _userRepository.GetByEmail(registerDto.Email);
+        
         if (getUser != null)
         {
             Notificar("Já existe um usuário cadastrado com o email informado.");
             return null;
         }
-
-        userMapper.Password = _passwordHasher.HashPassword(userMapper, userDto.Password);
-
+        
+        userMapper.Password = _passwordHasher.HashPassword(userMapper, registerDto.Password);
+        
         await _userRepository.Create(userMapper);
-
-        return _mapper.Map<RegisterDto>(userDto);
+        
+        return new UserDto
+        {
+            Email = registerDto.Email,
+            Name = registerDto.Name
+        };
     }
 
     private TokenDto GenerateToken(User user)

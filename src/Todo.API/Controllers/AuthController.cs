@@ -1,12 +1,12 @@
 ﻿using Todo.Core.Interfaces;
+using Todo.Services.DTO.Auth;
 using Microsoft.AspNetCore.Mvc;
 using Todo.Services.Interfaces;
 using Swashbuckle.AspNetCore.Annotations;
-using Todo.Services.DTO.Auth;
 
 namespace Todo.API.Controllers;
 
-[Route("Auth")]
+[Route("auth")]
 public class AuthController : MainController
 {
     private readonly IAuthService _authService;
@@ -20,11 +20,13 @@ public class AuthController : MainController
     }
 
     [HttpPost("login")]
-    [SwaggerOperation(Summary = "Login")]
+    [SwaggerOperation(Summary = "Login - Authentication")]
     [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> Login(LoginDto loginDto)
+    public async Task<ActionResult> Login([FromBody] LoginDto loginDto)
     {
+        if (!ModelState.IsValid) return CustomResponse(ModelState);
+        
         var userToken = await _authService.Login(loginDto);
         return CustomResponse(userToken);
     }
@@ -33,9 +35,11 @@ public class AuthController : MainController
     [SwaggerOperation(Summary = "Register Account")]
     [ProducesResponseType(typeof(RegisterDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> Register(UserDto userDto)
+    public async Task<ActionResult> Register([FromBody] RegisterDto registerDto)
     {
-        var registerUser = await _authService.Create(userDto);
+        if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+        var registerUser = await _authService.Register(registerDto);
         return CustomResponse(registerUser);
     }
 }
