@@ -1,9 +1,10 @@
 ﻿using Todo.Services.DTO;
+using Todo.Services.DTO.Auth;
 
 namespace Todo.Services.Interfaces;
 
 public interface IAuthService
 {
-    Task<RegisterDTO?> Create(UserDTO userDto);
-    Task<TokenDTO?> Login(LoginDTO loginDto);
+    Task<RegisterDto?> Create(UserDto userDto);
+    Task<TokenDto?> Login(LoginDto loginDto);
 }

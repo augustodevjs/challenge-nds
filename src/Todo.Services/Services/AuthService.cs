@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using System.Text;
-using Todo.Services.DTO;
 using Todo.Domain.Models;
 using Todo.Core.Interfaces;
 using Todo.Infra.Interfaces;
@@ -11,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
+using Todo.Services.DTO.Auth;
 
 namespace Todo.Services.Services;
 
@@ -35,7 +35,7 @@ public class AuthService : BaseService, IAuthService
         _passwordHasher = passwordHasher;
     }
     
-    public async Task<TokenDTO?> Login(LoginDTO loginDto)
+    public async Task<TokenDto?> Login(LoginDto loginDto)
     {
         var userMapper = _mapper.Map<User>(loginDto);
 
@@ -53,7 +53,7 @@ public class AuthService : BaseService, IAuthService
         return GenerateToken(user);
     }
 
-    public async Task<RegisterDTO?> Create(UserDTO userDto)
+    public async Task<RegisterDto?> Create(UserDto userDto)
     {
         var userMapper = _mapper.Map<User>(userDto);
 
@@ -71,10 +71,10 @@ public class AuthService : BaseService, IAuthService
 
         await _userRepository.Create(userMapper);
 
-        return _mapper.Map<RegisterDTO>(userDto);
+        return _mapper.Map<RegisterDto>(userDto);
     }
 
-    private TokenDTO GenerateToken(User user)
+    private TokenDto GenerateToken(User user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
 
@@ -101,7 +101,7 @@ public class AuthService : BaseService, IAuthService
 
         var encodedToken = tokenHandler.WriteToken(token);
 
-        return new TokenDTO
+        return new TokenDto
         {
             accessToken = encodedToken,
             expiresIn = TimeSpan.FromHours(int.Parse(_configuration["AppSettings:ExpirationHours"] ?? string.Empty))

@@ -1,6 +1,6 @@
 ﻿namespace Todo.Services.DTO;
 
-public class BaseDTO
+public class BaseDto
 {
     public Guid Id { get; set; }
 }

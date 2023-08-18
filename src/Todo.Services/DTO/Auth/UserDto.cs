@@ -1,17 +1,17 @@
-﻿namespace Todo.Services.DTO;
+﻿namespace Todo.Services.DTO.Auth;
 
-public class UserDTO : BaseDTO
+public class UserDto : BaseDto
 {
     public string Name { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
 
-    public UserDTO()
+    public UserDto()
     {
         
     }
 
-    public UserDTO(string name, string email, string password)
+    public UserDto(string name, string email, string password)
     {
         Name = name;
         Email = email;

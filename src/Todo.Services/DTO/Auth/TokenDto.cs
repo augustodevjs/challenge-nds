@@ -1,6 +1,6 @@
-﻿namespace Todo.Services.DTO;
+﻿namespace Todo.Services.DTO.Auth;
 
-public class TokenDTO
+public class TokenDto
 {
     public string accessToken { get; set; } 
     public double expiresIn { get; set; } 

@@ -15,11 +15,14 @@ public static class DependecyInjectionConfig
     public static void ResolveDependecies(this IServiceCollection services, WebApplicationBuilder builder)
     {
         services.AddSingleton(_ => builder.Configuration);
-        
-        services.AddScoped<IAuthService, AuthService>();
+
         services.AddScoped<INotificator, Notificator>();
+
         services.AddScoped<IUserRepository, UserRepository>();
-        
+        services.AddScoped<IAssignmentListRepository, AssignmentListRepository>();
+
+        services.AddScoped<IAuthService, AuthService>();
+
         builder.Services.AddScoped<IPasswordHasher<User>, Argon2PasswordHasher<User>>();
     }
 }
