@@ -34,6 +34,24 @@ public class AuthService : BaseService, IAuthService
         _userRepository = userRepository;
         _passwordHasher = passwordHasher;
     }
+    
+    public async Task<TokenDTO?> Login(LoginDTO loginDto)
+    {
+        var userMapper = _mapper.Map<User>(loginDto);
+
+        if (!ExecutarValidacao(new LoginValidator(), userMapper)) return null;
+
+        var user = await _userRepository.GetByEmail(loginDto.Email);
+
+        if (user == null || _passwordHasher.VerifyHashedPassword(user, user.Password, loginDto.Password) !=
+            PasswordVerificationResult.Success)
+        {
+            Notificar("Usuário ou senha estão incorretos.");
+            return null;
+        }
+
+        return GenerateToken(user);
+    }
 
     public async Task<RegisterDTO?> Create(UserDTO userDto)
     {
@@ -54,24 +72,6 @@ public class AuthService : BaseService, IAuthService
         await _userRepository.Create(userMapper);
 
         return _mapper.Map<RegisterDTO>(userDto);
-    }
-
-    public async Task<TokenDTO?> Login(LoginDTO loginDto)
-    {
-        var userMapper = _mapper.Map<User>(loginDto);
-
-        if (!ExecutarValidacao(new LoginValidator(), userMapper)) return null;
-
-        var user = await _userRepository.GetByEmail(loginDto.Email);
-
-        if (user == null || _passwordHasher.VerifyHashedPassword(user, user.Password, loginDto.Password) !=
-            PasswordVerificationResult.Success)
-        {
-            Notificar("Usuário ou senha estão incorretos.");
-            return null;
-        }
-
-        return GenerateToken(user);
     }
 
     private TokenDTO GenerateToken(User user)

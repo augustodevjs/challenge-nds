@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Todo.Infra.Context;
 using Todo.Domain.Models;
-using Todo.Infra.Context;
 using Todo.Infra.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Todo.Infra.Repository;
 

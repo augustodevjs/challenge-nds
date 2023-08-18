@@ -22,7 +22,7 @@ public class AuthController : MainController
     [HttpPost("login")]
     [SwaggerOperation(Summary = "Login")]
     [ProducesResponseType(typeof(TokenDTO), StatusCodes.Status200OK)]
-    [ProducesResponseType( typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> Login(LoginDTO loginDto)
     {
         var userToken = await _authService.Login(loginDto);
@@ -32,7 +32,7 @@ public class AuthController : MainController
     [HttpPost("register")]
     [SwaggerOperation(Summary = "Register Account")]
     [ProducesResponseType(typeof(RegisterDTO), StatusCodes.Status200OK)]
-    [ProducesResponseType( typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> Register(UserDTO userDto)
     {
         var registerUser = await _authService.Create(userDto);
