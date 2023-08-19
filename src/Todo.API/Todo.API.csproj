@@ -4,8 +4,6 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,16 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Todo.Core\Todo.Core.csproj" />
     <ProjectReference Include="..\Todo.Infra\Todo.Infra.csproj" />
     <ProjectReference Include="..\Todo.Services\Todo.Services.csproj" />
-
-
-
-
   </ItemGroup>
-
-
-
-
 </Project>

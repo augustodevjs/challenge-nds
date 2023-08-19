@@ -1,6 +1,6 @@
-﻿using Todo.Core.Interfaces;
+﻿using Todo.Services.Contracts;
 
-namespace Todo.Core.Notifications;
+namespace Todo.Services.Notifications;
 
 public class Notificator : INotificator
 {

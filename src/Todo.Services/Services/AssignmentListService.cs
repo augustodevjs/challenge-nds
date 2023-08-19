@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using Todo.Domain.Models;
-using Todo.Core.Interfaces;
-using Todo.Infra.Interfaces;
 using System.Security.Claims;
 using Todo.Domain.Validators;
-using Todo.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Todo.Infra.Contracts;
+using Todo.Services.Contracts;
 using Todo.Services.DTO.AssignmentList;
 
 namespace Todo.Services.Services;

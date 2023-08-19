@@ -1,6 +1,6 @@
 ﻿using Todo.Domain.Models;
 
-namespace Todo.Infra.Interfaces;
+namespace Todo.Infra.Contracts;
 
 public interface IAssignmentListRepository : IRepository<AssignmentList>
 {

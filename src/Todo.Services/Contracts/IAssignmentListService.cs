@@ -1,6 +1,6 @@
 ﻿using Todo.Services.DTO.AssignmentList;
 
-namespace Todo.Services.Interfaces;
+namespace Todo.Services.Contracts;
 
 public interface IAssignmentListService
 {

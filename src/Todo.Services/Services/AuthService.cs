@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
 using System.Text;
 using Todo.Domain.Models;
-using Todo.Core.Interfaces;
-using Todo.Infra.Interfaces;
 using System.Security.Claims;
 using Todo.Services.DTO.Auth;
-using Todo.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
+using Todo.Infra.Contracts;
+using Todo.Services.Contracts;
 
 namespace Todo.Services.Services;
 

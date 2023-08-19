@@ -1,6 +1,6 @@
-﻿using Todo.Core.Notifications;
+﻿using Todo.Services.Notifications;
 
-namespace Todo.Core.Interfaces;
+namespace Todo.Services.Contracts;
 
 public interface INotificator
 {

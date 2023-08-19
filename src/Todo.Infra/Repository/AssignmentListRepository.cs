@@ -1,6 +1,6 @@
 ﻿using Todo.Domain.Models;
 using Todo.Infra.Context;
-using Todo.Infra.Interfaces;
+using Todo.Infra.Contracts;
 
 namespace Todo.Infra.Repository;
 

@@ -15,5 +15,3 @@ C:\Users\joaoa\source\repos\todo-api\src\Todo.Services\obj\Debug\net7.0\Todo.Ser
 C:\Users\joaoa\source\repos\todo-api\src\Todo.Services\obj\Debug\net7.0\refint\Todo.Services.dll
 C:\Users\joaoa\source\repos\todo-api\src\Todo.Services\obj\Debug\net7.0\Todo.Services.pdb
 C:\Users\joaoa\source\repos\todo-api\src\Todo.Services\obj\Debug\net7.0\ref\Todo.Services.dll
-C:\Users\joaoa\source\repos\todo-api\src\Todo.Services\bin\Debug\net7.0\Todo.Core.dll
-C:\Users\joaoa\source\repos\todo-api\src\Todo.Services\bin\Debug\net7.0\Todo.Core.pdb

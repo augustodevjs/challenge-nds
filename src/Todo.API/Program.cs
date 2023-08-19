@@ -1,7 +1,7 @@
+using Todo.Infra.Context;
+using Todo.API.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Todo.API.Configuration;
-using Todo.Infra.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 

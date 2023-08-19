@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 using Todo.Domain.Models;
-using Todo.Core.Interfaces;
-using Todo.Core.Notifications;
 using FluentValidation.Results;
+using Todo.Services.Contracts;
+using Todo.Services.Notifications;
 
 namespace Todo.Services.Services;
 

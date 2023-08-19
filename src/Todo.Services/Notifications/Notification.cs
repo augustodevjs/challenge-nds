@@ -1,4 +1,4 @@
-﻿namespace Todo.Core.Notifications;
+﻿namespace Todo.Services.Notifications;
 
 public class Notification
 {
