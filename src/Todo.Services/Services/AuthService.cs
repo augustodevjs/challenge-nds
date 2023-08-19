@@ -50,7 +50,7 @@ public class AuthService : BaseService, IAuthService
 
     public async Task<UserDto?> Register(RegisterDto registerDto)
     {
-        var userMapper = _mapper.Map<User>(registerDto);
+        var user = _mapper.Map<User>(registerDto);
         
         var getUser = await _userRepository.GetByEmail(registerDto.Email);
         
@@ -60,15 +60,11 @@ public class AuthService : BaseService, IAuthService
             return null;
         }
         
-        userMapper.Password = _passwordHasher.HashPassword(userMapper, registerDto.Password);
+        user.Password = _passwordHasher.HashPassword(user, registerDto.Password);
         
-        await _userRepository.Create(userMapper);
-        
-        return new UserDto
-        {
-            Email = registerDto.Email,
-            Name = registerDto.Name
-        };
+        await _userRepository.Create(user);
+
+        return _mapper.Map<UserDto>(user);
     }
 
     private TokenDto GenerateToken(User user)

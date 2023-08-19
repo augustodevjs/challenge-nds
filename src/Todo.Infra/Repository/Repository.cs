@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Todo.Domain.Models;
+﻿using Todo.Domain.Models;
 using Todo.Infra.Context;
 using Todo.Infra.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Todo.Infra.Repository;
 
@@ -21,7 +21,7 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
         return await DbSet.ToListAsync();
     }
 
-    public virtual async Task<TEntity> GetById(Guid id)
+    public virtual async Task<TEntity> GetById(Guid? id)
     {
         return await DbSet.FindAsync(id);
     }

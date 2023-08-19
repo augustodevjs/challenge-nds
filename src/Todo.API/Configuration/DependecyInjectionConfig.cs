@@ -15,6 +15,7 @@ public static class DependecyInjectionConfig
     public static void ResolveDependecies(this IServiceCollection services, WebApplicationBuilder builder)
     {
         services.AddSingleton(_ => builder.Configuration);
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
         services.AddScoped<INotificator, Notificator>();
 
@@ -22,6 +23,7 @@ public static class DependecyInjectionConfig
         services.AddScoped<IAssignmentListRepository, AssignmentListRepository>();
 
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IAssignmentListService, AssignmentListService>();
 
         builder.Services.AddScoped<IPasswordHasher<User>, Argon2PasswordHasher<User>>();
     }
