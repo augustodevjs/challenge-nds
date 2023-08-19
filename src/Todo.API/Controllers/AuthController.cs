@@ -33,7 +33,7 @@ public class AuthController : MainController
 
     [HttpPost("register")]
     [SwaggerOperation(Summary = "Register Account")]
-    [ProducesResponseType(typeof(RegisterDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> Register([FromBody] RegisterDto registerDto)
     {
