@@ -13,6 +13,7 @@ public class AutoMapperConfig : Profile
         CreateMap<RegisterDto, User>();
         CreateMap<UserDto, RegisterDto>();
         CreateMap<UpdateAssignmentListDto, AssignmentList>();
+        CreateMap<AddAssignmentListDto, AssignmentList>();
         CreateMap<UpdateAssignmentListDto, AssignmentListDto>().ReverseMap();
         
         CreateMap<User, UserDto>().ReverseMap();

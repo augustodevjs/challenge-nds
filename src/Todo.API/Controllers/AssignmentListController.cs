@@ -24,7 +24,7 @@ public class AssignmentListController : MainController
     [SwaggerOperation(Summary = "Get a to-do list")]
     [ProducesResponseType(typeof(AssignmentListDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> GetById(string id)
+    public async Task<ActionResult> GetById(Guid id)
     {
         var getUser = await _assignmentListService.GetById(id);
         return CustomResponse(getUser);
@@ -44,7 +44,7 @@ public class AssignmentListController : MainController
     [SwaggerOperation(Summary = "Update a to-do list")]
     [ProducesResponseType(typeof(AssignmentListDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> Update(string id, [FromBody] UpdateAssignmentListDto updateAssignmentListDto)
+    public async Task<ActionResult> Update(Guid id, [FromBody] UpdateAssignmentListDto updateAssignmentListDto)
     {
         var updateAssignmentList = await _assignmentListService.Update(id, updateAssignmentListDto);
         return CustomResponse(updateAssignmentList);

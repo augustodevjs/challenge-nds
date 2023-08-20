@@ -2,8 +2,8 @@
 
 public class Assignment : Entity
 {
-    public string UserId { get; set; }
-    public string? AssignmentListId { get; set; }
+    public Guid UserId { get; set; }
+    public Guid? AssignmentListId { get; set; }
     
     public DateTime Deadline { get; set; }
     public string Description { get; set; }
