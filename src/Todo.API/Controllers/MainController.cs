@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Todo.Services.Contracts;
 using Todo.Services.Notifications;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Todo.API.Controllers;
 
@@ -20,42 +20,42 @@ public abstract class MainController : ControllerBase
         _notificador = notificador;
     }
 
-    protected bool OperacaoValida()
+    protected bool ValidOperation()
     {
-        return !_notificador.TemNotificacao();
+        return !_notificador.hasNotification();
     }
 
     protected ActionResult CustomResponse(object? result = null)
     {
-        if (OperacaoValida())
+        if (ValidOperation())
         {
             return Ok(result);
         }
 
         return BadRequest(new BadRequestResponse
         {
-            Erros = _notificador.ObterNotificacoes().Select(n => n.Mensagem).ToList()
+            Erros = _notificador.getNotification().Select(n => n.Message).ToList()
         });
     }
 
     protected ActionResult CustomResponse(ModelStateDictionary modelState)
     {
-        if (!modelState.IsValid) NotificarErroModelInvalida(modelState);
+        if (!modelState.IsValid) NotifyErrorModelInvalida(modelState);
         return CustomResponse();
     }
 
-    protected void NotificarErroModelInvalida(ModelStateDictionary modelState)
+    protected void NotifyErrorModelInvalida(ModelStateDictionary modelState)
     {
         var erros = modelState.Values.SelectMany(e => e.Errors);
         foreach (var erro in erros)
         {
             var errorMsg = erro.Exception == null ? erro.ErrorMessage : erro.Exception.Message;
-            NotificarErro(errorMsg);
+            NotifyError(errorMsg);
         }
     }
 
-    protected void NotificarErro(string mensagem)
+    protected void NotifyError(string message)
     {
-        _notificador.Handle(new Notification(mensagem));
+        _notificador.Handle(new Notification(message));
     }
 }

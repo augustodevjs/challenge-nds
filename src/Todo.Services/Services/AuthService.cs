@@ -40,7 +40,7 @@ public class AuthService : BaseService, IAuthService
         if (user == null || _passwordHasher.VerifyHashedPassword(user, user.Password, loginDto.Password) !=
             PasswordVerificationResult.Success)
         {
-            Notificar("Usuário ou senha estão incorretos.");
+            Notify("Usuário ou senha estão incorretos.");
             return null;
         }
 
@@ -55,7 +55,7 @@ public class AuthService : BaseService, IAuthService
         
         if (getUser != null)
         {
-            Notificar("Já existe um usuário cadastrado com o email informado.");
+            Notify("Já existe um usuário cadastrado com o email informado.");
             return null;
         }
         

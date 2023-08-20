@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Todo.Domain.Models;
-using FluentValidation.Results;
 using Todo.Services.Contracts;
+using FluentValidation.Results;
 using Todo.Services.Notifications;
 
 namespace Todo.Services.Services;
@@ -14,27 +14,27 @@ public abstract class BaseService
     {
         _notificator = notificator;
     }
-
-    protected void Notificar(ValidationResult validationResult)
+    
+    protected void Notify(string message)
+    {
+        _notificator.Handle(new Notification(message));
+    }
+    
+    protected void Notify(ValidationResult validationResult)
     {
         foreach (var error in validationResult.Errors)
         {
-            Notificar(error.ErrorMessage);
+            Notify(error.ErrorMessage);
         }
     }
     
-    protected void Notificar(string mensagem)
+    protected bool ExecuteValidation<TV, TE>(TV validation, TE entity) where TV : AbstractValidator<TE> where TE : Entity
     {
-        _notificator.Handle(new Notification(mensagem));
-    }
-    
-    protected bool ExecutarValidacao<TV, TE>(TV validacao, TE entidade) where TV : AbstractValidator<TE> where TE : Entity
-    {
-        var validator = validacao.Validate(entidade);
+        var validator = validation.Validate(entity);
 
         if(validator.IsValid) return true;
 
-        Notificar(validator);
+        Notify(validator);
 
         return false;
     }

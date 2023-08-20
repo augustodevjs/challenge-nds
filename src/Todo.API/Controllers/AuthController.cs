@@ -1,7 +1,7 @@
 ﻿using Todo.Services.DTO.Auth;
+using Todo.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using Todo.Services.Contracts;
 
 namespace Todo.API.Controllers;
 

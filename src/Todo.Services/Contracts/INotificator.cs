@@ -4,7 +4,7 @@ namespace Todo.Services.Contracts;
 
 public interface INotificator
 {
-    bool TemNotificacao();
-    List<Notification> ObterNotificacoes();
-    void Handle(Notification notificacao);
+    bool hasNotification();
+    List<Notification> getNotification();
+    void Handle(Notification notification);
 }

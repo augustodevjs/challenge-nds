@@ -33,7 +33,7 @@ public class AssignmentListService : BaseService, IAssignmentListService
         
         if (getUser == null)
         {
-            Notificar("O ID fornecido é inválido. Não foi possível encontrar o usuário correspondente.");
+            Notify("O ID fornecido é inválido. Não foi possível encontrar o usuário correspondente.");
             return null;
         };
 
@@ -45,7 +45,7 @@ public class AssignmentListService : BaseService, IAssignmentListService
         var assignmentList = _mapper.Map<AssignmentList>(addAssignmentListDto);
         assignmentList.UserId = GetUserId();
         
-        if (!ExecutarValidacao(new AssignmentListValidator(), assignmentList)) return null;
+        if (!ExecuteValidation(new AssignmentListValidator(), assignmentList)) return null;
         
         await _assignmentListRepository.Create(assignmentList);
         
@@ -56,7 +56,7 @@ public class AssignmentListService : BaseService, IAssignmentListService
     {
         if (id != updateAssignmentListDto.Id)
         {
-            Notificar("O id informado é inválido");
+            Notify("O id informado é inválido");
             return null;
         }
 
@@ -64,13 +64,13 @@ public class AssignmentListService : BaseService, IAssignmentListService
 
         if (getAssignmentList == null)
         {
-            Notificar("O ID fornecido é inválido. Não foi possível encontrar o usuário correspondente.");
+            Notify("O ID fornecido é inválido. Não foi possível encontrar o usuário correspondente.");
             return null;
         }
 
         _mapper.Map(updateAssignmentListDto, getAssignmentList);
 
-        if (!ExecutarValidacao(new AssignmentListValidator(), getAssignmentList)) return null;
+        if (!ExecuteValidation(new AssignmentListValidator(), getAssignmentList)) return null;
         
         await _assignmentListRepository.Update(getAssignmentList);
         
