@@ -31,7 +31,8 @@ public static class AuthenticationConfig
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,    
                     ValidIssuer = appSettings.Issuer,
                     ValidAudience = appSettings.ValidOn,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
