@@ -21,12 +21,11 @@ namespace Todo.Infra.Migrations
 
             modelBuilder.Entity("Todo.Domain.Models.Assignment", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(100)");
 
-                    b.Property<Guid?>("AssignmentListId")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("AssignmentListId")
+                        .HasColumnType("varchar(100)");
 
                     b.Property<sbyte>("Concluded")
                         .ValueGeneratedOnAdd()
@@ -51,8 +50,9 @@ namespace Todo.Infra.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("DATETIME");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 
@@ -65,9 +65,8 @@ namespace Todo.Infra.Migrations
 
             modelBuilder.Entity("Todo.Domain.Models.AssignmentList", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(100)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
@@ -83,8 +82,9 @@ namespace Todo.Infra.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 
@@ -95,9 +95,8 @@ namespace Todo.Infra.Migrations
 
             modelBuilder.Entity("Todo.Domain.Models.User", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(100)");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()

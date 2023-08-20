@@ -15,6 +15,6 @@ public class AssignmentListValidator : AbstractValidator<AssignmentList>
         
         RuleFor(c => c.UserId)
             .NotNull().WithMessage("O ID do usuário não pode ser nulo.")
-            .NotEqual(Guid.Empty).WithMessage("O ID do usuário não pode estar vazio.");
+            .NotEqual(string.Empty).WithMessage("O ID do usuário não pode estar vazio.");
     }
 }

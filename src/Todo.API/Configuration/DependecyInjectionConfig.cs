@@ -16,14 +16,13 @@ public static class DependecyInjectionConfig
         services.AddSingleton(_ => builder.Configuration);
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-        services.AddScoped<INotificator, Notificator>();
-
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IAssignmentListRepository, AssignmentListRepository>();
 
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IAssignmentListService, AssignmentListService>();
 
-        builder.Services.AddScoped<IPasswordHasher<User>, Argon2PasswordHasher<User>>();
+        services.AddScoped<INotificator, Notificator>();
+        services.AddScoped<IPasswordHasher<User>, Argon2PasswordHasher<User>>();
     }
 }

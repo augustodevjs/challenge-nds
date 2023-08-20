@@ -15,15 +15,15 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
         Db = db;
         DbSet = db.Set<TEntity>();
     }
-    
+
+    public virtual async Task<TEntity?> GetById(string? id)
+    {
+        return await DbSet.FindAsync(id);
+    }
+
     public virtual async Task<List<TEntity>> GetAll()
     {
         return await DbSet.ToListAsync();
-    }
-
-    public virtual async Task<TEntity> GetById(Guid? id)
-    {
-        return await DbSet.FindAsync(id);
     }
 
     public virtual async Task Create(TEntity entity)
@@ -38,7 +38,7 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
         await SaveChanges();
     }
 
-    public virtual async Task Delete(Guid id)
+    public virtual async Task Delete(string id)
     {
         DbSet.Remove(new TEntity { Id = id });
         await SaveChanges();

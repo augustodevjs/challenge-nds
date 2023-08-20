@@ -27,7 +27,7 @@ public class AssignmentListService : BaseService, IAssignmentListService
         _assignmentListRepository = assignmentListRepository;
     }
 
-    public async Task<AssignmentListDto?> GetById(Guid? id)
+    public async Task<AssignmentListDto?> GetById(string? id)
     {
         var getUser = await _assignmentListRepository.GetById(id);
         
@@ -52,7 +52,7 @@ public class AssignmentListService : BaseService, IAssignmentListService
         return _mapper.Map<AssignmentListDto>(assignmentList);
     }
 
-    public async  Task<AssignmentListDto?> Update(Guid id, UpdateAssignmentListDto updateAssignmentListDto)
+    public async  Task<AssignmentListDto?> Update(string id, UpdateAssignmentListDto updateAssignmentListDto)
     {
         if (id != updateAssignmentListDto.Id)
         {
@@ -77,9 +77,9 @@ public class AssignmentListService : BaseService, IAssignmentListService
         return _mapper.Map<AssignmentListDto>(updateAssignmentListDto);
     }
 
-    private Guid GetUserId()
+    private string GetUserId()
     {
         var userId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        return userId == null ? Guid.Empty : Guid.Parse(userId);
+        return userId == null ? string.Empty : userId;
     }
 }

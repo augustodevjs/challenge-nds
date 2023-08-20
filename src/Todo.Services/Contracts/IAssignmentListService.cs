@@ -4,7 +4,7 @@ namespace Todo.Services.Contracts;
 
 public interface IAssignmentListService
 {
-    Task<AssignmentListDto?> GetById(Guid? id);
+    Task<AssignmentListDto?> GetById(string? id);
     Task<AssignmentListDto?> Create(AddAssignmentListDto addAssignmentListDto);
-    Task<AssignmentListDto?> Update(Guid id ,UpdateAssignmentListDto updateAssignmentListDto);
+    Task<AssignmentListDto?> Update(string id ,UpdateAssignmentListDto updateAssignmentListDto);
 }
