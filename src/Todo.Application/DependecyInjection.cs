@@ -8,15 +8,13 @@ namespace Todo.Application;
 
 public static class DependecyInjection
 {
-    public static void AddApplication(this IServiceCollection services, IConfiguration configuration, WebApplicationBuilder builder)
+    public static void AddApplication(this IServiceCollection services, IConfiguration configuration,
+        WebApplicationBuilder builder)
     {
-        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-        services.AddAuthConfiguration(configuration);
-        
-        services.Configure<ApiBehaviorOptions>(o => o.SuppressModelStateInvalidFilter = true);
-        
         services.AddCorsConfig();
-        
         services.ResolveDependecies(builder);
+        services.AddAuthConfiguration(configuration);
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        services.Configure<ApiBehaviorOptions>(o => o.SuppressModelStateInvalidFilter = true);
     }
 }

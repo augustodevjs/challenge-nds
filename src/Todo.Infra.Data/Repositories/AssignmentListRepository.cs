@@ -17,7 +17,7 @@ public class AssignmentListRepository : Repository<AssignmentList>, IAssignmentL
         _context = context;
     }
 
-    public async Task<IPagedResult<AssignmentList>> Search(Guid userId, string name, int perPage = 10, int page = 1)
+    public async Task<IPagedResult<AssignmentList>> Search(Guid userId, string name, string description, int perPage = 10, int page = 1)
     {
         var query = _context.AssignmentLists
             .AsNoTracking()
@@ -26,6 +26,9 @@ public class AssignmentListRepository : Repository<AssignmentList>, IAssignmentL
 
         if (!string.IsNullOrWhiteSpace(name))
             query = query.Where(c => c.Name.Contains(name));
+        
+        if (!string.IsNullOrWhiteSpace(description))
+            query = query.Where(c => c.Description.Contains(description));
 
         var result = new PagedResult<AssignmentList>
         {

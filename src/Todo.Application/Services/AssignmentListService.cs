@@ -44,7 +44,7 @@ public class AssignmentListService : BaseService, IAssignmentListService
     public async Task<PagedDto<AssignmentListDto>> Search(AssignmentListSearchDto search)
     {
         var result = await _assignmentListRepository
-            .Search(GetUserId(), search.Name, search.PerPage, search.Page);
+            .Search(GetUserId(), search.Name, search.Description, search.PerPage, search.Page);
 
         return new PagedDto<AssignmentListDto>
         {
@@ -54,7 +54,7 @@ public class AssignmentListService : BaseService, IAssignmentListService
             PerPage = result.PerPage,
             PageCount = result.PageCount
         };
-    }   
+    }
 
     public async Task<AssignmentListDto?> Create(AddAssignmentListDto addAssignmentListDto)
     {

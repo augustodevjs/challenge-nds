@@ -12,8 +12,8 @@ public class AutoMapperProfile : Profile
         CreateMap<LoginDto, User>();
         CreateMap<RegisterDto, User>();
         CreateMap<UserDto, RegisterDto>();
-        CreateMap<UpdateAssignmentListDto, AssignmentList>();
         CreateMap<AddAssignmentListDto, AssignmentList>();
+        CreateMap<UpdateAssignmentListDto, AssignmentList>();
         
         CreateMap<User, UserDto>().ReverseMap();
         CreateMap<AssignmentList, AssignmentListDto>().ReverseMap();
