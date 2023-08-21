@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Todo.Services.Contracts;
-using Todo.Services.Notifications;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Todo.Application.Contracts;
+using Todo.Application.Notifications;
 
 namespace Todo.API.Controllers;
 

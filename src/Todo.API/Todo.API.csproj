@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Todo.Infra\Todo.Infra.csproj" />
-    <ProjectReference Include="..\Todo.Services\Todo.Services.csproj" />
+    <ProjectReference Include="..\Todo.Infra.Data\Todo.Infra.Data.csproj" />
+    <ProjectReference Include="..\Todo.Application\Todo.Application.csproj" />
   </ItemGroup>
 </Project>

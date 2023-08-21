@@ -1,12 +1,11 @@
 ﻿using Todo.Domain.Models;
-using Todo.Infra.Repository;
-using Todo.Services.Services;
 using Microsoft.AspNetCore.Identity;
 using ScottBrady91.AspNetCore.Identity;
-using Todo.Infra.Contracts;
-using Todo.Infra.Contracts.Repository;
-using Todo.Services.Contracts;
-using Todo.Services.Notifications;
+using Todo.Application.Contracts;
+using Todo.Application.Notifications;
+using Todo.Application.Services;
+using Todo.Domain.Contracts.Repository;
+using Todo.Infra.Data.Repositories;
 
 namespace Todo.API.Configuration;
 

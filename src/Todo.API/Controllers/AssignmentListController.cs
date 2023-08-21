@@ -1,9 +1,8 @@
-﻿using Todo.Services.Contracts;
-using Microsoft.AspNetCore.Mvc;
-using Todo.Services.DTO.AssignmentList;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Swashbuckle.AspNetCore.Annotations;
-using Todo.Services.DTO.Paged;
+using Todo.Application.Contracts;
+using Todo.Application.DTO.AssignmentList;
 
 namespace Todo.API.Controllers;
 
@@ -19,14 +18,6 @@ public class AssignmentListController : MainController
         ) : base(notificador)
     {
         _assignmentListService = assignmentListService;
-    }
-    
-    [HttpGet]
-    [SwaggerOperation("Search to-do lists")]
-    [ProducesResponseType(typeof(PagedDto<AssignmentListDto>), StatusCodes.Status200OK)]
-    public async Task<PagedDto<AssignmentListDto>> Search([FromQuery] AssignmentListSearchDto search)
-    {
-        return await _assignmentListService.Search(search);
     }
 
     [HttpGet("{id:guid}")]

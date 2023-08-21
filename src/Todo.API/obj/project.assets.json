@@ -1259,6 +1259,22 @@
           "lib/netcoreapp2.0/_._": {}
         }
       },
+      "Todo.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.10",
+          "ScottBrady91.AspNetCore.Identity.Argon2PasswordHasher": "1.4.0",
+          "Todo.Infra.Data": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Todo.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Todo.Application.dll": {}
+        }
+      },
       "Todo.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
@@ -1272,7 +1288,7 @@
           "bin/placeholder/Todo.Domain.dll": {}
         }
       },
-      "Todo.Infra/1.0.0": {
+      "Todo.Infra.Data/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
@@ -1281,26 +1297,10 @@
           "Todo.Domain": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/Todo.Infra.dll": {}
+          "bin/placeholder/Todo.Infra.Data.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Todo.Infra.dll": {}
-        }
-      },
-      "Todo.Services/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v7.0",
-        "dependencies": {
-          "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
-          "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.10",
-          "ScottBrady91.AspNetCore.Identity.Argon2PasswordHasher": "1.4.0",
-          "Todo.Infra": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/Todo.Services.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Todo.Services.dll": {}
+          "bin/placeholder/Todo.Infra.Data.dll": {}
         }
       }
     }
@@ -3226,20 +3226,20 @@
         "version.txt"
       ]
     },
+    "Todo.Application/1.0.0": {
+      "type": "project",
+      "path": "../Todo.Application/Todo.Application.csproj",
+      "msbuildProject": "../Todo.Application/Todo.Application.csproj"
+    },
     "Todo.Domain/1.0.0": {
       "type": "project",
       "path": "../Todo.Domain/Todo.Domain.csproj",
       "msbuildProject": "../Todo.Domain/Todo.Domain.csproj"
     },
-    "Todo.Infra/1.0.0": {
+    "Todo.Infra.Data/1.0.0": {
       "type": "project",
-      "path": "../Todo.Infra/Todo.Infra.csproj",
-      "msbuildProject": "../Todo.Infra/Todo.Infra.csproj"
-    },
-    "Todo.Services/1.0.0": {
-      "type": "project",
-      "path": "../Todo.Services/Todo.Services.csproj",
-      "msbuildProject": "../Todo.Services/Todo.Services.csproj"
+      "path": "../Todo.Infra.Data/Todo.Infra.Data.csproj",
+      "msbuildProject": "../Todo.Infra.Data/Todo.Infra.Data.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -3252,8 +3252,8 @@
       "Pomelo.EntityFrameworkCore.MySql >= 7.0.0",
       "Swashbuckle.AspNetCore >= 6.5.0",
       "Swashbuckle.AspNetCore.Annotations >= 6.5.0",
-      "Todo.Infra >= 1.0.0",
-      "Todo.Services >= 1.0.0"
+      "Todo.Application >= 1.0.0",
+      "Todo.Infra.Data >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -3283,11 +3283,11 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Infra\\Todo.Infra.csproj": {
-              "projectPath": "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Infra\\Todo.Infra.csproj"
+            "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Application\\Todo.Application.csproj": {
+              "projectPath": "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Application\\Todo.Application.csproj"
             },
-            "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Services\\Todo.Services.csproj": {
-              "projectPath": "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Services\\Todo.Services.csproj"
+            "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Infra.Data\\Todo.Infra.Data.csproj": {
+              "projectPath": "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Infra.Data\\Todo.Infra.Data.csproj"
             }
           }
         }

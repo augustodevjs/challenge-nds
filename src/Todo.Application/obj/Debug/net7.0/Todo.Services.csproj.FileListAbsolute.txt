@@ -1,0 +1,17 @@
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Services\bin\Debug\net7.0\Todo.Services.deps.json
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Services\bin\Debug\net7.0\Todo.Services.dll
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Services\bin\Debug\net7.0\Todo.Services.pdb
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Services\bin\Debug\net7.0\Todo.Domain.dll
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Services\bin\Debug\net7.0\Todo.Domain.pdb
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Services\obj\Debug\net7.0\Todo.Services.csproj.AssemblyReference.cache
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Services\obj\Debug\net7.0\Todo.Services.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Services\obj\Debug\net7.0\Todo.Services.AssemblyInfoInputs.cache
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Services\obj\Debug\net7.0\Todo.Services.AssemblyInfo.cs
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Services\obj\Debug\net7.0\Todo.Services.csproj.CoreCompileInputs.cache
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Services\obj\Debug\net7.0\Todo.Services.csproj.CopyComplete
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Services\obj\Debug\net7.0\Todo.Services.dll
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Services\obj\Debug\net7.0\refint\Todo.Services.dll
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Services\obj\Debug\net7.0\Todo.Services.pdb
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Services\obj\Debug\net7.0\ref\Todo.Services.dll
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Services\bin\Debug\net7.0\Todo.Infra.Data.dll
+C:\Users\joaoa\source\repos\todo-api\src\Todo.Services\bin\Debug\net7.0\Todo.Infra.Data.pdb

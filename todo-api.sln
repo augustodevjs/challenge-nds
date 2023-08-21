@@ -9,9 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.API", "src\Todo.API\To
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.Domain", "src\Todo.Domain\Todo.Domain.csproj", "{01FE5480-9C3D-42A5-9BC5-EB81CEB135DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.Infra", "src\Todo.Infra\Todo.Infra.csproj", "{38846FAA-09C8-4897-BBA5-0F3CC310F4FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.Infra.Data", "src\Todo.Infra.Data\Todo.Infra.Data.csproj", "{38846FAA-09C8-4897-BBA5-0F3CC310F4FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.Services", "src\Todo.Services\Todo.Services.csproj", "{97F94101-ACE8-4818-B929-844CF2A4AE79}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.Application", "src\Todo.Application\Todo.Application.csproj", "{97F94101-ACE8-4818-B929-844CF2A4AE79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

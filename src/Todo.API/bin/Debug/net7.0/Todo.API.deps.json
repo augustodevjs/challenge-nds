@@ -16,8 +16,8 @@
           "Pomelo.EntityFrameworkCore.MySql": "7.0.0",
           "Swashbuckle.AspNetCore": "6.5.0",
           "Swashbuckle.AspNetCore.Annotations": "6.5.0",
-          "Todo.Infra": "1.0.0",
-          "Todo.Services": "1.0.0"
+          "Todo.Application": "1.0.0",
+          "Todo.Infra.Data": "1.0.0"
         },
         "runtime": {
           "Todo.API.dll": {}
@@ -623,6 +623,17 @@
         }
       },
       "System.ValueTuple/4.5.0": {},
+      "Todo.Application/1.0.0": {
+        "dependencies": {
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.10",
+          "ScottBrady91.AspNetCore.Identity.Argon2PasswordHasher": "1.4.0",
+          "Todo.Infra.Data": "1.0.0"
+        },
+        "runtime": {
+          "Todo.Application.dll": {}
+        }
+      },
       "Todo.Domain/1.0.0": {
         "dependencies": {
           "FluentValidation": "11.7.1"
@@ -631,25 +642,14 @@
           "Todo.Domain.dll": {}
         }
       },
-      "Todo.Infra/1.0.0": {
+      "Todo.Infra.Data/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "7.0.10",
           "Pomelo.EntityFrameworkCore.MySql": "7.0.0",
           "Todo.Domain": "1.0.0"
         },
         "runtime": {
-          "Todo.Infra.dll": {}
-        }
-      },
-      "Todo.Services/1.0.0": {
-        "dependencies": {
-          "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
-          "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.10",
-          "ScottBrady91.AspNetCore.Identity.Argon2PasswordHasher": "1.4.0",
-          "Todo.Infra": "1.0.0"
-        },
-        "runtime": {
-          "Todo.Services.dll": {}
+          "Todo.Infra.Data.dll": {}
         }
       }
     }
@@ -1185,17 +1185,17 @@
       "path": "system.valuetuple/4.5.0",
       "hashPath": "system.valuetuple.4.5.0.nupkg.sha512"
     },
+    "Todo.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "Todo.Domain/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Todo.Infra/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Todo.Services/1.0.0": {
+    "Todo.Infra.Data/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using Todo.Domain.Models;
-using Todo.Infra.Filter;
-using Todo.Services.DTO.Auth;
-using Todo.Services.DTO.AssignmentList;
+using Todo.Application.DTO.Auth;
+using Todo.Application.DTO.AssignmentList;
 
 namespace Todo.API.Configuration;
 
@@ -18,7 +17,6 @@ public class AutoMapperConfig : Profile
         
         CreateMap<User, UserDto>().ReverseMap();
         CreateMap<AssignmentList, AssignmentListDto>().ReverseMap();
-        CreateMap<AssignmentListSearchDto, AssignmentFilter>().ReverseMap();
         CreateMap<UpdateAssignmentListDto, AssignmentListDto>().ReverseMap();
     }
 }
