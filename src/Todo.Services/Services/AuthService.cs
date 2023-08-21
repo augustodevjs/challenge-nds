@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
 using Todo.Infra.Contracts;
+using Todo.Infra.Contracts.Repository;
 using Todo.Services.Contracts;
 
 namespace Todo.Services.Services;
@@ -43,7 +44,7 @@ public class AuthService : BaseService, IAuthService
             Notify("Usuário ou senha estão incorretos.");
             return null;
         }
-
+        
         return GenerateToken(user);
     }
 

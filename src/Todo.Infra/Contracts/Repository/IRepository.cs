@@ -1,6 +1,6 @@
 ﻿using Todo.Domain.Models;
 
-namespace Todo.Infra.Contracts;
+namespace Todo.Infra.Contracts.Repository;
 
 public interface IRepository<TEntity> : IDisposable where TEntity : Entity
 {

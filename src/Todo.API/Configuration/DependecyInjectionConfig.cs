@@ -4,6 +4,7 @@ using Todo.Services.Services;
 using Microsoft.AspNetCore.Identity;
 using ScottBrady91.AspNetCore.Identity;
 using Todo.Infra.Contracts;
+using Todo.Infra.Contracts.Repository;
 using Todo.Services.Contracts;
 using Todo.Services.Notifications;
 

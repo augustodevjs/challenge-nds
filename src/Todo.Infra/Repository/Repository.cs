@@ -2,6 +2,7 @@
 using Todo.Infra.Context;
 using Microsoft.EntityFrameworkCore;
 using Todo.Infra.Contracts;
+using Todo.Infra.Contracts.Repository;
 
 namespace Todo.Infra.Repository;
 
