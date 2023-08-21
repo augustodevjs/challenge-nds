@@ -2,13 +2,13 @@
 using System.Text;
 using Todo.Domain.Models;
 using System.Security.Claims;
+using Todo.Application.DTO.Auth;
+using Todo.Application.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Todo.Domain.Contracts.Repository;
 using Microsoft.Extensions.Configuration;
-using Todo.Application.Contracts;
-using Todo.Application.DTO.Auth;
 
 namespace Todo.Application.Services;
 

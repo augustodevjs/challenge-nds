@@ -3,11 +3,11 @@ using Todo.Domain.Models;
 using Todo.Application.DTO.Auth;
 using Todo.Application.DTO.AssignmentList;
 
-namespace Todo.API.Configuration;
+namespace Todo.Application.AutoMapper;
 
-public class AutoMapperConfig : Profile
+public class AutoMapperProfile : Profile
 {
-    public AutoMapperConfig()
+    public AutoMapperProfile()
     {
         CreateMap<LoginDto, User>();
         CreateMap<RegisterDto, User>();

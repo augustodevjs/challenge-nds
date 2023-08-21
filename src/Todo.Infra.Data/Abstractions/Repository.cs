@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Todo.Domain.Contracts.Repository;
-using Todo.Domain.Models;
+﻿using Todo.Domain.Models;
 using Todo.Infra.Data.Context;
+using Microsoft.EntityFrameworkCore;
+using Todo.Domain.Contracts.Repository;
 
 namespace Todo.Infra.Data.Abstractions;
 
@@ -9,21 +9,21 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
 {
     protected readonly TodoDbContext Db;
     protected readonly DbSet<TEntity> DbSet;
-    
+
     public Repository(TodoDbContext db)
     {
         Db = db;
         DbSet = db.Set<TEntity>();
     }
 
-    public virtual async Task<TEntity?> GetById(Guid? id)
-    {
-        return await DbSet.FindAsync(id);
-    }
-
     public virtual async Task<List<TEntity>> GetAll()
     {
         return await DbSet.ToListAsync();
+    }
+
+    public virtual async Task<TEntity?> GetById(Guid? id)
+    {
+        return await DbSet.FindAsync(id);
     }
 
     public virtual async Task Create(TEntity entity)
@@ -48,7 +48,7 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
     {
         return await Db.SaveChangesAsync();
     }
-    
+
     public void Dispose()
     {
         Db?.Dispose();

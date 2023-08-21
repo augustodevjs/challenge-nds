@@ -1,4 +1,6 @@
-﻿namespace Todo.API.Configuration;
+﻿using Microsoft.Extensions.DependencyInjection;
+
+namespace Todo.Application.Configuration;
 
 public static class CorsConfig
 {

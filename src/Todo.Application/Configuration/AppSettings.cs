@@ -1,4 +1,4 @@
-﻿namespace Todo.API.Extensions;
+﻿namespace Todo.Application.Configuration;
 
 public class AppSettings
 {

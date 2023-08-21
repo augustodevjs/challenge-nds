@@ -1,15 +1,18 @@
 ﻿using Todo.Domain.Models;
-using Microsoft.AspNetCore.Identity;
-using ScottBrady91.AspNetCore.Identity;
-using Todo.Application.Contracts;
-using Todo.Application.Notifications;
 using Todo.Application.Services;
-using Todo.Domain.Contracts.Repository;
+using Microsoft.AspNetCore.Http;
+using Todo.Application.Contracts;
+using Microsoft.AspNetCore.Builder;
 using Todo.Infra.Data.Repositories;
+using Microsoft.AspNetCore.Identity;
+using Todo.Application.Notifications;
+using Todo.Domain.Contracts.Repository;
+using ScottBrady91.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Todo.API.Configuration;
+namespace Todo.Application.Configuration;
 
-public static class DependecyInjectionConfig
+public static class DependecyConfig
 {
     public static void ResolveDependecies(this IServiceCollection services, WebApplicationBuilder builder)
     {

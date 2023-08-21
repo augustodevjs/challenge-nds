@@ -3,6 +3,7 @@ using Todo.Domain.Models;
 using System.Security.Claims;
 using Todo.Domain.Validators;
 using Microsoft.AspNetCore.Http;
+using Todo.Application.DTO.Paged;
 using Todo.Application.Contracts;
 using Todo.Domain.Contracts.Repository;
 using Todo.Application.DTO.AssignmentList;
@@ -39,6 +40,21 @@ public class AssignmentListService : BaseService, IAssignmentListService
 
         return _mapper.Map<AssignmentListDto>(getUser);
     }
+
+    public async Task<PagedDto<AssignmentListDto>> Search(AssignmentListSearchDto search)
+    {
+        var result = await _assignmentListRepository
+            .Search(GetUserId(), search.Name, search.PerPage, search.Page);
+
+        return new PagedDto<AssignmentListDto>
+        {
+            Items = _mapper.Map<List<AssignmentListDto>>(result.Items),
+            Total = result.Total,
+            Page = result.Page,
+            PerPage = result.PerPage,
+            PageCount = result.PageCount
+        };
+    }   
 
     public async Task<AssignmentListDto?> Create(AddAssignmentListDto addAssignmentListDto)
     {

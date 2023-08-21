@@ -1,13 +1,14 @@
 ﻿using System.Text;
-using Todo.API.Extensions;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
-namespace Todo.API.Configuration;
+namespace Todo.Application.Configuration;
 
-public static class AuthenticationConfig
+public static class AuthConfig
 {
-    public static void AddAuthentication(this IServiceCollection services, ConfigurationManager configuration)
+    public static void AddAuthConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
         var appSettingsSection = configuration.GetSection("AppSettings");
         services.Configure<AppSettings>(appSettingsSection);

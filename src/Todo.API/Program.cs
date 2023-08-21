@@ -1,23 +1,11 @@
+using Todo.Infra.Data;
+using Todo.Application;
 using Todo.API.Configuration;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Todo.Infra.Data.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var serverVersion = new MySqlServerVersion(new Version(10, 4, 27));
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
-builder.Services.Configure<ApiBehaviorOptions>(o => o.SuppressModelStateInvalidFilter = true);
-
-builder.Services.AddDbContext<TodoDbContext>(options => options.UseMySql(connectionString, serverVersion));
-
-builder.Services.AddAuthentication(builder.Configuration);
-builder.Services.ResolveDependecies(builder);
-
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-builder.Services.AddCorsConfig();
+builder.Services.AddApplication(builder.Configuration, builder);
+builder.Services.AddInfraData(builder.Configuration.GetConnectionString("DefaultConnection"));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
