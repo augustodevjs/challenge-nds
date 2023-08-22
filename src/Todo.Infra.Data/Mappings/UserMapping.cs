@@ -43,7 +43,5 @@ public class UserMapping : IEntityTypeConfiguration<User>
         builder
             .HasMany(c => c.AssignmentLists)
             .WithOne(c => c.User);
-
-        builder.ToTable("Usuários");
     }
 }

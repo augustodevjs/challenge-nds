@@ -9,6 +9,6 @@ public class AssignmentList : Entity
     public Guid UserId { get; set; }
 
     // EF Relation
-    public User User { get; set; }
-    public Collection<Assignment> Assignments { get; set; } = new();
+    public virtual User User { get; set; }
+    public virtual Collection<Assignment> Assignments { get; set; } = new();
 }

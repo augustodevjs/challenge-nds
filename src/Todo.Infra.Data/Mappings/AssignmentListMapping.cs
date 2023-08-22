@@ -31,7 +31,5 @@ public class AssignmentListMapping : IEntityTypeConfiguration<AssignmentList>
         builder
             .HasMany(c => c.Assignments)
             .WithOne(c => c.AssignmentList);
-
-        builder.ToTable("Lista de Tarefas");
     }
 }

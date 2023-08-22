@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Todo.Infra.Data.Context;
 
@@ -10,9 +11,11 @@ using Todo.Infra.Data.Context;
 namespace Todo.Infra.Migrations
 {
     [DbContext(typeof(TodoDbContext))]
-    partial class TodoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230822193901_models")]
+    partial class models
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,7 +64,7 @@ namespace Todo.Infra.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Assignments");
+                    b.ToTable("Tarefas", (string)null);
                 });
 
             modelBuilder.Entity("Todo.Domain.Models.AssignmentList", b =>
@@ -93,7 +96,7 @@ namespace Todo.Infra.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AssignmentLists");
+                    b.ToTable("Lista de Tarefas", (string)null);
                 });
 
             modelBuilder.Entity("Todo.Domain.Models.User", b =>
@@ -124,7 +127,7 @@ namespace Todo.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Usuários", (string)null);
                 });
 
             modelBuilder.Entity("Todo.Domain.Models.Assignment", b =>

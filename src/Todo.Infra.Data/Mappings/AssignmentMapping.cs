@@ -48,7 +48,5 @@ public class AssignmentMapping : IEntityTypeConfiguration<Assignment>
             .Property(c => c.UpdatedAt)
             .ValueGeneratedOnAddOrUpdate()
             .HasColumnType("DATETIME");
-
-        builder.ToTable("Tarefas");
     }
 }

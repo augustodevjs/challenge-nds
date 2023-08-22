@@ -2,11 +2,10 @@
 
 public class Assignment : Entity
 {
+    public string Description { get; set; }
     public Guid UserId { get; set; }
     public Guid? AssignmentListId { get; set; }
-    
-    public DateTime Deadline { get; set; }
-    public string Description { get; set; }
+    public DateTime? Deadline { get; set; }
     public bool Concluded { get; private set; }
     public DateTime? ConcludedAt { get; private set; }
     
@@ -20,7 +19,7 @@ public class Assignment : Entity
         ConcludedAt = DateTime.Now;
     }
 
-    public void SetUnConcluded()
+    public void SetUnconcluded()
     {
         Concluded = false;
         ConcludedAt = null;
