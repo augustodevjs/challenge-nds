@@ -32,7 +32,7 @@ public class AssignmentListRepository : Repository<AssignmentList>, IAssignmentL
 
         var result = new PagedResult<AssignmentList>
         {
-            Items = await query.OrderBy(c => c.Name).Skip((page - 1) * perPage).Take(perPage).ToListAsync(),
+            Items = await query.OrderBy(c => c.Name).Include(c => c.Assignments).Skip((page - 1) * perPage).Take(perPage).ToListAsync(),
             Total = await query.CountAsync(),
             Page = page,
             PerPage = perPage
@@ -42,5 +42,10 @@ public class AssignmentListRepository : Repository<AssignmentList>, IAssignmentL
         result.PageCount = (int)Math.Ceiling(pageCount);
 
         return result;
+    }
+
+    public override async Task<AssignmentList?> GetById(Guid? id)
+    {
+        return await _context.AssignmentLists.Include(c => c.Assignments).FirstOrDefaultAsync();
     }
 }
