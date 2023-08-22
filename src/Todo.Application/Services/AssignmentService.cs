@@ -60,6 +60,29 @@ public class AssignmentService : BaseService, IAssignmentService
         return _mapper.Map<AssignmentDto>(assignment);
     }
 
+    public async Task<AssignmentDto?> Update(Guid id, UpdateAssignmentDto updateAssignmentDto)
+    {
+        if (id != updateAssignmentDto.Id)
+        {
+            Notify("O id informado é inválido");
+            return null;
+        }
+
+        var getAssignment = await _assignmentRepository.GetById(id);
+        
+        if (getAssignment == null)
+        {
+            Notify("O ID fornecido é inválido. Não foi possível encontrar essa tarefa correspondente.");
+            return null;
+        }
+
+        _mapper.Map(updateAssignmentDto, getAssignment);
+
+        await _assignmentRepository.Update(getAssignment);
+
+        return _mapper.Map<AssignmentDto>(updateAssignmentDto);
+    }
+    
     public async Task Delete(Guid id)
     {
         var getAssignment = await _assignmentRepository.GetById(id);

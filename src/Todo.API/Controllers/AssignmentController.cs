@@ -19,7 +19,7 @@ public class AssignmentController : MainController
     {
         _assignmentService = assignmentService;
     }
-    
+
     [HttpGet("{id:guid}")]
     [SwaggerOperation(Summary = "Get a to-do")]
     [ProducesResponseType(typeof(AssignmentDto), StatusCodes.Status200OK)]
@@ -37,11 +37,23 @@ public class AssignmentController : MainController
     public async Task<ActionResult> Create([FromBody] AddAssignmentDto addAssignmentDto)
     {
         if (!ModelState.IsValid) return CustomResponse(ModelState);
-        
+
         var createAssignment = await _assignmentService.Create(addAssignmentDto);
         return CustomResponse(createAssignment);
     }
-    
+
+    [HttpPut("{id:guid}")]
+    [SwaggerOperation("Update a task")]
+    [ProducesResponseType(typeof(AssignmentDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateAssignmentDto updateAssignmentDto)
+    {
+        if (!ModelState.IsValid) return CustomResponse(ModelState);
+        
+        var updateAssignment = await _assignmentService.Update(id, updateAssignmentDto);
+        return CustomResponse(updateAssignment);
+    }
+
     [HttpDelete("{id:guid}")]
     [SwaggerOperation("Delete a task")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -52,4 +64,3 @@ public class AssignmentController : MainController
         return CustomResponse();
     }
 }
-
