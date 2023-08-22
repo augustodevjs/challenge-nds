@@ -1,11 +1,11 @@
-﻿using System.Security.Claims;
-using AutoMapper;
+﻿using AutoMapper;
+using Todo.Domain.Models;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Todo.Application.Contracts;
-using Todo.Application.Contracts.Services;
 using Todo.Application.DTO.Assignment;
 using Todo.Domain.Contracts.Repository;
-using Todo.Domain.Models;
+using Todo.Application.Contracts.Services;
 
 namespace Todo.Application.Services;
 
@@ -27,6 +27,19 @@ public class AssignmentService : BaseService, IAssignmentService
         _httpContextAccessor = httpContextAccessor;
         _assignmentRepository = assignmentRepository;
         _assignmentListRepository = assignmentListRepository;
+    }
+    
+    public async Task<AssignmentDto?> GetById(Guid id)
+    {
+        var getAssignment = await _assignmentRepository.GetById(id);
+
+        if (getAssignment == null)
+        {
+            Notify("O ID fornecido é inválido. Não foi possível encontrar a tarefa correspondente.");
+            return null;
+        }
+
+        return _mapper.Map<AssignmentDto>(getAssignment);
     }
 
     public async Task<AssignmentDto?> Create(AddAssignmentDto addAssignmentDto)

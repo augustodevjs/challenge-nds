@@ -25,8 +25,7 @@ public class AuthService : BaseService, IAuthService
         INotificator notificator,
         IConfiguration configuration,
         IUserRepository userRepository,
-        IPasswordHasher<User> passwordHasher
-    ) : base(notificator)
+        IPasswordHasher<User> passwordHasher) : base(notificator)
     {
         _mapper = mapper;
         _configuration = configuration;

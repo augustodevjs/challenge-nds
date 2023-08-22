@@ -5,9 +5,9 @@ using Todo.Domain.Validators;
 using Microsoft.AspNetCore.Http;
 using Todo.Application.DTO.Paged;
 using Todo.Application.Contracts;
-using Todo.Application.Contracts.Services;
 using Todo.Domain.Contracts.Repository;
 using Todo.Application.DTO.AssignmentList;
+using Todo.Application.Contracts.Services;
 
 namespace Todo.Application.Services;
 
@@ -21,27 +21,13 @@ public class AssignmentListService : BaseService, IAssignmentListService
         IMapper mapper,
         INotificator notificator,
         IHttpContextAccessor httpContextAccessor,
-        IAssignmentListRepository assignmentListRepository
-    ) : base(notificator)
+        IAssignmentListRepository assignmentListRepository) : base(notificator)
     {
         _mapper = mapper;
         _httpContextAccessor = httpContextAccessor;
         _assignmentListRepository = assignmentListRepository;
     }
-
-    public async Task<AssignmentListDto?> GetById(Guid? id)
-    {
-        var getUser = await _assignmentListRepository.GetById(id);
-
-        if (getUser == null)
-        {
-            Notify("O ID fornecido é inválido. Não foi possível encontrar o usuário correspondente.");
-            return null;
-        }
-
-        return _mapper.Map<AssignmentListDto>(getUser);
-    }
-
+    
     public async Task<PagedDto<AssignmentListDto>> Search(AssignmentListSearchDto search)
     {
         var result = await _assignmentListRepository
@@ -57,6 +43,19 @@ public class AssignmentListService : BaseService, IAssignmentListService
         };
     }
 
+    public async Task<AssignmentListDto?> GetById(Guid? id)
+    {
+        var getAssignmentList = await _assignmentListRepository.GetById(id);
+
+        if (getAssignmentList == null)
+        {
+            Notify("O ID fornecido é inválido. Não foi possível encontrar a lista de tarefa correspondente.");
+            return null;
+        }
+
+        return _mapper.Map<AssignmentListDto>(getAssignmentList);
+    }
+    
     public async Task<AssignmentListDto?> Create(AddAssignmentListDto addAssignmentListDto)
     {
         var assignmentList = _mapper.Map<AssignmentList>(addAssignmentListDto);

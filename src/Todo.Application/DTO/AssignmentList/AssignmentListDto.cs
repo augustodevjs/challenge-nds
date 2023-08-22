@@ -1,5 +1,4 @@
-﻿
-using Todo.Application.DTO.Assignment;
+﻿using Todo.Application.DTO.Assignment;
 
 namespace Todo.Application.DTO.AssignmentList;
 

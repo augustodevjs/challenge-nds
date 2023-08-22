@@ -1,5 +1,5 @@
-﻿using Todo.Domain.Contracts;
-using Todo.Domain.Models;
+﻿using Todo.Domain.Models;
+using Todo.Domain.Contracts;
 
 namespace Todo.Infra.Data.Paged;
 

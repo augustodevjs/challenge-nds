@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Todo.Domain.Models;
+﻿using Todo.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Todo.Infra.Data.Context;
 
