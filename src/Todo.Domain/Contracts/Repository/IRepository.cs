@@ -8,6 +8,6 @@ public interface IRepository<TEntity> : IDisposable where TEntity : Entity
     Task<TEntity?> GetById(Guid? id);
     Task<List<TEntity>> GetAll();
     Task Update(TEntity entity);
-    Task Delete(Guid id);
+    Task Delete(TEntity entity);
     Task<int> SaveChanges();
 }

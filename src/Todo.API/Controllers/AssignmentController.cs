@@ -41,4 +41,15 @@ public class AssignmentController : MainController
         var createAssignment = await _assignmentService.Create(addAssignmentDto);
         return CustomResponse(createAssignment);
     }
+    
+    [HttpDelete("{id:guid}")]
+    [SwaggerOperation("Delete a task")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        await _assignmentService.Delete(id);
+        return CustomResponse();
+    }
 }
+

@@ -5,7 +5,7 @@ using Todo.Domain.Contracts.Repository;
 
 namespace Todo.Infra.Data.Abstractions;
 
-public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity, new()
+public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
 {
     protected readonly TodoDbContext Db;
     protected readonly DbSet<TEntity> DbSet;
@@ -38,9 +38,9 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
         await SaveChanges();
     }
 
-    public virtual async Task Delete(Guid id)
+    public virtual async Task Delete(TEntity entity)
     {
-        DbSet.Remove(new TEntity { Id = id });
+        DbSet.Remove(entity);
         await SaveChanges();
     }
 

@@ -28,7 +28,7 @@ public class AssignmentService : BaseService, IAssignmentService
         _assignmentRepository = assignmentRepository;
         _assignmentListRepository = assignmentListRepository;
     }
-    
+
     public async Task<AssignmentDto?> GetById(Guid id)
     {
         var getAssignment = await _assignmentRepository.GetById(id);
@@ -58,6 +58,19 @@ public class AssignmentService : BaseService, IAssignmentService
         await _assignmentRepository.Create(assignment);
 
         return _mapper.Map<AssignmentDto>(assignment);
+    }
+
+    public async Task Delete(Guid id)
+    {
+        var getAssignment = await _assignmentRepository.GetById(id);
+
+        if (getAssignment == null)
+        {
+            Notify("O ID fornecido é inválido. Não foi possível encontrar essa tarefa correspondente.");
+            return;
+        }
+
+        await _assignmentRepository.Delete(getAssignment);
     }
 
     private Guid GetUserId()
