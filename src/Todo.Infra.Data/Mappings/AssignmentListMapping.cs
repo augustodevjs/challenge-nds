@@ -19,6 +19,16 @@ public class AssignmentListMapping : IEntityTypeConfiguration<AssignmentList>
             .IsRequired();
 
         builder
+            .Property(c => c.CreatedAt)
+            .ValueGeneratedOnAdd()
+            .HasColumnType("DATETIME");
+        
+        builder
+            .Property(c => c.UpdatedAt)
+            .ValueGeneratedOnAddOrUpdate()
+            .HasColumnType("DATETIME");
+        
+        builder
             .HasMany(c => c.Assignments)
             .WithOne(c => c.AssignmentList);
 

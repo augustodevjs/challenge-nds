@@ -15,13 +15,12 @@ public class AssignmentListController : MainController
     private readonly IAssignmentListService _assignmentListService;
 
     public AssignmentListController(
-        INotificator notificador, 
-        IAssignmentListService assignmentListService
-        ) : base(notificador)
+        INotificator notificador,
+        IAssignmentListService assignmentListService) : base(notificador)
     {
         _assignmentListService = assignmentListService;
     }
-    
+
     [HttpGet]
     [SwaggerOperation("Search to-do lists")]
     [ProducesResponseType(typeof(PagedDto<AssignmentListDto>), StatusCodes.Status200OK)]
@@ -39,7 +38,7 @@ public class AssignmentListController : MainController
         var getAssignmentList = await _assignmentListService.GetById(id);
         return CustomResponse(getAssignmentList);
     }
-    
+
     [HttpPost]
     [SwaggerOperation(Summary = "Add a new to-do list")]
     [ProducesResponseType(typeof(AssignmentListDto), StatusCodes.Status200OK)]
@@ -49,7 +48,7 @@ public class AssignmentListController : MainController
         var createAssignmentList = await _assignmentListService.Create(addAssignmentListDto);
         return CustomResponse(createAssignmentList);
     }
-    
+
     [HttpPut("{id:guid}")]
     [SwaggerOperation(Summary = "Update a to-do list")]
     [ProducesResponseType(typeof(AssignmentListDto), StatusCodes.Status200OK)]

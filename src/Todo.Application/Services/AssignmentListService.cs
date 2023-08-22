@@ -81,7 +81,7 @@ public class AssignmentListService : BaseService, IAssignmentListService
 
         if (getAssignmentList == null)
         {
-            Notify("O ID fornecido é inválido. Não foi possível encontrar o usuário correspondente.");
+            Notify("O ID fornecido é inválido. Não foi possível encontrar uma lista de tarefas correspondente.");
             return null;
         }
 
