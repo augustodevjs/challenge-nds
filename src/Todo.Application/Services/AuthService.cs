@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Todo.Domain.Contracts.Repository;
 using Microsoft.Extensions.Configuration;
+using Todo.Application.Contracts.Services;
 
 namespace Todo.Application.Services;
 

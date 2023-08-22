@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Todo.Domain.Contracts.Repository;
-using Todo.Domain.Models;
-using Todo.Infra.Data.Abstractions;
+﻿using Todo.Domain.Models;
 using Todo.Infra.Data.Context;
+using Todo.Infra.Data.Abstractions;
+using Microsoft.EntityFrameworkCore;
+using Todo.Domain.Contracts.Repository;
 
 namespace Todo.Infra.Data.Repositories;
 

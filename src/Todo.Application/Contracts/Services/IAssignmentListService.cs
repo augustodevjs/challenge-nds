@@ -1,7 +1,7 @@
 ﻿using Todo.Application.DTO.AssignmentList;
 using Todo.Application.DTO.Paged;
 
-namespace Todo.Application.Contracts;
+namespace Todo.Application.Contracts.Services;
 
 public interface IAssignmentListService
 {

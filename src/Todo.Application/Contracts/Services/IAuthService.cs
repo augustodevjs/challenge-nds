@@ -1,6 +1,6 @@
 ﻿using Todo.Application.DTO.Auth;
 
-namespace Todo.Application.Contracts;
+namespace Todo.Application.Contracts.Services;
 
 public interface IAuthService
 {

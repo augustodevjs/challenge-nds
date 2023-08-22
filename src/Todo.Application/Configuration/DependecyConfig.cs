@@ -9,6 +9,7 @@ using Todo.Application.Notifications;
 using Todo.Domain.Contracts.Repository;
 using ScottBrady91.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using Todo.Application.Contracts.Services;
 
 namespace Todo.Application.Configuration;
 
