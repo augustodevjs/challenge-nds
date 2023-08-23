@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Todo.Application.DTO.Paged;
 using Todo.Application.Contracts;
 using Todo.Application.DTO.Assignment;
 using Microsoft.AspNetCore.Authorization;
@@ -19,12 +20,20 @@ public class AssignmentController : MainController
     {
         _assignmentService = assignmentService;
     }
+    
+    [HttpGet]
+    [SwaggerOperation("Search tasks")]
+    [ProducesResponseType(typeof(PagedDto<AssignmentDto>), StatusCodes.Status200OK)]
+    public async Task<PagedDto<AssignmentDto>> Search([FromQuery] AssignmentSearchDto search)
+    {
+        return await _assignmentService.Search(search);
+    }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("{id}")]
     [SwaggerOperation(Summary = "Get a to-do")]
     [ProducesResponseType(typeof(AssignmentDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> GetById(Guid id)
+    public async Task<ActionResult> GetById(string id)
     {
         var getAssignment = await _assignmentService.GetById(id);
         return CustomResponse(getAssignment);
@@ -42,11 +51,11 @@ public class AssignmentController : MainController
         return CustomResponse(createAssignment);
     }
 
-    [HttpPut("{id:guid}")]
+    [HttpPut("{id}")]
     [SwaggerOperation("Update a task")]
     [ProducesResponseType(typeof(AssignmentDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateAssignmentDto updateAssignmentDto)
+    public async Task<IActionResult> Update(string id, [FromBody] UpdateAssignmentDto updateAssignmentDto)
     {
         if (!ModelState.IsValid) return CustomResponse(ModelState);
         
@@ -54,13 +63,33 @@ public class AssignmentController : MainController
         return CustomResponse(updateAssignment);
     }
 
-    [HttpDelete("{id:guid}")]
+    [HttpDelete("{id}")]
     [SwaggerOperation("Delete a task")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Delete(Guid id)
+    public async Task<IActionResult> Delete(string id)
     {
         await _assignmentService.Delete(id);
         return CustomResponse();
+    }
+    
+    [HttpPatch("{id}/conclude")]
+    [SwaggerOperation("Conclud a task")]
+    [ProducesResponseType(typeof(AssignmentDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Conclude(string id)
+    {
+        var concludedAssignment = await _assignmentService.MarkConcluded(id);
+        return CustomResponse(concludedAssignment);
+    }
+    
+    [HttpPatch("{id}/unconclude")]
+    [SwaggerOperation("Desconclud a task")]
+    [ProducesResponseType(typeof(AssignmentDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Unconclude(string id)
+    {
+        var desconcludedAssignment = await _assignmentService.MarkDesconcluded(id);
+        return CustomResponse(desconcludedAssignment);
     }
 }

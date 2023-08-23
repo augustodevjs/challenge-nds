@@ -1,11 +1,15 @@
-﻿using Todo.Application.DTO.Assignment;
+﻿using Todo.Application.DTO.Paged;
+using Todo.Application.DTO.Assignment;
 
 namespace Todo.Application.Contracts.Services;
 
 public interface IAssignmentService
 {
-    Task<AssignmentDto?> GetById(Guid id);
+    Task<PagedDto<AssignmentDto>> Search(AssignmentSearchDto search);
+    Task<AssignmentDto?> GetById(string id);
     Task<AssignmentDto?> Create(AddAssignmentDto addAssignmentDto);
-    Task<AssignmentDto?> Update(Guid id, UpdateAssignmentDto updateAssignmentDto);
-    Task Delete(Guid id);
+    Task<AssignmentDto?> Update(string id, UpdateAssignmentDto updateAssignmentDto);
+    Task Delete(string id);
+    Task<AssignmentDto?> MarkConcluded(string id);
+    Task<AssignmentDto?> MarkDesconcluded(string id);
 }

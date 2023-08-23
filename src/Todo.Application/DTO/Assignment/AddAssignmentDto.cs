@@ -13,5 +13,5 @@ public class AddAssignmentDto
     public DateTime Deadline { get; set; }
 
     [Required(ErrorMessage = "O campo AssignmentListId não pode ser deixado vazio.")]
-    public Guid AssignmentListId { get; set; }
+    public string AssignmentListId { get; set; }
 }

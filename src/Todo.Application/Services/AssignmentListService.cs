@@ -43,8 +43,10 @@ public class AssignmentListService : BaseService, IAssignmentListService
         };
     }
 
-    public async Task<AssignmentListDto?> GetById(Guid? id)
+    public async Task<AssignmentListDto?> GetById(string? id)
     {
+        if (!IsValidGuid(id)) return null;
+        
         var getAssignmentList = await _assignmentListRepository.GetById(id, GetUserId());
 
         if (getAssignmentList == null)
@@ -59,7 +61,7 @@ public class AssignmentListService : BaseService, IAssignmentListService
     public async Task<AssignmentListDto?> Create(AddAssignmentListDto addAssignmentListDto)
     {
         var assignmentList = _mapper.Map<AssignmentList>(addAssignmentListDto);
-        assignmentList.UserId = GetUserId();
+        assignmentList.UserId = Guid.Parse(GetUserId());
 
         if (!ExecuteValidation(new AssignmentListValidator(), assignmentList)) return null;
 
@@ -68,34 +70,66 @@ public class AssignmentListService : BaseService, IAssignmentListService
         return _mapper.Map<AssignmentListDto>(assignmentList);
     }
 
-    public async Task<AssignmentListDto?> Update(Guid id, UpdateAssignmentListDto updateAssignmentListDto)
+    public async Task<AssignmentListDto?> Update(string id, UpdateAssignmentListDto updateAssignmentListDto)
     {
-        if (id != updateAssignmentListDto.Id)
+        if (id != updateAssignmentListDto.Id || !Guid.TryParse(id, out _))
         {
             Notify("O id informado é inválido");
             return null;
         }
 
-        var getAssignmentList = await _assignmentListRepository.GetById(id, GetUserId());
+        var assignmentList = await _assignmentListRepository.GetById(id, GetUserId());
 
-        if (getAssignmentList == null)
+        if (assignmentList == null)
         {
             Notify("Não foi possível encontrar a lista de tarefa correspondente.");
             return null;
         }
 
-        _mapper.Map(updateAssignmentListDto, getAssignmentList);
+        _mapper.Map(updateAssignmentListDto, assignmentList);
 
-        if (!ExecuteValidation(new AssignmentListValidator(), getAssignmentList)) return null;
+        if (!ExecuteValidation(new AssignmentListValidator(), assignmentList)) return null;
 
-        await _assignmentListRepository.Update(getAssignmentList);
+        await _assignmentListRepository.Update(assignmentList);
 
-        return _mapper.Map<AssignmentListDto>(updateAssignmentListDto);
+        return _mapper.Map<AssignmentListDto>(assignmentList);
     }
 
-    private Guid GetUserId()
+    public async Task Delete(string id)
+    {
+        if (!IsValidGuid(id)) return;
+        
+        var assignmentList = await _assignmentListRepository.GetById(id, GetUserId());
+
+        if (assignmentList == null)
+        {
+            Notify("Não foi possível encontra a lista de tarefa correspondente.");
+            return;
+        }
+
+        if (assignmentList.Assignments.Any(a => !a.Concluded))
+        {
+            Notify("Não é possível excluir lista com tarefas não concluídas!");
+            return;
+        }
+
+        await _assignmentListRepository.Delete(assignmentList);
+    }
+    
+    private string GetUserId()
     {
         var userId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        return userId == null ? Guid.Empty : Guid.Parse(userId);
+        return userId ?? string.Empty;
+    }
+    
+    private bool IsValidGuid(string? id)
+    {
+        if (!Guid.TryParse(id, out _))
+        {
+            Notify("O id informado é inválido");
+            return false;
+        }
+
+        return true;
     }
 }

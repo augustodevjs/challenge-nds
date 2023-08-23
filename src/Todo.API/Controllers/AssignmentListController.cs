@@ -29,11 +29,11 @@ public class AssignmentListController : MainController
         return await _assignmentListService.Search(search);
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("{id}")]
     [SwaggerOperation(Summary = "Get a to-do list")]
     [ProducesResponseType(typeof(AssignmentListDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> GetById(Guid id)
+    public async Task<ActionResult> GetById(string id)
     {
         var getAssignmentList = await _assignmentListService.GetById(id);
         return CustomResponse(getAssignmentList);
@@ -49,13 +49,23 @@ public class AssignmentListController : MainController
         return CustomResponse(createAssignmentList);
     }
 
-    [HttpPut("{id:guid}")]
+    [HttpPut("{id}")]
     [SwaggerOperation(Summary = "Update a to-do list")]
     [ProducesResponseType(typeof(AssignmentListDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> Update(Guid id, [FromBody] UpdateAssignmentListDto updateAssignmentListDto)
+    public async Task<ActionResult> Update(string id, [FromBody] UpdateAssignmentListDto updateAssignmentListDto)
     {
         var updateAssignmentList = await _assignmentListService.Update(id, updateAssignmentListDto);
         return CustomResponse(updateAssignmentList);
+    }
+    
+    [HttpDelete("{id}")]
+    [SwaggerOperation("Delete a todo-list")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Delete(string id)
+    {
+        await _assignmentListService.Delete(id);
+        return CustomResponse();
     }
 }

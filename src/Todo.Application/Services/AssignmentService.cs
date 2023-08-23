@@ -6,6 +6,8 @@ using Todo.Application.Contracts;
 using Todo.Application.DTO.Assignment;
 using Todo.Domain.Contracts.Repository;
 using Todo.Application.Contracts.Services;
+using Todo.Application.DTO.Paged;
+using Todo.Domain.Filter;
 
 namespace Todo.Application.Services;
 
@@ -29,12 +31,29 @@ public class AssignmentService : BaseService, IAssignmentService
         _assignmentListRepository = assignmentListRepository;
     }
 
-    public async Task<AssignmentDto?> GetById(Guid id)
+    public async Task<PagedDto<AssignmentDto>> Search(AssignmentSearchDto search)
     {
+        var filter = _mapper.Map<AssignmentFilter>(search);
+        var result = await _assignmentRepository.Search(GetUserId(), filter, search.PerPage, search.Page);
+
+        return new PagedDto<AssignmentDto>
+        {
+            Items = _mapper.Map<List<AssignmentDto>>(result.Items),
+            Total = result.Total,
+            Page = result.Page,
+            PerPage = result.PerPage,
+            PageCount = result.PageCount
+        };
+    }
+
+    public async Task<AssignmentDto?> GetById(string id)
+    {
+        if (!IsValidGuid(id)) return null;
+
         var getAssignment = await _assignmentRepository.GetById(id, GetUserId());
 
         if (getAssignment == null)
-        {   
+        {
             Notify("Não foi possível encontrar a tarefa correspondente.");
             return null;
         }
@@ -44,7 +63,9 @@ public class AssignmentService : BaseService, IAssignmentService
 
     public async Task<AssignmentDto?> Create(AddAssignmentDto addAssignmentDto)
     {
-        var getAssignment = await _assignmentListRepository.GetById(addAssignmentDto.AssignmentListId);
+        if (!IsValidGuid(addAssignmentDto.AssignmentListId)) return null;
+
+        var getAssignment = await _assignmentListRepository.GetById(Guid.Parse(addAssignmentDto.AssignmentListId));
 
         if (getAssignment == null)
         {
@@ -53,23 +74,25 @@ public class AssignmentService : BaseService, IAssignmentService
         }
 
         var assignment = _mapper.Map<Assignment>(addAssignmentDto);
-        assignment.UserId = GetUserId();
+        assignment.UserId = Guid.Parse(GetUserId());
 
         await _assignmentRepository.Create(assignment);
 
         return _mapper.Map<AssignmentDto>(assignment);
     }
 
-    public async Task<AssignmentDto?> Update(Guid id, UpdateAssignmentDto updateAssignmentDto)
+    public async Task<AssignmentDto?> Update(string id, UpdateAssignmentDto updateAssignmentDto)
     {
-        if (id != updateAssignmentDto.Id)
+        bool isIdInvalid = !Guid.TryParse(id, out _) || !Guid.TryParse(updateAssignmentDto.Id, out _);
+        
+        if (id != updateAssignmentDto.Id || isIdInvalid)
         {
             Notify("O id informado é inválido");
             return null;
         }
 
         var getAssignment = await _assignmentRepository.GetById(id, GetUserId());
-        
+
         if (getAssignment == null)
         {
             Notify("Não foi possível encontrar a tarefa correspondente.");
@@ -82,9 +105,11 @@ public class AssignmentService : BaseService, IAssignmentService
 
         return _mapper.Map<AssignmentDto>(updateAssignmentDto);
     }
-    
-    public async Task Delete(Guid id)
+
+    public async Task Delete(string id)
     {
+        if (!IsValidGuid(id)) return;
+
         var getAssignment = await _assignmentRepository.GetById(id, GetUserId());
 
         if (getAssignment == null)
@@ -96,9 +121,56 @@ public class AssignmentService : BaseService, IAssignmentService
         await _assignmentRepository.Delete(getAssignment);
     }
 
-    private Guid GetUserId()
+    public async Task<AssignmentDto?> MarkConcluded(string id)
+    {
+        if (!IsValidGuid(id)) return null;
+
+        var assignment = await _assignmentRepository.GetById(id, GetUserId());
+
+        if (assignment == null)
+        {
+            Notify("Não foi possível encontrar a tarefa correspondente.");
+            return null;
+        }
+
+        assignment.SetConcluded();
+
+        await _assignmentRepository.Update(assignment);
+        return _mapper.Map<AssignmentDto>(assignment);
+    }
+
+    public async Task<AssignmentDto?> MarkDesconcluded(string id)
+    {
+        if (!IsValidGuid(id)) return null;
+
+        var assignment = await _assignmentRepository.GetById(id, GetUserId());
+
+        if (assignment == null)
+        {
+            Notify("Não foi possível encontrar a tarefa correspondente.");
+            return null;
+        }
+
+        assignment.SetUnconcluded();
+
+        await _assignmentRepository.Update(assignment);
+        return _mapper.Map<AssignmentDto>(assignment);
+    }
+
+    private string GetUserId()
     {
         var userId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        return userId == null ? Guid.Empty : Guid.Parse(userId);
+        return userId ?? string.Empty;
+    }
+
+    private bool IsValidGuid(string? id)
+    {
+        if (!Guid.TryParse(id, out _))
+        {
+            Notify("O id informado é inválido");
+            return false;
+        }
+
+        return true;
     }
 }
