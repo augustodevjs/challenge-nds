@@ -12,8 +12,8 @@ namespace Todo.Application.Services;
 public class AssignmentService : BaseService, IAssignmentService
 {
     private readonly IMapper _mapper;
-    private readonly IAssignmentRepository _assignmentRepository;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IAssignmentRepository _assignmentRepository;
     private readonly IAssignmentListRepository _assignmentListRepository;
 
     public AssignmentService(
@@ -31,11 +31,11 @@ public class AssignmentService : BaseService, IAssignmentService
 
     public async Task<AssignmentDto?> GetById(Guid id)
     {
-        var getAssignment = await _assignmentRepository.GetById(id);
+        var getAssignment = await _assignmentRepository.GetById(id, GetUserId());
 
         if (getAssignment == null)
-        {
-            Notify("O ID fornecido é inválido. Não foi possível encontrar a tarefa correspondente.");
+        {   
+            Notify("Não foi possível encontrar a tarefa correspondente.");
             return null;
         }
 
@@ -48,7 +48,7 @@ public class AssignmentService : BaseService, IAssignmentService
 
         if (getAssignment == null)
         {
-            Notify("O ID fornecido é inválido. Não foi possível encontrar essa lista de tarefas correspondente.");
+            Notify("Não foi possível encontrar a lista de tarefas correspondente.");
             return null;
         }
 
@@ -68,11 +68,11 @@ public class AssignmentService : BaseService, IAssignmentService
             return null;
         }
 
-        var getAssignment = await _assignmentRepository.GetById(id);
+        var getAssignment = await _assignmentRepository.GetById(id, GetUserId());
         
         if (getAssignment == null)
         {
-            Notify("O ID fornecido é inválido. Não foi possível encontrar essa tarefa correspondente.");
+            Notify("Não foi possível encontrar a tarefa correspondente.");
             return null;
         }
 
@@ -85,11 +85,11 @@ public class AssignmentService : BaseService, IAssignmentService
     
     public async Task Delete(Guid id)
     {
-        var getAssignment = await _assignmentRepository.GetById(id);
+        var getAssignment = await _assignmentRepository.GetById(id, GetUserId());
 
         if (getAssignment == null)
         {
-            Notify("O ID fornecido é inválido. Não foi possível encontrar essa tarefa correspondente.");
+            Notify("Não foi possível encontrar a tarefa correspondente.");
             return;
         }
 

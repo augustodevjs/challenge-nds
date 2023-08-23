@@ -49,7 +49,7 @@ public class AssignmentListService : BaseService, IAssignmentListService
 
         if (getAssignmentList == null)
         {
-            Notify("O ID fornecido é inválido. Não foi possível encontrar a lista de tarefa correspondente.");
+            Notify("Não foi possível encontrar a lista de tarefa correspondente.");
             return null;
         }
 
@@ -76,11 +76,11 @@ public class AssignmentListService : BaseService, IAssignmentListService
             return null;
         }
 
-        var getAssignmentList = await _assignmentListRepository.GetById(id);
+        var getAssignmentList = await _assignmentListRepository.GetById(id, GetUserId());
 
         if (getAssignmentList == null)
         {
-            Notify("O ID fornecido é inválido. Não foi possível encontrar uma lista de tarefas correspondente.");
+            Notify("Não foi possível encontrar a lista de tarefa correspondente.");
             return null;
         }
 

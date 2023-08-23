@@ -4,5 +4,5 @@ namespace Todo.Domain.Contracts.Repository;
 
 public interface IAssignmentRepository : IRepository<Assignment>
 {
-    
+    Task<Assignment?> GetById(Guid? id, Guid userId);
 }
