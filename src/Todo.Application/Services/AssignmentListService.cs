@@ -45,7 +45,7 @@ public class AssignmentListService : BaseService, IAssignmentListService
 
     public async Task<AssignmentListDto?> GetById(Guid? id)
     {
-        var getAssignmentList = await _assignmentListRepository.GetById(id);
+        var getAssignmentList = await _assignmentListRepository.GetById(id, GetUserId());
 
         if (getAssignmentList == null)
         {

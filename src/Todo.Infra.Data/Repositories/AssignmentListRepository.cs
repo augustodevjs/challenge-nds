@@ -17,7 +17,8 @@ public class AssignmentListRepository : Repository<AssignmentList>, IAssignmentL
         _context = context;
     }
 
-    public async Task<IPagedResult<AssignmentList>> Search(Guid userId, string name, string description, int perPage = 10, int page = 1)
+    public async Task<IPagedResult<AssignmentList>> Search(Guid userId, string name, string description,
+        int perPage = 10, int page = 1)
     {
         var query = _context.AssignmentLists
             .AsNoTracking()
@@ -26,13 +27,14 @@ public class AssignmentListRepository : Repository<AssignmentList>, IAssignmentL
 
         if (!string.IsNullOrWhiteSpace(name))
             query = query.Where(c => c.Name.Contains(name));
-        
+
         if (!string.IsNullOrWhiteSpace(description))
             query = query.Where(c => c.Description.Contains(description));
 
         var result = new PagedResult<AssignmentList>
         {
-            Items = await query.OrderBy(c => c.Name).Include(c => c.Assignments).Skip((page - 1) * perPage).Take(perPage).ToListAsync(),
+            Items = await query.OrderBy(c => c.Name).Include(c => c.Assignments).Skip((page - 1) * perPage)
+                .Take(perPage).ToListAsync(),
             Total = await query.CountAsync(),
             Page = page,
             PerPage = perPage
@@ -44,8 +46,10 @@ public class AssignmentListRepository : Repository<AssignmentList>, IAssignmentL
         return result;
     }
 
-    public override async Task<AssignmentList?> GetById(Guid? id)
+    public async Task<AssignmentList?> GetById(Guid? id, Guid userId)
     {
-        return await _context.AssignmentLists.Include(c => c.Assignments).FirstOrDefaultAsync();
+        return await _context.AssignmentLists
+            .Include(c => c.Assignments)
+            .FirstOrDefaultAsync(c => c.Id == id && c.UserId == userId);
     }
 }
