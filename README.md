@@ -34,14 +34,34 @@ Criar uma API Rest usando .NET 7 e EF Core.
 
 ---
 
-#### Dependencias
+#### Dependencias por Camadas
 
-- .NET 7
-- Entity Framerwork Core
-- MySQL
-- AutoMapper
-- FluentValidation
-- [ScottBrady91.AspNetCore.Identity.Argon2PasswordHasher](https://github.com/scottbrady91/ScottBrady91.AspNetCore.Identity.Argon2PasswordHasher)
+- API:
+  - Microsoft.AspnetCore.Authentication 
+  - Microsoft.AspNetCore.Authentication.JwtBearer 
+  - Microsoft.AspNetCore.Identity.EntityFrameworkCore 
+  - Microsoft.EntityFrameworkCore 
+  - Microsoft.EntityFrameworkCore.Design 
+  - Pomelo.EntityFrameworkCore.MySql 
+  - Swashbuckle.AspNetCore 
+  - Swashbuckle.AspNetCore.Annotations
+  
+
+- Application:
+  - AutoMapper.Extensions.Microsoft.DependencyInjection 
+  - Microsoft.AspNetCore.Authentication.JwtBearer 
+  - ScottBrady91.AspNetCore.Identity.Argon2PasswordHasher
+
+
+- Domain:
+  - FluentValidation
+
+
+- Infra.Data:
+  - Microsoft.EntityFrameworkCore 
+  - Microsoft.EntityFrameworkCore.Design 
+  - Pomelo.EntityFrameworkCore.MySql
+
 
 #### Descrição de Entidades
 
@@ -72,21 +92,21 @@ Criar uma API Rest usando .NET 7 e EF Core.
 
 #### Registro do usuário
 
-- [ ] Pedir `Name`, `Email`, `Password`
-- [ ] Realizar confimação do `Password`
-- [ ] Deve ser verificado se o `Email` já está em uso.
-- [ ] O `password` deve ser armazenado utilizando algum algoritmo de hash. [Artigo sobre Password Hash](https://www.scottbrady91.com/aspnet-identity/improving-the-aspnet-core-identity-password-hasher) (Opte pelo Argon2)
+- [x] Pedir `Name`, `Email`, `Password`
+- [x] Realizar confimação do `Password`
+- [x] Deve ser verificado se o `Email` já está em uso.
+- [x] O `password` deve ser armazenado utilizando algum algoritmo de hash. [Artigo sobre Password Hash](https://www.scottbrady91.com/aspnet-identity/improving-the-aspnet-core-identity-password-hasher) (Opte pelo Argon2)
 
 #### Login
 
-- [ ] Pedir `Email` e `Password`
-- [ ] Verificar se o `Password` informado bate com o `Password` armazenado. [Exemplo](https://gitlab.com/nds-ifce-maracanau/desafios-nds/backend-todo-list/-/blob/main/src/IFCE.TodoList.Application/Services/AuthService.cs#L41)
-- [ ] Caso o usuário não for encontrado ou a senha for incorreta, retonar um erro genérico, como `Usuário ou senha incorretos`
-- [ ] Após as verificações, gerar o `JWT`.
+- [x] Pedir `Email` e `Password`
+- [x] Verificar se o `Password` informado bate com o `Password` armazenado. [Exemplo](https://gitlab.com/nds-ifce-maracanau/desafios-nds/backend-todo-list/-/blob/main/src/IFCE.TodoList.Application/Services/AuthService.cs#L41)
+- [x] Caso o usuário não for encontrado ou a senha for incorreta, retonar um erro genérico, como `Usuário ou senha incorretos`
+- [x] Após as verificações, gerar o `JWT`.
 
 #### Cadastrar uma Lista (AssigmentList)
 
-- [ ] Solicitar o uma `Name` para lista
-- [ ] O `UserId` deve ser obtido do `JWT`
-- [ ] Validar se o nome foi preenchido.
-- [ ] Verificar se o `UserId` não é inválido. Se utilizar `Guid` verificar se não é um `Guid` vazio.
+- [x] Solicitar o uma `Name` para lista
+- [x] O `UserId` deve ser obtido do `JWT`
+- [x] Validar se o nome foi preenchido.
+- [x] Verificar se o `UserId` não é inválido. Se utilizar `Guid` verificar se não é um `Guid` vazio.
