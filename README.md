@@ -1,5 +1,7 @@
 ## NDS - Backend - Todo List
 
+<img src="./images/swagger.png">
+
 ### Objetivo:
 
 Criar uma API Rest usando .NET 7 e EF Core.
