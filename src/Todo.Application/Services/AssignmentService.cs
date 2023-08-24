@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using Todo.Domain.Models;
+using Todo.Domain.Filter;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
+using Todo.Application.DTO.Paged;
 using Todo.Application.Contracts;
 using Todo.Application.DTO.Assignment;
 using Todo.Domain.Contracts.Repository;
 using Todo.Application.Contracts.Services;
-using Todo.Application.DTO.Paged;
-using Todo.Domain.Filter;
 
 namespace Todo.Application.Services;
 

@@ -8,6 +8,8 @@ using Todo.Application.Contracts;
 using Todo.Domain.Contracts.Repository;
 using Todo.Application.DTO.AssignmentList;
 using Todo.Application.Contracts.Services;
+using Todo.Application.DTO.Assignment;
+using Todo.Domain.Filter;
 
 namespace Todo.Application.Services;
 
@@ -16,15 +18,18 @@ public class AssignmentListService : BaseService, IAssignmentListService
     private readonly IMapper _mapper;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IAssignmentListRepository _assignmentListRepository;
+    private readonly IAssignmentRepository _assignmentRepository;
 
     public AssignmentListService(
         IMapper mapper,
         INotificator notificator,
         IHttpContextAccessor httpContextAccessor,
+        IAssignmentRepository assignmentRepository,
         IAssignmentListRepository assignmentListRepository) : base(notificator)
     {
         _mapper = mapper;
         _httpContextAccessor = httpContextAccessor;
+        _assignmentRepository = assignmentRepository;
         _assignmentListRepository = assignmentListRepository;
     }
     
@@ -36,6 +41,22 @@ public class AssignmentListService : BaseService, IAssignmentListService
         return new PagedDto<AssignmentListDto>
         {
             Items = _mapper.Map<List<AssignmentListDto>>(result.Items),
+            Total = result.Total,
+            Page = result.Page,
+            PerPage = result.PerPage,
+            PageCount = result.PageCount
+        };
+    }
+    
+    public async Task<PagedDto<AssignmentDto>> SearchAssignments(string id, AssignmentSearchDto search)
+    {
+        var filter = _mapper.Map<AssignmentFilter>(search);
+        var result = await _assignmentRepository
+            .Search(GetUserId(), filter, search.PerPage, search.Page, id);
+
+        return new PagedDto<AssignmentDto>
+        {
+            Items = _mapper.Map<List<AssignmentDto>>(result.Items),
             Total = result.Total,
             Page = result.Page,
             PerPage = result.PerPage,

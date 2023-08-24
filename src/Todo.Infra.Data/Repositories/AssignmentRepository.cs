@@ -70,7 +70,7 @@ public class AssignmentRepository : Repository<Assignment>, IAssignmentRepositor
                 .Where(c => c.AssignmentList.UserId == Guid.Parse(userId));
         }
 
-        if (!string.IsNullOrEmpty(listId))
+        if (string.IsNullOrEmpty(listId))
         {
             query = query
                 .Where(c => c.AssignmentListId == null)
