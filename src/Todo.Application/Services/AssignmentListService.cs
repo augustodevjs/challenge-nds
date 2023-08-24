@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
+using Todo.Domain.Filter;
 using Todo.Domain.Models;
 using System.Security.Claims;
 using Todo.Domain.Validators;
 using Microsoft.AspNetCore.Http;
 using Todo.Application.DTO.Paged;
 using Todo.Application.Contracts;
+using Todo.Application.DTO.Assignment;
 using Todo.Domain.Contracts.Repository;
 using Todo.Application.DTO.AssignmentList;
 using Todo.Application.Contracts.Services;
-using Todo.Application.DTO.Assignment;
-using Todo.Domain.Filter;
 
 namespace Todo.Application.Services;
 
@@ -48,8 +48,10 @@ public class AssignmentListService : BaseService, IAssignmentListService
         };
     }
     
-    public async Task<PagedDto<AssignmentDto>> SearchAssignments(string id, AssignmentSearchDto search)
+    public async Task<PagedDto<AssignmentDto>?> SearchAssignments(string id, AssignmentSearchDto search)
     {
+        if (!IsValidGuid(id)) return null;
+        
         var filter = _mapper.Map<AssignmentFilter>(search);
         var result = await _assignmentRepository
             .Search(GetUserId(), filter, search.PerPage, search.Page, id);
@@ -124,7 +126,7 @@ public class AssignmentListService : BaseService, IAssignmentListService
 
         if (assignmentList == null)
         {
-            Notify("Não foi possível encontra a lista de tarefa correspondente.");
+            Notify("Não foi possível encontrar a lista de tarefa correspondente.");
             return;
         }
 

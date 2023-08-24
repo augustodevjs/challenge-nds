@@ -27,7 +27,6 @@ public class AssignmentRepository : Repository<Assignment>, IAssignmentRepositor
             .AsQueryable();
 
         ApplyFilter(userId, filter, ref query, listId);
-        ApplyOrdenation(filter, ref query);
 
         var result = new PagedResult<Assignment>
         {
@@ -45,7 +44,8 @@ public class AssignmentRepository : Repository<Assignment>, IAssignmentRepositor
 
     public async Task<Assignment?> GetById(string id, string userId)
     {
-        return await _context.Assignments.FirstOrDefaultAsync(c => c.Id == Guid.Parse(id) && c.UserId == Guid.Parse(userId));
+        return await _context.Assignments.FirstOrDefaultAsync(c =>
+            c.Id == Guid.Parse(id) && c.UserId == Guid.Parse(userId));
     }
 
     private static void ApplyFilter(string userId, AssignmentFilter filter, ref IQueryable<Assignment> query,
@@ -58,10 +58,10 @@ public class AssignmentRepository : Repository<Assignment>, IAssignmentRepositor
             query = query.Where(c => c.Concluded == filter.Concluded.Value);
 
         if (filter.StartDeadline.HasValue)
-            query = query.Where(c => c.Deadline >= filter.StartDeadline.Value);
+            query = query.Where(c => c.Deadline != null && c.Deadline.Value >= filter.StartDeadline.Value);
 
         if (filter.EndDeadline.HasValue)
-            query = query.Where(c => c.Deadline <= filter.EndDeadline.Value);
+            query = query.Where(c => c.Deadline != null && c.Deadline.Value <= filter.EndDeadline.Value);
 
         if (!string.IsNullOrEmpty(listId))
         {
@@ -69,35 +69,5 @@ public class AssignmentRepository : Repository<Assignment>, IAssignmentRepositor
                 .Where(c => c.AssignmentListId == Guid.Parse(listId))
                 .Where(c => c.AssignmentList.UserId == Guid.Parse(userId));
         }
-
-        if (string.IsNullOrEmpty(listId))
-        {
-            query = query
-                .Where(c => c.AssignmentListId == null)
-                .Where(c => c.UserId == Guid.Parse(userId));
-        }
-    }
-
-    private static void ApplyOrdenation(AssignmentFilter filter, ref IQueryable<Assignment> query)
-    {
-        if (filter.OrderDir.ToLower().Equals("asc"))
-        {
-            query = filter.OrderBy.ToLower() switch
-            {
-                "description" => query.OrderBy(c => c.Description),
-                "concluded" => query.OrderBy(c => c.Concluded),
-                "deadline" => query.OrderBy(c => c.Deadline),
-                _ => query.OrderBy(c => c.CreatedAt)
-            };
-            return;
-        }
-
-        query = filter.OrderBy.ToLower() switch
-        {
-            "description" => query.OrderByDescending(c => c.Description),
-            "concluded" => query.OrderByDescending(c => c.Concluded),
-            "deadline" => query.OrderByDescending(c => c.Deadline),
-            _ => query.OrderByDescending(c => c.CreatedAt)
-        };
     }
 }

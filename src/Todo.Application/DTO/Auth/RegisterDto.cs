@@ -9,7 +9,7 @@ public class RegisterDto
     [StringLength(150, MinimumLength = 3, ErrorMessage = "O campo Nome precisa ter entre {2} e {1} caracteres.")]
     public string Name { get; set; }
 
-    [EmailAddress(ErrorMessage = "O email fornecido não é válido.")]
+    [EmailAddress(ErrorMessage = "O Campo Email fornecido não é válido.")]
     [Required(ErrorMessage = "O campo Email não pode ser deixado vazio.")]
     [StringLength(100, MinimumLength = 3, ErrorMessage = "O campo Email deve conter entre {2} e {1} caracteres.")]
     public string Email { get; set; }
