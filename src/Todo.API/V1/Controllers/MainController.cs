@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Todo.Application.Contracts;
 using Todo.Application.Notifications;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace Todo.API.Controllers;
+namespace Todo.API.V1.Controllers;
 
 public sealed class BadRequestResponse
 {

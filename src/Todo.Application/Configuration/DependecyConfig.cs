@@ -10,6 +10,7 @@ using Todo.Domain.Contracts.Repository;
 using ScottBrady91.AspNetCore.Identity;
 using Todo.Application.Contracts.Services;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Todo.Application.Configuration;
 

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Todo.Application.DTO.Auth;
-using Todo.Application.Contracts;
 using Swashbuckle.AspNetCore.Annotations;
+using Todo.Application.Contracts;
 using Todo.Application.Contracts.Services;
+using Todo.Application.DTO.Auth;
 
-namespace Todo.API.Controllers;
+namespace Todo.API.V1.Controllers;
 
 [Route("auth")]
 public class AuthController : MainController
@@ -26,7 +26,7 @@ public class AuthController : MainController
     public async Task<ActionResult> Login([FromBody] LoginDto loginDto)
     {
         if (!ModelState.IsValid) return CustomResponse(ModelState);
-        
+
         var userToken = await _authService.Login(loginDto);
         return CustomResponse(userToken);
     }

@@ -24,4 +24,8 @@
     <ProjectReference Include="..\Todo.Infra.Data\Todo.Infra.Data.csproj" />
     <ProjectReference Include="..\Todo.Application\Todo.Application.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="V1\" />
+  </ItemGroup>
 </Project>
