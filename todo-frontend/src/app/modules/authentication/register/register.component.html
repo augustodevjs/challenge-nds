@@ -3,27 +3,73 @@
     <mat-card-content>
       <h2>Register - Todo</h2>
 
-      <form action="">
-        <mat-form-field>
-          <mat-label>Nome</mat-label>
-          <input matInput placeholder="Digite o seu nome" />
-        </mat-form-field>
+      <form
+        (ngSubmit)="register()"
+        [formGroup]="registerForm"
+        novalidate
+        autocomplete="false"
+      >
+        <div class="form-inputs">
+          <mat-form-field>
+            <mat-label>Nome</mat-label>
+            <input
+              matInput
+              placeholder="Digite o seu nome"
+              formControlName="name"
+            />
+            <mat-error *ngIf="displayMessage['name']">
+              {{ displayMessage["name"] }}
+            </mat-error>
+          </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>Email</mat-label>
-          <input matInput placeholder="Digite o seu email" />
-        </mat-form-field>
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              placeholder="Digite o seu email"
+              formControlName="email"
+            />
+            <mat-error *ngIf="displayMessage['email']">
+              {{ displayMessage["email"] }}
+            </mat-error>
+          </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>Senha</mat-label>
-          <input matInput placeholder="Digite a sua senha" />
-        </mat-form-field>
+          <mat-form-field>
+            <mat-label>Senha</mat-label>
+            <input
+              matInput
+              type="password"
+              autocomplete="on"
+              placeholder="Digite a sua senha"
+              formControlName="password"
+            />
+            <mat-error *ngIf="displayMessage['password']">
+              {{ displayMessage["password"] }}
+            </mat-error>
+          </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>Confirmação de Senha</mat-label>
-          <input matInput placeholder="Repita novamente sua senha" />
-        </mat-form-field>
-        <button mat-raised-button color="primary">Cadastrar</button>
+          <mat-form-field>
+            <mat-label>Confirmação de Senha</mat-label>
+            <input
+              matInput
+              type="password"
+              autocomplete="on"
+              placeholder="Repita novamente sua senha"
+              formControlName="passwordConfirm"
+            />
+            <mat-error *ngIf="displayMessage['passwordConfirm']">
+              {{ displayMessage["passwordConfirm"] }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <button
+          type="submit"
+          [disabled]="!registerForm.valid"
+          mat-raised-button
+          color="primary"
+        >
+          Cadastrar
+        </button>
       </form>
 
       <span routerLink="/login">Já possui uma conta?</span>

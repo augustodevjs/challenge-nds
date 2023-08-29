@@ -3,17 +3,48 @@
     <mat-card-content>
       <h2>Login - Todo</h2>
 
-      <form action="">
-        <mat-form-field>
-          <mat-label>Email</mat-label>
-          <input matInput placeholder="Digite o seu email" />
-        </mat-form-field>
+      <form
+        (ngSubmit)="login()"
+        [formGroup]="loginForm"
+        novalidate
+        autocomplete="false"
+      >
+        <div class="form-inputs">
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              placeholder="Digite o seu email"
+              formControlName="email"
+            />
+            <mat-error *ngIf="displayMessage['email']">
+              {{ displayMessage["email"] }}
+            </mat-error>
+          </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>Senha</mat-label>
-          <input matInput placeholder="Digite a sua senha" />
-        </mat-form-field>
-        <button mat-raised-button color="primary">Entrar</button>
+          <mat-form-field>
+            <mat-label>Senha</mat-label>
+            <input
+              matInput
+              type="password"
+              autocomplete="on"
+              placeholder="Digite a sua senha"
+              formControlName="password"
+            />
+            <mat-error *ngIf="displayMessage['password']">
+              {{ displayMessage["password"] }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <button
+          type="submit"
+          [disabled]="!loginForm.valid"
+          mat-raised-button
+          color="primary"
+        >
+          Entrar
+        </button>
       </form>
 
       <span routerLink="/register">Não possui uma conta?</span>
