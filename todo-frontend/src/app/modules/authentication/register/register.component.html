@@ -1,1 +1,32 @@
-<p>register works!</p>
+<div class="container">
+  <mat-card>
+    <mat-card-content>
+      <h2>Register - Todo</h2>
+
+      <form action="">
+        <mat-form-field>
+          <mat-label>Nome</mat-label>
+          <input matInput placeholder="Digite o seu nome" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="Digite o seu email" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Senha</mat-label>
+          <input matInput placeholder="Digite a sua senha" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Confirmação de Senha</mat-label>
+          <input matInput placeholder="Repita novamente sua senha" />
+        </mat-form-field>
+        <button mat-raised-button color="primary">Cadastrar</button>
+      </form>
+
+      <span routerLink="/login">Já possui uma conta?</span>
+    </mat-card-content>
+  </mat-card>
+</div>
