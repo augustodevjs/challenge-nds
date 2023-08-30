@@ -7,7 +7,6 @@ import { Observable, fromEvent, merge } from 'rxjs';
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  providers: [registerFormMessages]
 })
 export class RegisterComponent implements OnInit, AfterViewInit {
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements!: ElementRef[];

@@ -1,2 +1,2 @@
-export * from './login-messages'
-export * from './register-messages'
+export * from './login-messages.service'
+export * from './register-messages.service'

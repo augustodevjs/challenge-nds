@@ -1,7 +1,9 @@
 import { Injectable } from "@angular/core";
 import { ValidationMessages } from "..";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class loginFormMessages {
   validationMessages: ValidationMessages = {
     email: {

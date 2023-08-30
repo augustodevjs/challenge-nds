@@ -7,7 +7,6 @@ import { DisplayMessage, GenericValidator, LoginFormModel, loginFormMessages } f
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [loginFormMessages]
 })
 export class LoginComponent implements OnInit, AfterViewInit {
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements!: ElementRef[];
