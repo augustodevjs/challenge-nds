@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements!: ElementRef[];
 
   loginForm!: FormGroup;
+  hide: boolean = true;
   LoginFormModel: LoginFormModel = {} as LoginFormModel;
 
   genericValidator: GenericValidator;

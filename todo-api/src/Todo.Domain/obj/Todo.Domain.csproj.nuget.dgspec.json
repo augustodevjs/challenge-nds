@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Domain\\Todo.Domain.csproj": {}
+    "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.Domain\\Todo.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Domain\\Todo.Domain.csproj": {
+    "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.Domain\\Todo.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Domain\\Todo.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.Domain\\Todo.Domain.csproj",
         "projectName": "Todo.Domain",
-        "projectPath": "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Domain\\Todo.Domain.csproj",
+        "projectPath": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.Domain\\Todo.Domain.csproj",
         "packagesPath": "C:\\Users\\joaoa\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Domain\\obj\\",
+        "outputPath": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\joaoa\\AppData\\Roaming\\NuGet\\NuGet.Config",

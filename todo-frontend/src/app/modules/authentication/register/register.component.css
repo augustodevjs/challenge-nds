@@ -25,12 +25,12 @@
   margin-bottom: 0.5rem;
 }
 
-.container mat-card mat-card-content button {
+.container mat-card mat-card-content button span {
   width: 100%;
   padding: 0.5rem;
 }
 
-.container mat-card mat-card-content span {
+.link-count {
   display: flex;
   justify-content: center;
   margin-top: 1rem;

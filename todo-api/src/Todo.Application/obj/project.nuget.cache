@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "svTfxf9iwFoKo0zqgaZyJDJxuGOoGruwEZtFnXuTE6Ocg3BS3Zl8x/pVFyrz5jlkDqwZig8df0D+312kfkQEzw==",
+  "dgSpecHash": "dIQqUVCxUtO9++9f0UTnTej8ulQSNvh33b/CW2ILKh6e0Nzs6M91jJUVM1594EoHqt4qVjkOvIr91SwsCvALaQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Application\\Todo.Application.csproj",
+  "projectFilePath": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.Application\\Todo.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\joaoa\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

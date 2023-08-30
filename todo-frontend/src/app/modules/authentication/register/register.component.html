@@ -1,5 +1,5 @@
 <div class="container">
-  <mat-card>
+  <mat-card [appearance]="'outlined'">
     <mat-card-content>
       <h2>Register - Todo</h2>
 
@@ -10,7 +10,7 @@
         autocomplete="false"
       >
         <div class="form-inputs">
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label>Nome</mat-label>
             <input
               matInput
@@ -22,7 +22,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label>Email</mat-label>
             <input
               matInput
@@ -34,7 +34,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label>Senha</mat-label>
             <input
               matInput
@@ -48,17 +48,17 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label>Confirmação de Senha</mat-label>
             <input
               matInput
               type="password"
               autocomplete="on"
               placeholder="Repita novamente sua senha"
-              formControlName="passwordConfirm"
+              formControlName="confirmPassword"
             />
-            <mat-error *ngIf="displayMessage['passwordConfirm']">
-              {{ displayMessage["passwordConfirm"] }}
+            <mat-error *ngIf="displayMessage['confirmPassword']">
+              {{ displayMessage["confirmPassword"] }}
             </mat-error>
           </mat-form-field>
         </div>
@@ -68,11 +68,18 @@
           mat-raised-button
           color="primary"
         >
-          Cadastrar
+          <span *ngIf="!isLoading">Cadastrar</span>
+          <mat-spinner
+            *ngIf="isLoading"
+            diameter="20"
+            color="accent"
+          ></mat-spinner>
         </button>
       </form>
 
-      <span routerLink="/auth/login">Já possui uma conta?</span>
+      <span class="link-count" clas routerLink="/auth/login"
+        >Já possui uma conta?</span
+      >
     </mat-card-content>
   </mat-card>
 </div>

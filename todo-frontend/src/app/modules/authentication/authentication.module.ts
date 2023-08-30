@@ -8,6 +8,7 @@ import { MaterialModule } from '../../shared';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthenticationRoutingModule } from './authentication-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -15,12 +16,13 @@ import { AuthenticationRoutingModule } from './authentication-routing.module';
     RegisterComponent
   ],
   imports: [
-    CommonModule,
-    RouterModule,
-    MaterialModule,
     FormsModule,
+    RouterModule,
+    CommonModule,
+    MaterialModule,
+    HttpClientModule,
     ReactiveFormsModule,
-    AuthenticationRoutingModule
+    AuthenticationRoutingModule,
   ],
   exports: [
     LoginComponent,

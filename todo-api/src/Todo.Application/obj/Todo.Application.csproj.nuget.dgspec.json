@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Application\\Todo.Application.csproj": {}
+    "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.Application\\Todo.Application.csproj": {}
   },
   "projects": {
-    "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Application\\Todo.Application.csproj": {
+    "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.Application\\Todo.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Application\\Todo.Application.csproj",
+        "projectUniqueName": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.Application\\Todo.Application.csproj",
         "projectName": "Todo.Application",
-        "projectPath": "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Application\\Todo.Application.csproj",
+        "projectPath": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.Application\\Todo.Application.csproj",
         "packagesPath": "C:\\Users\\joaoa\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Application\\obj\\",
+        "outputPath": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\joaoa\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,8 +28,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Infra.Data\\Todo.Infra.Data.csproj": {
-                "projectPath": "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Infra.Data\\Todo.Infra.Data.csproj"
+              "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.Infra.Data\\Todo.Infra.Data.csproj": {
+                "projectPath": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.Infra.Data\\Todo.Infra.Data.csproj"
               }
             }
           }
@@ -77,14 +77,14 @@
         }
       }
     },
-    "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Domain\\Todo.Domain.csproj": {
+    "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.Domain\\Todo.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Domain\\Todo.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.Domain\\Todo.Domain.csproj",
         "projectName": "Todo.Domain",
-        "projectPath": "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Domain\\Todo.Domain.csproj",
+        "projectPath": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.Domain\\Todo.Domain.csproj",
         "packagesPath": "C:\\Users\\joaoa\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Domain\\obj\\",
+        "outputPath": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\joaoa\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -138,14 +138,14 @@
         }
       }
     },
-    "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Infra.Data\\Todo.Infra.Data.csproj": {
+    "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.Infra.Data\\Todo.Infra.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Infra.Data\\Todo.Infra.Data.csproj",
+        "projectUniqueName": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.Infra.Data\\Todo.Infra.Data.csproj",
         "projectName": "Todo.Infra.Data",
-        "projectPath": "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Infra.Data\\Todo.Infra.Data.csproj",
+        "projectPath": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.Infra.Data\\Todo.Infra.Data.csproj",
         "packagesPath": "C:\\Users\\joaoa\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Infra.Data\\obj\\",
+        "outputPath": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.Infra.Data\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\joaoa\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -162,8 +162,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Domain\\Todo.Domain.csproj": {
-                "projectPath": "C:\\Users\\joaoa\\source\\repos\\todo-api\\src\\Todo.Domain\\Todo.Domain.csproj"
+              "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.Domain\\Todo.Domain.csproj": {
+                "projectPath": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.Domain\\Todo.Domain.csproj"
               }
             }
           }
