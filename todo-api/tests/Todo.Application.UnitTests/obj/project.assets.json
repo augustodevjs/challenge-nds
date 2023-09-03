@@ -5523,11 +5523,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.UnitTests\\Todo.UnitTests.csproj",
-      "projectName": "Todo.UnitTests",
-      "projectPath": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.UnitTests\\Todo.UnitTests.csproj",
+      "projectUniqueName": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\tests\\Todo.Application.UnitTests\\Todo.Application.UnitTests.csproj",
+      "projectName": "Todo.Application.UnitTests",
+      "projectPath": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\tests\\Todo.Application.UnitTests\\Todo.Application.UnitTests.csproj",
       "packagesPath": "C:\\Users\\joaoa\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.UnitTests\\obj\\",
+      "outputPath": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\tests\\Todo.Application.UnitTests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\joaoa\\AppData\\Roaming\\NuGet\\NuGet.Config",

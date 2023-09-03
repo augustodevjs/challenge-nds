@@ -1,4 +1,4 @@
-namespace Todo.UnitTests;
+namespace Todo.Domain.UnitTests;
 
 public class UnitTest1
 {

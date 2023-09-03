@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LVzRkOJ5oJO2tesrIhOUZW/3o8Ujuw/L7aVdWXVcyUMjQVELAzaFsOUK+PA194L3fLKYDX8iDO06AmQ234Xkkw==",
+  "dgSpecHash": "CJLgx8ZVPPTZy7Tn9+kQb4nVz09o/SliXwDFKSSgd+7aVnMzlf8yxs0Kqkzc3LXP2CRu9jXnrf5ZwJKI11Oq5g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.UnitTests\\Todo.UnitTests.csproj",
+  "projectFilePath": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\tests\\Todo.Application.UnitTests\\Todo.Application.UnitTests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\joaoa\\.nuget\\packages\\coverlet.collector\\3.2.0\\coverlet.collector.3.2.0.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\microsoft.codecoverage\\17.6.0\\microsoft.codecoverage.17.6.0.nupkg.sha512",
