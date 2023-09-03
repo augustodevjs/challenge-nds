@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthenticationModule } from './modules/authentication/authentication.module';
 
+
 @NgModule({
   declarations: [
     AppComponent,

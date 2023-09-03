@@ -3,6 +3,8 @@ import { FormGroup, Validators, FormBuilder, FormControlName } from '@angular/fo
 import { ConfirmedValidator, DisplayMessage, GenericValidator, RegisterFormModel, RegisterFormResponse, RegisterService, registerFormMessages } from '../../../shared';
 import { Observable, fromEvent, merge } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -12,13 +14,20 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class RegisterComponent implements OnInit, AfterViewInit {
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements!: ElementRef[];
 
-  isLoading: boolean = false;
   registerForm!: FormGroup;
+  errors: string[] = ['asdaaskdjalksdjalksjdalksjdlkajsdlkajsdklasjlkakjsdklajss']
+  isLoading: boolean = false;
   genericValidator: GenericValidator;
   displayMessage: DisplayMessage = {}
   registerFormModel: RegisterFormModel = {} as RegisterFormModel;
 
-  constructor(private builder: FormBuilder, private registerFormMessages: registerFormMessages, private registerService: RegisterService) {
+  constructor(
+    private router: Router,
+    private builder: FormBuilder,
+    private _snackBar: MatSnackBar,
+    private registerService: RegisterService,
+    private registerFormMessages: registerFormMessages,
+  ) {
     this.genericValidator = new GenericValidator(this.registerFormMessages.validationMessages);
   }
 
@@ -43,6 +52,13 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     })
   }
 
+  openSnackBar(message: string,) {
+    this._snackBar.open(message, 'Ok', {
+      horizontalPosition: 'end',
+      verticalPosition: 'top',
+    });
+  }
+
   register(): void {
     this.isLoading = true;
 
@@ -50,11 +66,12 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
     this.registerService.register(this.registerFormModel).subscribe({
       next: (data: RegisterFormResponse) => {
-        console.log('Usuario cadastrado', data);
+        this.openSnackBar(`Usuário ${data.name} foi criado com sucesso`);
+        this.router.navigateByUrl('/auth/login')
       },
       error: (error: HttpErrorResponse) => {
         this.isLoading = false;
-        this.registerService.errorHandling(error)
+        this.errors = this.registerService.errorHandling(error)
       },
       complete: () => {
         this.isLoading = false;

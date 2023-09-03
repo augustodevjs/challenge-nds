@@ -2,7 +2,7 @@ import { Observable } from "rxjs";
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from "@angular/common/http";
 import { BaseService } from '../../base-service/base-service';
-import { RegisterFormModel, RegisterFormResponse, HttpStatusCode, UnexpectedError, ValidationError } from '../../../../shared';
+import { RegisterFormModel, RegisterFormResponse, HttpStatusCode, UnexpectedError } from '../../../../shared';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +13,10 @@ export class RegisterService extends BaseService {
     return this.httpClient.post<RegisterFormResponse>(url, user);
   }
 
-  errorHandling(response: HttpErrorResponse) {
+  errorHandling(response: HttpErrorResponse): string[] {
     switch (response.status) {
       case HttpStatusCode.BadRequest:
-        console.log(response.error.erros[0])
-        throw new ValidationError(response.error.erros[0]);
+        return response.error.erros;
       default:
         throw new UnexpectedError();
     }

@@ -1,8 +1,6 @@
 
 e
 5src/Todo.Application/Configuration/DependecyConfig.cs,6\d\6dbb78e3e3dff1b0418500d77a89a73a0f0e7ce4
-Z
-*src/Todo.Application/DependecyInjection.cs,a\7\a7c9e8425580f7d0cb7910ed25a61a604f105669
 `
 0src/Todo.Application/Configuration/AuthConfig.cs,9\0\90f4d191e61642cc94f4cde4a24ad9cf3e665893
 j
@@ -49,3 +47,19 @@ l
 <src/Todo.Infra.Data/Repositories/AssignmentListRepository.cs,8\7\87c34d777a33b5996c41aa4d2b4699869a735fb8
 f
 6src/Todo.Application/Services/AssignmentListService.cs,a\0\a0a214ede3204759ad1f9ace5fe3eac0f87c55c2
+M
+src/Todo.API/appsettings.json,b\e\be057cd8a223f10598c02752b6b55588f546b2bb
+]
+-src/Todo.API/V1/Controllers/MainController.cs,f\9\f9d05672b1a97bfa1c7a55e007940c93bc1bdb5f
+]
+-src/Todo.API/V1/Controllers/AuthController.cs,e\5\e58caa5b7195979389927c54b859dac6ab043575
+_
+/src/Todo.Application/DTO/V1/Auth/RegisterDto.cs,8\5\8568a9b72349d58b7f9b599b249a9c7e99688c22
+\
+,src/Todo.Application/Services/AuthService.cs,4\d\4d677a16b158929e60464aadb5e217d45915a2fb
+G
+src/Todo.API/Program.cs,b\0\b0dae69d047ad0a3488bdf59aaf1b84599bc6b1e
+Y
+)src/Todo.Infra.Data/DependecyInjection.cs,e\d\ed376779a75e7d145ff58e75629d62d0b2f834e4
+Z
+*src/Todo.Application/DependecyInjection.cs,a\7\a7c9e8425580f7d0cb7910ed25a61a604f105669
