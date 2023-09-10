@@ -127,3 +127,13 @@ R
 "src/Todo.Domain/Todo.Domain.csproj,b\7\b73b6e36f5feeccb9345a586d58d3f89b907a120
 e
 5src/Todo.Domain/Validators/AssignmentListValidator.cs,4\f\4fa5d5fe52333d229031d4854474cf5e6a08e63c
+P
+ src/Todo.Domain/Models/Entity.cs,3\8\389e0adf3165b2527dd08213f8872d47a631ccce
+N
+src/Todo.Domain/Models/User.cs,b\4\b4f95f012dcbd9a8f93d9760e17e178193feae38
+]
+-tests/Todo.UnitTests/Domain/AssignmentTest.cs,c\8\c889044cb8b39b12d4be7981958fc15839bc66a7
+b
+2src/Todo.Infra.Data/Repositories/UserRepository.cs,f\a\fa509d1e4fb4a61e1cca19b1d915116c84e77ea9
+h
+8src/Todo.Infra.Data/Repositories/AssignmentRepository.cs,e\a\ea9e7a1339a921b776b8a4e30d2e6e3f01b1f50c
