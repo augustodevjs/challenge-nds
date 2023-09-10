@@ -4,10 +4,10 @@ using Todo.Domain.Filter;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Todo.Application.Contracts;
-using Todo.Domain.Contracts.Repository;
-using Todo.Application.Contracts.Services;
-using Todo.Application.DTO.V1.Assignment;
 using Todo.Application.DTO.V1.Paged;
+using Todo.Domain.Contracts.Repository;
+using Todo.Application.DTO.V1.Assignment;
+using Todo.Application.Contracts.Services;
 
 namespace Todo.Application.Services;
 

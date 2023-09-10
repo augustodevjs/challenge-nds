@@ -18,7 +18,7 @@ public class AuthService : BaseService, IAuthService
     private readonly IMapper _mapper;
     private readonly IConfiguration _configuration;
     private readonly IUserRepository _userRepository;
-    private readonly IPasswordHasher<User> _passwordHasher;
+        private readonly IPasswordHasher<User> _passwordHasher;
 
     public AuthService(
         IMapper mapper,
