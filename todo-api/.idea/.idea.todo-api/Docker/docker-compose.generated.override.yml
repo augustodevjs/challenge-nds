@@ -1,0 +1,24 @@
+# This is a generated file. Not intended for manual editing.
+version: "3.8"
+services:
+  api:
+    build:
+      context: "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.API"
+      dockerfile: "Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net7.0/Todo.API.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+      NUGET_PACKAGES: "C:\\Users\\joaoa\\.nuget\\packages"
+      NUGET_FALLBACK_PACKAGES: "C:\\Users\\joaoa\\.nuget\\packages"
+    image: "todo.api:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\joaoa\\.nuget\\packages:/root/.nuget/fallbackpackages"
+    - "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.API:/app:rw"
+    - "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api:/src:rw"
+    working_dir: "/app"
