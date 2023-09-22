@@ -16,7 +16,7 @@ services:
     environment:
       - ASPNETCORE_URLS=http://+:80
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=database;port=3306;Database=todo-api;Uid=root;Pwd=84880897; Connection Timeout=30; Persist Security Info=False;
+      - ConnectionStrings__DefaultConnection=Server=database;port=3306;Database=todo-api;Uid=root;Pwd=84880897;
     networks:
       - todoapp_net
 

@@ -11,7 +11,6 @@ services:
     - "dotnet"
     - "/app/bin/Debug/net7.0/Todo.API.dll"
     environment:
-      ASPNETCORE_ENVIRONMENT: "Development"
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
       NUGET_PACKAGES: "C:\\Users\\joaoa\\.nuget\\packages"
       NUGET_FALLBACK_PACKAGES: "C:\\Users\\joaoa\\.nuget\\packages"

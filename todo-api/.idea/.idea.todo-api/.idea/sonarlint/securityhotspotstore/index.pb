@@ -137,3 +137,9 @@ b
 2src/Todo.Infra.Data/Repositories/UserRepository.cs,f\a\fa509d1e4fb4a61e1cca19b1d915116c84e77ea9
 h
 8src/Todo.Infra.Data/Repositories/AssignmentRepository.cs,e\a\ea9e7a1339a921b776b8a4e30d2e6e3f01b1f50c
+Y
+)src/Todo.API/appsettings.Development.json,2\f\2f023d9e36ac759157fcfbadfd42a87a80e53711
+G
+src/Todo.API/Dockerfile,2\b\2bc88873739056595fcc61cc0f5864bbd7278230
+O
+src/Todo.API/docker-compose.yml,3\e\3ec0169f5b3a511f2ad1e0ab14e1ac51500b1718

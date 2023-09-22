@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\Todo.API",
+    "\\src\\Todo.API\\V1",
+    "\\src\\Todo.API\\V1\\Controllers"
+  ],
+  "SelectedNode": "\\src\\Todo.API\\V1\\Controllers\\AuthController.cs",
+  "PreviewInSolutionExplorer": false
+}
