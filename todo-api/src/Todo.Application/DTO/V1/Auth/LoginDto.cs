@@ -1,17 +1,34 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using FluentValidation;
+using FluentValidation.Results;
 
 namespace Todo.Application.DTO.V1.Auth;
 
 public class LoginDto
 {
-    [EmailAddress(ErrorMessage = "O email fornecido não é válido.")]
-    [Required(ErrorMessage = "O campo de email não pode ser deixado vazio.")]
-    [StringLength(100, MinimumLength = 3, ErrorMessage = "O campo de email deve conter entre {2} e {1} caracteres.")]
-    public string Email { get; set; }
+    public string Email { get; set; } = null!;
+    public string Password { get; set; } = null!;
 
-    [Required(ErrorMessage = "A senha não pode ser deixada vazia.")]
-    [StringLength(250, MinimumLength = 3, ErrorMessage = "A senha deve conter entre {2} e {1} caracteres.")]
-    [PasswordPropertyText]
-    public string Password { get; set; }
+    public bool Validar(out ValidationResult validationResult)
+    {
+        var validator = new InlineValidator<LoginDto>();
+        
+        validator
+            .RuleFor(c => c.Email)
+            .NotEmpty()
+            .WithMessage("O campo de email não pode ser deixado vazio.")
+            .EmailAddress()
+            .WithMessage("O email fornecido não é válido.")
+            .Length(3, 100)
+            .WithMessage("O campo de email deve conter entre {MinLength} e {MaxLength} caracteres.");
+
+        validator
+            .RuleFor(c => c.Password)
+            .NotEmpty()
+            .WithMessage("A senha não pode ser deixada vazia.")
+            .Length(3, 250)
+            .WithMessage("A senha deve conter entre {MinLength} e {MaxLength} caracteres.");
+
+        validationResult = validator.Validate(this);
+        return validationResult.IsValid;
+    }
 }

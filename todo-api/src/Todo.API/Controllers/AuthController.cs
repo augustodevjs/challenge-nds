@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
-using Todo.Application.Contracts;
-using Todo.Application.Contracts.Services;
+﻿using Todo.API.Responses;
+using Microsoft.AspNetCore.Mvc;
 using Todo.Application.DTO.V1.Auth;
+using Todo.Application.Notifications;
+using Swashbuckle.AspNetCore.Annotations;
+using Todo.Application.Contracts.Services;
 
-namespace Todo.API.V1.Controllers;
+namespace Todo.API.Controllers;
 
 [Route("auth")]
 public class AuthController : MainController
@@ -20,26 +21,22 @@ public class AuthController : MainController
     }
 
     [HttpPost("login")]
-    [SwaggerOperation(Summary = "Login - Authentication")]
+    [SwaggerOperation(Summary = "Login")]
     [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> Login([FromBody] LoginDto loginDto)
+    [ProducesResponseType(typeof(UnauthorizedObjectResult), StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
     {
-        if (!ModelState.IsValid) return CustomResponse(ModelState);
-
-        var userToken = await _authService.Login(loginDto);
-        return CustomResponse(userToken);
+        var token = await _authService.Login(loginDto);
+        return token != null ? OkResponse(token) : Unauthorized(new[] { "Usuário e/ou senha incorretos" });
     }
 
     [HttpPost("register")]
     [SwaggerOperation(Summary = "Register Account")]
     [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> Register([FromBody] RegisterDto registerDto)
+    public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
     {
-        if (!ModelState.IsValid) return CustomResponse(ModelState);
-
         var registerUser = await _authService.Register(registerDto);
-        return CustomResponse(registerUser);
+        return OkResponse(registerUser);
     }
 }

@@ -2,68 +2,78 @@
 using System.Text;
 using Todo.Domain.Models;
 using System.Security.Claims;
-using Todo.Application.Contracts;
+using Todo.Application.DTO.V1.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Todo.Application.Notifications;
 using System.IdentityModel.Tokens.Jwt;
 using Todo.Domain.Contracts.Repository;
 using Microsoft.Extensions.Configuration;
 using Todo.Application.Contracts.Services;
-using Todo.Application.DTO.V1.Auth;
 
 namespace Todo.Application.Services;
 
 public class AuthService : BaseService, IAuthService
 {
-    private readonly IMapper _mapper;
     private readonly IConfiguration _configuration;
     private readonly IUserRepository _userRepository;
-        private readonly IPasswordHasher<User> _passwordHasher;
+    private readonly IPasswordHasher<User> _passwordHasher;
 
     public AuthService(
         IMapper mapper,
         INotificator notificator,
         IConfiguration configuration,
         IUserRepository userRepository,
-        IPasswordHasher<User> passwordHasher) : base(notificator)
+        IPasswordHasher<User> passwordHasher) : base(mapper, notificator)
     {
-        _mapper = mapper;
         _configuration = configuration;
         _userRepository = userRepository;
         _passwordHasher = passwordHasher;
     }
-    
+
     public async Task<TokenDto?> Login(LoginDto loginDto)
     {
+        if (!loginDto.Validar(out var validationResult))
+        {
+            Notificator.Handle(validationResult.Errors);
+            return null;
+        }
+        
         var user = await _userRepository.GetByEmail(loginDto.Email);
 
         if (user == null || _passwordHasher.VerifyHashedPassword(user, user.Password, loginDto.Password) !=
             PasswordVerificationResult.Success)
         {
-            Notify("Usuário ou senha estão incorretos.");
+            Notificator.Handle("Usuário ou senha estão incorretos.");
             return null;
         }
-        
+
         return GenerateToken(user);
     }
 
     public async Task<UserDto?> Register(RegisterDto registerDto)
     {
-        var user = _mapper.Map<User>(registerDto);
-        
-        var getUser = await _userRepository.GetByEmail(registerDto.Email);
-        
-        if (getUser != null)
+        if (!registerDto.Validar(out var validationResult))
         {
-            Notify("Já existe um usuário cadastrado com o email informado.");
+            Notificator.Handle(validationResult.Errors);
             return null;
         }
         
+        var user = Mapper.Map<User>(registerDto);
+
+        var getUser = await _userRepository.GetByEmail(registerDto.Email);
+
+        if (getUser != null)
+        {
+            Notificator.Handle("Já existe um usuário cadastrado com o email informado.");
+            return null;
+        }
+
         user.Password = _passwordHasher.HashPassword(user, registerDto.Password);
-        
+
         await _userRepository.Create(user);
 
-        return _mapper.Map<UserDto>(user);
+        return Mapper.Map<UserDto>(user);
     }
 
     private TokenDto GenerateToken(User user)
@@ -95,9 +105,7 @@ public class AuthService : BaseService, IAuthService
 
         return new TokenDto
         {
-            accessToken = encodedToken,
-            expiresIn = TimeSpan.FromHours(int.Parse(_configuration["AppSettings:ExpirationHours"] ?? string.Empty))
-                .TotalSeconds
+            accessToken = encodedToken
         };
     }
 }

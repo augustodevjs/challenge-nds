@@ -1,23 +1,36 @@
-﻿using Todo.Application.Contracts;
+﻿using FluentValidation.Results;
 
 namespace Todo.Application.Notifications;
 
 public class Notificator : INotificator
 {
-    private List<Notification> _notifications = new();
+    private bool _notFoundResource;
+    private readonly List<string> _notifications = new();
 
-    public void Handle(Notification notification)
+    public void Handle(string message)
     {
-        _notifications.Add(notification);
+        if (_notFoundResource)
+            throw new InvalidOperationException("Cannot call Handle when there are NotFoundResource!");
+        
+        _notifications.Add(message);
     }
 
-    public List<Notification> getNotification()
+    public void Handle(List<ValidationFailure> failures)
     {
-        return _notifications;
+        failures.ForEach(err => Handle(err.ErrorMessage));
     }
 
-    public bool hasNotification()
+    public void HandleNotFoundResource()
     {
-        return _notifications.Any();
+        if (HasNotification)
+            throw new InvalidOperationException("Cannot call HandleNotFoundResource when there are notifications!");
+        
+        _notFoundResource = true;
     }
+
+    public IEnumerable<string> GetNotifications() => _notifications;
+
+    public bool HasNotification  => _notifications.Any();
+
+    public bool IsNotFoundResource => _notFoundResource;
 }

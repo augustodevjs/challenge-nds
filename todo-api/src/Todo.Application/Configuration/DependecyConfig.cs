@@ -1,7 +1,6 @@
 ﻿using Todo.Domain.Models;
 using Todo.Application.Services;
 using Microsoft.AspNetCore.Http;
-using Todo.Application.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Todo.Infra.Data.Repositories;
 using Microsoft.AspNetCore.Identity;

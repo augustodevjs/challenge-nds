@@ -3,8 +3,8 @@ using Todo.Domain.Models;
 using Todo.Domain.Filter;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
-using Todo.Application.Contracts;
 using Todo.Application.DTO.V1.Paged;
+using Todo.Application.Notifications;
 using Todo.Domain.Contracts.Repository;
 using Todo.Application.DTO.V1.Assignment;
 using Todo.Application.Contracts.Services;
@@ -13,7 +13,6 @@ namespace Todo.Application.Services;
 
 public class AssignmentService : BaseService, IAssignmentService
 {
-    private readonly IMapper _mapper;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IAssignmentRepository _assignmentRepository;
     private readonly IAssignmentListRepository _assignmentListRepository;
@@ -23,9 +22,8 @@ public class AssignmentService : BaseService, IAssignmentService
         INotificator notificator,
         IAssignmentRepository assignmentRepository,
         IAssignmentListRepository assignmentListRepository,
-        IHttpContextAccessor httpContextAccessor) : base(notificator)
+        IHttpContextAccessor httpContextAccessor) : base(mapper, notificator)
     {
-        _mapper = mapper;
         _httpContextAccessor = httpContextAccessor;
         _assignmentRepository = assignmentRepository;
         _assignmentListRepository = assignmentListRepository;
@@ -33,12 +31,12 @@ public class AssignmentService : BaseService, IAssignmentService
 
     public async Task<PagedDto<AssignmentDto>> Search(AssignmentSearchDto search)
     {
-        var filter = _mapper.Map<AssignmentFilter>(search);
+        var filter = Mapper.Map<AssignmentFilter>(search);
         var result = await _assignmentRepository.Search(GetUserId(), filter, search.PerPage, search.Page);
 
         return new PagedDto<AssignmentDto>
         {
-            Items = _mapper.Map<List<AssignmentDto>>(result.Items),
+            Items = Mapper.Map<List<AssignmentDto>>(result.Items),
             Total = result.Total,
             Page = result.Page,
             PerPage = result.PerPage,
@@ -52,13 +50,10 @@ public class AssignmentService : BaseService, IAssignmentService
 
         var getAssignment = await _assignmentRepository.GetById(id, GetUserId());
 
-        if (getAssignment == null)
-        {
-            Notify("Não foi possível encontrar a tarefa correspondente.");
-            return null;
-        }
-
-        return _mapper.Map<AssignmentDto>(getAssignment);
+        if (getAssignment != null) return Mapper.Map<AssignmentDto>(getAssignment);
+        
+        Notificator.Handle("Não foi possível encontrar a tarefa correspondente.");
+        return null;
     }
 
     public async Task<AssignmentDto?> Create(AddAssignmentDto addAssignmentDto)
@@ -69,16 +64,16 @@ public class AssignmentService : BaseService, IAssignmentService
 
         if (getAssignment == null)
         {
-            Notify("Não foi possível encontrar a lista de tarefas correspondente.");
+            Notificator.Handle("Não foi possível encontrar a lista de tarefas correspondente.");
             return null;
         }
 
-        var assignment = _mapper.Map<Assignment>(addAssignmentDto);
+        var assignment = Mapper.Map<Assignment>(addAssignmentDto);
         assignment.UserId = Guid.Parse(GetUserId());
 
         await _assignmentRepository.Create(assignment);
 
-        return _mapper.Map<AssignmentDto>(assignment);
+        return Mapper.Map<AssignmentDto>(assignment);
     }
 
     public async Task<AssignmentDto?> Update(string id, UpdateAssignmentDto updateAssignmentDto)
@@ -87,7 +82,7 @@ public class AssignmentService : BaseService, IAssignmentService
         
         if (id != updateAssignmentDto.Id || isIdInvalid)
         {
-            Notify("O id informado é inválido");
+            Notificator.Handle("O id informado é inválido");
             return null;
         }
 
@@ -95,15 +90,15 @@ public class AssignmentService : BaseService, IAssignmentService
 
         if (getAssignment == null)
         {
-            Notify("Não foi possível encontrar a tarefa correspondente.");
+            Notificator.Handle("Não foi possível encontrar a tarefa correspondente.");
             return null;
         }
 
-        _mapper.Map(updateAssignmentDto, getAssignment);
+        Mapper.Map(updateAssignmentDto, getAssignment);
 
         await _assignmentRepository.Update(getAssignment);
 
-        return _mapper.Map<AssignmentDto>(updateAssignmentDto);
+        return Mapper.Map<AssignmentDto>(updateAssignmentDto);
     }
 
     public async Task Delete(string id)
@@ -114,7 +109,7 @@ public class AssignmentService : BaseService, IAssignmentService
 
         if (getAssignment == null)
         {
-            Notify("Não foi possível encontrar a tarefa correspondente.");
+            Notificator.Handle("Não foi possível encontrar a tarefa correspondente.");
             return;
         }
 
@@ -129,14 +124,14 @@ public class AssignmentService : BaseService, IAssignmentService
 
         if (assignment == null)
         {
-            Notify("Não foi possível encontrar a tarefa correspondente.");
+            Notificator.Handle("Não foi possível encontrar a tarefa correspondente.");
             return null;
         }
 
         assignment.SetConcluded();
 
         await _assignmentRepository.Update(assignment);
-        return _mapper.Map<AssignmentDto>(assignment);
+        return Mapper.Map<AssignmentDto>(assignment);
     }
 
     public async Task<AssignmentDto?> MarkDesconcluded(string id)
@@ -147,14 +142,14 @@ public class AssignmentService : BaseService, IAssignmentService
 
         if (assignment == null)
         {
-            Notify("Não foi possível encontrar a tarefa correspondente.");
+            Notificator.Handle("Não foi possível encontrar a tarefa correspondente.");
             return null;
         }
 
         assignment.SetUnconcluded();
 
         await _assignmentRepository.Update(assignment);
-        return _mapper.Map<AssignmentDto>(assignment);
+        return Mapper.Map<AssignmentDto>(assignment);
     }
 
     private string GetUserId()
@@ -167,7 +162,7 @@ public class AssignmentService : BaseService, IAssignmentService
     {
         if (!Guid.TryParse(id, out _))
         {
-            Notify("O id informado é inválido");
+            Notificator.Handle("O id informado é inválido");
             return false;
         }
 
