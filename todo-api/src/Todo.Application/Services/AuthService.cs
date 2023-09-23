@@ -2,13 +2,14 @@
 using System.Text;
 using Todo.Domain.Models;
 using System.Security.Claims;
-using Todo.Application.DTO.V1.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Todo.Application.Notifications;
 using System.IdentityModel.Tokens.Jwt;
 using Todo.Domain.Contracts.Repository;
+using Todo.Application.DTO.V1.ViewModel;
 using Microsoft.Extensions.Configuration;
+using Todo.Application.DTO.V1.InputModel;
 using Todo.Application.Contracts.Services;
 
 namespace Todo.Application.Services;
@@ -31,17 +32,17 @@ public class AuthService : BaseService, IAuthService
         _passwordHasher = passwordHasher;
     }
 
-    public async Task<TokenDto?> Login(LoginDto loginDto)
+    public async Task<TokenViewModel?> Login(LoginInputModel inputModel)
     {
-        if (!loginDto.Validar(out var validationResult))
+        if (!inputModel.Validar(out var validationResult))
         {
             Notificator.Handle(validationResult.Errors);
             return null;
         }
         
-        var user = await _userRepository.GetByEmail(loginDto.Email);
+        var user = await _userRepository.GetByEmail(inputModel.Email);
 
-        if (user == null || _passwordHasher.VerifyHashedPassword(user, user.Password, loginDto.Password) !=
+        if (user == null || _passwordHasher.VerifyHashedPassword(user, user.Password, inputModel.Password) !=
             PasswordVerificationResult.Success)
         {
             Notificator.Handle("Usuário ou senha estão incorretos.");
@@ -51,17 +52,17 @@ public class AuthService : BaseService, IAuthService
         return GenerateToken(user);
     }
 
-    public async Task<UserDto?> Register(RegisterDto registerDto)
+    public async Task<UserViewModel?> Register(RegisterInputModel inputModel)
     {
-        if (!registerDto.Validar(out var validationResult))
+        if (!inputModel.Validar(out var validationResult))
         {
             Notificator.Handle(validationResult.Errors);
             return null;
         }
         
-        var user = Mapper.Map<User>(registerDto);
+        var user = Mapper.Map<User>(inputModel);
 
-        var getUser = await _userRepository.GetByEmail(registerDto.Email);
+        var getUser = await _userRepository.GetByEmail(inputModel.Email);
 
         if (getUser != null)
         {
@@ -69,14 +70,14 @@ public class AuthService : BaseService, IAuthService
             return null;
         }
 
-        user.Password = _passwordHasher.HashPassword(user, registerDto.Password);
+        user.Password = _passwordHasher.HashPassword(user, inputModel.Password);
 
         await _userRepository.Create(user);
 
-        return Mapper.Map<UserDto>(user);
+        return Mapper.Map<UserViewModel>(user);
     }
 
-    private TokenDto GenerateToken(User user)
+    private TokenViewModel GenerateToken(User user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
 
@@ -103,9 +104,9 @@ public class AuthService : BaseService, IAuthService
 
         var encodedToken = tokenHandler.WriteToken(token);
 
-        return new TokenDto
+        return new TokenViewModel
         {
-            accessToken = encodedToken
+            AccessToken = encodedToken
         };
     }
 }

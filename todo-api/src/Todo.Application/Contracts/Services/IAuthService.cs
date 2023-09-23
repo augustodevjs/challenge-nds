@@ -1,9 +1,10 @@
-﻿using Todo.Application.DTO.V1.Auth;
+﻿using Todo.Application.DTO.V1.InputModel;
+using Todo.Application.DTO.V1.ViewModel;
 
 namespace Todo.Application.Contracts.Services;
 
 public interface IAuthService
 {
-    Task<TokenDto?> Login(LoginDto loginDto);
-    Task<UserDto?> Register(RegisterDto registerDto);
+    Task<TokenViewModel?> Login(LoginInputModel inputModel);
+    Task<UserViewModel?> Register(RegisterInputModel inputModel);
 }

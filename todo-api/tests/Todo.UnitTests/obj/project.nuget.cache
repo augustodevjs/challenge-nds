@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "RKfVTCzJpHg29ecK6k1N2+Ic9jPlk8IxJ15j2IbLQt7BeL6NJ2vGcBvMI48vgY2VwYbGYAVycQjqIJgWHHPr0Q==",
+  "dgSpecHash": "MnWzJ8d/y0h6IeTalRE3EuTF4qagSlmtEeQ8X9Xez5EHG6CYOd5j2R9hbAcIyasq4qL0EfIb5po6L3HtxNEfZg==",
   "success": true,
   "projectFilePath": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\tests\\Todo.UnitTests\\Todo.UnitTests.csproj",
   "expectedPackageFiles": [

@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
-using Todo.Domain.Models;
+using Todo.Core.Utils;
 using Todo.Domain.Filter;
+using Todo.Domain.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
-using Todo.Application.DTO.V1.Paged;
 using Todo.Application.Notifications;
 using Todo.Domain.Contracts.Repository;
-using Todo.Application.DTO.V1.Assignment;
+using Todo.Application.DTO.V1.ViewModel;
+using Todo.Application.DTO.V1.InputModel;
 using Todo.Application.Contracts.Services;
 
 namespace Todo.Application.Services;
@@ -20,23 +21,23 @@ public class AssignmentService : BaseService, IAssignmentService
     public AssignmentService(
         IMapper mapper,
         INotificator notificator,
+        IHttpContextAccessor httpContextAccessor,
         IAssignmentRepository assignmentRepository,
-        IAssignmentListRepository assignmentListRepository,
-        IHttpContextAccessor httpContextAccessor) : base(mapper, notificator)
+        IAssignmentListRepository assignmentListRepository) : base(mapper, notificator)
     {
         _httpContextAccessor = httpContextAccessor;
         _assignmentRepository = assignmentRepository;
         _assignmentListRepository = assignmentListRepository;
     }
 
-    public async Task<PagedDto<AssignmentDto>> Search(AssignmentSearchDto search)
+    public async Task<PagedViewModel<AssignmentViewModel>> Search(AssignmentSearchInputModel inputModel)
     {
-        var filter = Mapper.Map<AssignmentFilter>(search);
-        var result = await _assignmentRepository.Search(GetUserId(), filter, search.PerPage, search.Page);
+        var filter = Mapper.Map<AssignmentFilter>(inputModel);
+        var result = await _assignmentRepository.Search(GetUserId(), filter, inputModel.PerPage, inputModel.Page);
 
-        return new PagedDto<AssignmentDto>
+        return new PagedViewModel<AssignmentViewModel>
         {
-            Items = Mapper.Map<List<AssignmentDto>>(result.Items),
+            Items = Mapper.Map<List<AssignmentViewModel>>(result.Items),
             Total = result.Total,
             Page = result.Page,
             PerPage = result.PerPage,
@@ -44,23 +45,37 @@ public class AssignmentService : BaseService, IAssignmentService
         };
     }
 
-    public async Task<AssignmentDto?> GetById(string id)
+    public async Task<AssignmentViewModel?> GetById(string id)
     {
-        if (!IsValidGuid(id)) return null;
+        if (!GuidUtils.isValidGuid(id))
+        {
+            Notificator.Handle("O id informado é inválido");
+            return null;
+        }
 
         var getAssignment = await _assignmentRepository.GetById(id, GetUserId());
 
-        if (getAssignment != null) return Mapper.Map<AssignmentDto>(getAssignment);
+        if (getAssignment != null) return Mapper.Map<AssignmentViewModel>(getAssignment);
         
-        Notificator.Handle("Não foi possível encontrar a tarefa correspondente.");
+        Notificator.HandleNotFoundResource();
         return null;
     }
 
-    public async Task<AssignmentDto?> Create(AddAssignmentDto addAssignmentDto)
+    public async Task<AssignmentViewModel?> Create(AddAssignmentInputModel inputModel)
     {
-        if (!IsValidGuid(addAssignmentDto.AssignmentListId)) return null;
+        if (!GuidUtils.isValidGuid(inputModel.AssignmentListId))
+        {
+            Notificator.Handle("O id informado é inválido");
+            return null;
+        }
 
-        var getAssignment = await _assignmentListRepository.GetById(Guid.Parse(addAssignmentDto.AssignmentListId));
+        if (!inputModel.Validar(out var validationResult))
+        {
+            Notificator.Handle(validationResult.Errors);
+            return null;
+        }
+
+        var getAssignment = await _assignmentListRepository.GetById(Guid.Parse(inputModel.AssignmentListId));
 
         if (getAssignment == null)
         {
@@ -68,104 +83,109 @@ public class AssignmentService : BaseService, IAssignmentService
             return null;
         }
 
-        var assignment = Mapper.Map<Assignment>(addAssignmentDto);
+        var assignment = Mapper.Map<Assignment>(inputModel);
         assignment.UserId = Guid.Parse(GetUserId());
 
         await _assignmentRepository.Create(assignment);
 
-        return Mapper.Map<AssignmentDto>(assignment);
+        return Mapper.Map<AssignmentViewModel>(assignment);
     }
 
-    public async Task<AssignmentDto?> Update(string id, UpdateAssignmentDto updateAssignmentDto)
+    public async Task<AssignmentViewModel?> Update(string id, UpdateAssignmentInputModel inputModel)
     {
-        bool isIdInvalid = !Guid.TryParse(id, out _) || !Guid.TryParse(updateAssignmentDto.Id, out _);
+        bool isIdInvalid = !Guid.TryParse(id, out _) || !Guid.TryParse(inputModel.Id, out _);
         
-        if (id != updateAssignmentDto.Id || isIdInvalid)
+        if (id != inputModel.Id || isIdInvalid)
         {
             Notificator.Handle("O id informado é inválido");
             return null;
         }
+        
+        if (!inputModel.Validar(out var validationResult))
+        {
+            Notificator.Handle(validationResult.Errors);
+            return null;
+        }
 
         var getAssignment = await _assignmentRepository.GetById(id, GetUserId());
 
         if (getAssignment == null)
         {
-            Notificator.Handle("Não foi possível encontrar a tarefa correspondente.");
+            Notificator.HandleNotFoundResource();
             return null;
         }
 
-        Mapper.Map(updateAssignmentDto, getAssignment);
+        var result = Mapper.Map(inputModel, getAssignment);
 
         await _assignmentRepository.Update(getAssignment);
 
-        return Mapper.Map<AssignmentDto>(updateAssignmentDto);
+        return Mapper.Map<AssignmentViewModel>(result);
     }
 
     public async Task Delete(string id)
     {
-        if (!IsValidGuid(id)) return;
+        if (!GuidUtils.isValidGuid(id))
+        {
+            Notificator.Handle("O id informado é inválido");
+            return;
+        }
 
         var getAssignment = await _assignmentRepository.GetById(id, GetUserId());
 
         if (getAssignment == null)
         {
-            Notificator.Handle("Não foi possível encontrar a tarefa correspondente.");
+            Notificator.HandleNotFoundResource();
             return;
         }
 
         await _assignmentRepository.Delete(getAssignment);
     }
 
-    public async Task<AssignmentDto?> MarkConcluded(string id)
+    public async Task MarkConcluded(string id)
     {
-        if (!IsValidGuid(id)) return null;
+        if (!GuidUtils.isValidGuid(id))
+        {
+            Notificator.Handle("O id informado é inválido");
+            return;
+        }
 
         var assignment = await _assignmentRepository.GetById(id, GetUserId());
 
         if (assignment == null)
         {
-            Notificator.Handle("Não foi possível encontrar a tarefa correspondente.");
-            return null;
+            Notificator.HandleNotFoundResource();
+            return;
         }
 
         assignment.SetConcluded();
 
         await _assignmentRepository.Update(assignment);
-        return Mapper.Map<AssignmentDto>(assignment);
     }
 
-    public async Task<AssignmentDto?> MarkDesconcluded(string id)
+    public async Task MarkDesconcluded(string id)
     {
-        if (!IsValidGuid(id)) return null;
+        if (!GuidUtils.isValidGuid(id))
+        {
+            Notificator.Handle("O id informado é inválido");
+            return;
+        }
 
         var assignment = await _assignmentRepository.GetById(id, GetUserId());
 
         if (assignment == null)
         {
-            Notificator.Handle("Não foi possível encontrar a tarefa correspondente.");
-            return null;
+            Notificator.HandleNotFoundResource();
+            return;
         }
 
         assignment.SetUnconcluded();
 
         await _assignmentRepository.Update(assignment);
-        return Mapper.Map<AssignmentDto>(assignment);
     }
 
     private string GetUserId()
     {
         var userId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         return userId ?? string.Empty;
-    }
-
-    private bool IsValidGuid(string? id)
-    {
-        if (!Guid.TryParse(id, out _))
-        {
-            Notificator.Handle("O id informado é inválido");
-            return false;
-        }
-
-        return true;
     }
 }

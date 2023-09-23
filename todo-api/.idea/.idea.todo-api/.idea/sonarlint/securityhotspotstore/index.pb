@@ -31,12 +31,8 @@ b
 -src/Todo.Application/DTO/V1/Paged/PagedDto.cs,6\0\600668d8f91d00a6e9e95d0e0cfd0e570de7b952
 u
 Esrc/Todo.Application/DTO/V1/AssignmentList/AssignmentListSearchDto.cs,7\8\784280a86091cf19c411cdf9476f99662c9573ed
-c
-3src/Todo.API/V1/Controllers/AssignmentController.cs,c\c\ccffbec755c59f719481f85ccffffa361614721f
 V
 &src/Todo.Application/DTO/V1/BaseDto.cs,1\0\10919e09858db05e88c6120e9763c3664f1cf62b
-g
-7src/Todo.API/V1/Controllers/AssignmentListController.cs,b\9\b919b5ef1c2df3788bb6403f9dd46a9d5243185c
 m
 =src/Todo.Application/Contracts/Services/IAssignmentService.cs,b\b\bb8514d7e97f2b09987100619a19dfad30b9ffc5
 r
@@ -49,10 +45,6 @@ f
 6src/Todo.Application/Services/AssignmentListService.cs,a\0\a0a214ede3204759ad1f9ace5fe3eac0f87c55c2
 M
 src/Todo.API/appsettings.json,b\e\be057cd8a223f10598c02752b6b55588f546b2bb
-]
--src/Todo.API/V1/Controllers/MainController.cs,f\9\f9d05672b1a97bfa1c7a55e007940c93bc1bdb5f
-]
--src/Todo.API/V1/Controllers/AuthController.cs,e\5\e58caa5b7195979389927c54b859dac6ab043575
 _
 /src/Todo.Application/DTO/V1/Auth/RegisterDto.cs,8\5\8568a9b72349d58b7f9b599b249a9c7e99688c22
 \
@@ -119,8 +111,6 @@ Z
 *src/Todo.Infra.Data/Todo.Infra.Data.csproj,e\4\e41e0a3a394cc6b8276c3b17b1ba8f2f58480ca1
 \
 ,src/Todo.Application/Todo.Application.csproj,6\c\6c2f8c7a78702808a41289a3864a7413e8321d02
-b
-2src/Todo.Application/Notifications/Notification.cs,d\d\dd84f97e7631e7506741c772e1207d683373c49e
 a
 1src/Todo.Application/Notifications/Notificator.cs,7\d\7dd1cce37709709f7fc448e8b4876412099ccf0f
 R
@@ -143,3 +133,21 @@ G
 src/Todo.API/Dockerfile,2\b\2bc88873739056595fcc61cc0f5864bbd7278230
 O
 src/Todo.API/docker-compose.yml,3\e\3ec0169f5b3a511f2ad1e0ab14e1ac51500b1718
+\
+,src/Todo.API/Responses/BadRequestResponse.cs,c\2\c2afec441040b284afaf043761e9e5e3d6f98ede
+f
+6src/Todo.API/Responses/DevelopmentExceptionResponse.cs,0\9\097fc4df4ef70e962b1792fcb2a7334827b4db0f
+[
++src/Todo.API/Responses/ExceptionResponse.cs,8\0\80604316dcac713365c54972f608320d0f5f9157
+R
+"src/Todo.API/Responses/Response.cs,a\8\a8111e1bb034f509eb9fc3f5ce14985fb0bd79a0
+b
+2src/Todo.Application/Notifications/INotificator.cs,5\b\5be15f47808689342d7ed47be87469f143ed0989
+Z
+*src/Todo.API/Controllers/MainController.cs,8\3\83451fc1bcc72706dd8fd1f1a0b984961d60cacb
+Z
+*src/Todo.API/Controllers/AuthController.cs,2\2\22f3ccc727e05d5fa43b1070ed022307331c592d
+d
+4src/Todo.API/Controllers/AssignmentListController.cs,1\f\1f43fb0578294321f21cb81065f6df129d0b99f6
+`
+0src/Todo.API/Controllers/AssignmentController.cs,a\e\ae2ad908e1f50de6e793dbd59798b3cc27ec6f5d

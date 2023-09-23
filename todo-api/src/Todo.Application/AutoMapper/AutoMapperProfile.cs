@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using Todo.Domain.Filter;
 using Todo.Domain.Models;
-using Todo.Application.DTO.V1.Assignment;
-using Todo.Application.DTO.V1.AssignmentList;
-using Todo.Application.DTO.V1.Auth;
+using Todo.Application.DTO.V1.ViewModel;
+using Todo.Application.DTO.V1.InputModel;
 
 namespace Todo.Application.AutoMapper;
 
@@ -13,28 +12,28 @@ public class AutoMapperProfile : Profile
     {
         #region Auth
 
-        CreateMap<User, UserDto>().ReverseMap();
-        CreateMap<LoginDto, User>().ReverseMap();
-        CreateMap<RegisterDto, User>().ReverseMap();
-        CreateMap<UserDto, RegisterDto>().ReverseMap();
+        CreateMap<User, UserViewModel>().ReverseMap();
+        CreateMap<LoginInputModel, User>().ReverseMap();
+        CreateMap<RegisterInputModel, User>().ReverseMap();
+        CreateMap<UserViewModel, RegisterInputModel>().ReverseMap();
 
         #endregion
 
         #region Assignment
 
-        CreateMap<Assignment, AssignmentDto>().ReverseMap();
-        CreateMap<AddAssignmentDto, Assignment>().ReverseMap();
-        CreateMap<Assignment, UpdateAssignmentDto>().ReverseMap();
-        CreateMap<UpdateAssignmentDto, AssignmentDto>().ReverseMap();
-        CreateMap<AssignmentSearchDto, AssignmentFilter>().ReverseMap();
+        CreateMap<Assignment, AssignmentViewModel>().ReverseMap();
+        CreateMap<AddAssignmentInputModel, Assignment>().ReverseMap();
+        CreateMap<Assignment, UpdateAssignmentInputModel>().ReverseMap();
+        CreateMap<AssignmentSearchInputModel, AssignmentFilter>().ReverseMap();
+        CreateMap<UpdateAssignmentInputModel, AssignmentViewModel>().ReverseMap();
 
         #endregion
 
         #region AssignmentList
 
-        CreateMap<AssignmentList, AssignmentListDto>().ReverseMap();
-        CreateMap<AddAssignmentListDto, AssignmentList>().ReverseMap();
-        CreateMap<UpdateAssignmentListDto, AssignmentList>().ReverseMap();
+        CreateMap<AssignmentList, AssignmentListViewModel>().ReverseMap();
+        CreateMap<AddAssignmentListInputModel, AssignmentList>().ReverseMap();
+        CreateMap<UpdateAssignmentListInputModel, AssignmentList>().ReverseMap();
 
         #endregion
     }

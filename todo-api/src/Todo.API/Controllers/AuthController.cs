@@ -1,7 +1,8 @@
 ﻿using Todo.API.Responses;
 using Microsoft.AspNetCore.Mvc;
-using Todo.Application.DTO.V1.Auth;
 using Todo.Application.Notifications;
+using Todo.Application.DTO.V1.ViewModel;
+using Todo.Application.DTO.V1.InputModel;
 using Swashbuckle.AspNetCore.Annotations;
 using Todo.Application.Contracts.Services;
 
@@ -22,21 +23,21 @@ public class AuthController : MainController
 
     [HttpPost("login")]
     [SwaggerOperation(Summary = "Login")]
-    [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(UnauthorizedObjectResult), StatusCodes.Status401Unauthorized)]
-    public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
+    [ProducesResponseType(typeof(TokenViewModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> Login([FromBody] LoginInputModel inputModel)
     {
-        var token = await _authService.Login(loginDto);
+        var token = await _authService.Login(inputModel);
         return token != null ? OkResponse(token) : Unauthorized(new[] { "Usuário e/ou senha incorretos" });
     }
 
     [HttpPost("register")]
     [SwaggerOperation(Summary = "Register Account")]
-    [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(UserViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
+    public async Task<IActionResult> Register([FromBody] RegisterInputModel inputModel)
     {
-        var registerUser = await _authService.Register(registerDto);
+        var registerUser = await _authService.Register(inputModel);
         return OkResponse(registerUser);
     }
 }

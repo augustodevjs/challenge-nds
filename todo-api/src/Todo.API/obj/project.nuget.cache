@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "+74n2EsKZdxl+9ohQMPgJwNh7Y4kFmwdl6appnTaOuk9iHslq7nYhn6sWrwEnJ2SK0liMicvY3ruSw4fnU0vyg==",
+  "dgSpecHash": "EAjDQG3e58/fCuFHHKNyc1haY+GCvbGLoCt/pg2kmg+cv1cLJK1OpWsSsBHnFoFwf/QaE58gWoSaubokJN3CQQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.API\\Todo.API.csproj",
   "expectedPackageFiles": [
