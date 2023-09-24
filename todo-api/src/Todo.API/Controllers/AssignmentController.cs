@@ -33,7 +33,7 @@ public class AssignmentController : MainController
     [HttpGet("{id}")]
     [SwaggerOperation(Summary = "Get a to-do")]
     [ProducesResponseType(typeof(AssignmentViewModel), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundResult), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(string id)
     {
         var getAssignment = await _assignmentService.GetById(id);
@@ -43,7 +43,7 @@ public class AssignmentController : MainController
     [HttpPost]
     [SwaggerOperation("Add a new to-do")]
     [ProducesResponseType(typeof(AssignmentViewModel), StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(BadRequestResult), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create([FromBody] AddAssignmentInputModel inputModel)
     {
         var createAssignment = await _assignmentService.Create(inputModel);
@@ -53,8 +53,8 @@ public class AssignmentController : MainController
     [HttpPut("{id}")]
     [SwaggerOperation("Update a task")]
     [ProducesResponseType(typeof(AssignmentViewModel), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(BadRequestResult), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(NotFoundResult), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Update(string id, [FromBody] UpdateAssignmentInputModel inputModel)
     {
         var updateAssignment = await _assignmentService.Update(id, inputModel);
@@ -64,7 +64,7 @@ public class AssignmentController : MainController
     [HttpDelete("{id}")]
     [SwaggerOperation("Delete a task")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundResult), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(string id)
     {
         await _assignmentService.Delete(id);
@@ -74,7 +74,7 @@ public class AssignmentController : MainController
     [HttpPatch("{id}/conclude")]
     [SwaggerOperation("Conclud a task")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundResult), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Conclude(string id)
     {
         await _assignmentService.MarkConcluded(id);
@@ -84,7 +84,7 @@ public class AssignmentController : MainController
     [HttpPatch("{id}/unconclude")]
     [SwaggerOperation("Desconclud a task")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundResult), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Unconclude(string id)
     { 
         await _assignmentService.MarkDesconcluded(id);
