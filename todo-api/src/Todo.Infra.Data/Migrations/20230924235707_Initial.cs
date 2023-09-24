@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Todo.Infra.Migrations
+namespace Todo.Infra.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class ChangeTypeOfId : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,10 +16,11 @@ namespace Todo.Infra.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Usuários",
+                name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(type: "VARCHAR(150)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Email = table.Column<string>(type: "VARCHAR(100)", nullable: false)
@@ -33,44 +34,48 @@ namespace Todo.Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Usuários", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Lista de Tarefas",
+                name: "AssignmentLists",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(type: "varchar(100)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Description = table.Column<string>(type: "varchar(100)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    UserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "DATETIME", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UpdatedAt = table.Column<DateTime>(type: "DATETIME", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.ComputedColumn)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Lista de Tarefas", x => x.Id);
+                    table.PrimaryKey("PK_AssignmentLists", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Lista de Tarefas_Usuários_UserId",
+                        name: "FK_AssignmentLists_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "Usuários",
+                        principalTable: "Users",
                         principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Tarefas",
+                name: "Assignments",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    UserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    AssignmentListId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    Deadline = table.Column<DateTime>(type: "DATETIME", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(type: "VARCHAR(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    AssignmentListId = table.Column<int>(type: "int", nullable: true),
+                    Deadline = table.Column<DateTime>(type: "DATETIME", nullable: false),
                     Concluded = table.Column<sbyte>(type: "TINYINT", nullable: false, defaultValue: (sbyte)0),
                     ConcludedAt = table.Column<DateTime>(type: "DATETIME", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "DATETIME", nullable: false)
@@ -80,33 +85,33 @@ namespace Todo.Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tarefas", x => x.Id);
+                    table.PrimaryKey("PK_Assignments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tarefas_Lista de Tarefas_AssignmentListId",
+                        name: "FK_Assignments_AssignmentLists_AssignmentListId",
                         column: x => x.AssignmentListId,
-                        principalTable: "Lista de Tarefas",
+                        principalTable: "AssignmentLists",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Tarefas_Usuários_UserId",
+                        name: "FK_Assignments_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "Usuários",
+                        principalTable: "Users",
                         principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Lista de Tarefas_UserId",
-                table: "Lista de Tarefas",
+                name: "IX_AssignmentLists_UserId",
+                table: "AssignmentLists",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tarefas_AssignmentListId",
-                table: "Tarefas",
+                name: "IX_Assignments_AssignmentListId",
+                table: "Assignments",
                 column: "AssignmentListId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tarefas_UserId",
-                table: "Tarefas",
+                name: "IX_Assignments_UserId",
+                table: "Assignments",
                 column: "UserId");
         }
 
@@ -114,13 +119,13 @@ namespace Todo.Infra.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Tarefas");
+                name: "Assignments");
 
             migrationBuilder.DropTable(
-                name: "Lista de Tarefas");
+                name: "AssignmentLists");
 
             migrationBuilder.DropTable(
-                name: "Usuários");
+                name: "Users");
         }
     }
 }

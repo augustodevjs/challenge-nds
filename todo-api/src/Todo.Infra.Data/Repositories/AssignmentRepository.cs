@@ -18,12 +18,12 @@ public class AssignmentRepository : Repository<Assignment>, IAssignmentRepositor
         _context = context;
     }
 
-    public async Task<IPagedResult<Assignment>> Search(string userId, AssignmentFilter filter, int perPage = 10,
-        int page = 1, string? listId = null)
+    public async Task<IPagedResult<Assignment>> Search(int? userId, AssignmentFilter filter, int perPage = 10,
+        int page = 1, int? listId = null)
     {
         var query = _context.Assignments
             .AsNoTracking()
-            .Where(c => c.UserId == Guid.Parse(userId))
+            .Where(c => c.UserId == userId)
             .AsQueryable();
 
         ApplyFilter(userId, filter, ref query, listId);
@@ -42,14 +42,14 @@ public class AssignmentRepository : Repository<Assignment>, IAssignmentRepositor
         return result;
     }
 
-    public async Task<Assignment?> GetById(string id, string userId)
+    public async Task<Assignment?> GetById(int id, int? userId)
     {
         return await _context.Assignments.FirstOrDefaultAsync(c =>
-            c.Id == Guid.Parse(id) && c.UserId == Guid.Parse(userId));
+            c.Id == id && c.UserId == userId);
     }
 
-    private static void ApplyFilter(string userId, AssignmentFilter filter, ref IQueryable<Assignment> query,
-        string? listId = null)
+    private static void ApplyFilter(int? userId, AssignmentFilter filter, ref IQueryable<Assignment> query,
+        int? listId = null)
     {
         if (!string.IsNullOrWhiteSpace(filter.Description))
             query = query.Where(c => c.Description.Contains(filter.Description));
@@ -63,11 +63,11 @@ public class AssignmentRepository : Repository<Assignment>, IAssignmentRepositor
         if (filter.EndDeadline.HasValue)
             query = query.Where(c => c.Deadline != null && c.Deadline.Value <= filter.EndDeadline.Value);
 
-        if (!string.IsNullOrEmpty(listId))
+        if (!listId.HasValue)
         {
             query = query
-                .Where(c => c.AssignmentListId == Guid.Parse(listId))
-                .Where(c => c.AssignmentList.UserId == Guid.Parse(userId));
+                .Where(c => c.AssignmentListId == listId)
+                .Where(c => c.AssignmentList.UserId == userId);
         }
     }
 }

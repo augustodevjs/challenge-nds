@@ -3,8 +3,8 @@
 public class Assignment : Entity
 {
     public string Description { get; set; }
-    public Guid UserId { get; set; }
-    public Guid? AssignmentListId { get; set; }
+    public int UserId { get; set; }
+    public int? AssignmentListId { get; set; }
     public DateTime? Deadline { get; set; }
     public bool Concluded { get; private set; }
     public DateTime? ConcludedAt { get; private set; }

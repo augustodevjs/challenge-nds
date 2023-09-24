@@ -7,7 +7,7 @@ public class AddAssignmentInputModel
 {
     public string Description { get; set; } = null!;
     public DateTime Deadline { get; set; } 
-    public string AssignmentListId { get; set; } = null!;
+    public int AssignmentListId { get; set; }
     
     public bool Validar(out ValidationResult validationResult)
     {

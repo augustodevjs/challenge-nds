@@ -133,3 +133,5 @@ C:\Users\joaoa\source\repos\todo\todo-api\tests\Todo.Application.Tests\obj\Debug
 C:\Users\joaoa\source\repos\todo\todo-api\tests\Todo.Application.Tests\obj\Debug\net7.0\Todo.Application.Tests.pdb
 C:\Users\joaoa\source\repos\todo\todo-api\tests\Todo.Application.Tests\obj\Debug\net7.0\Todo.Application.Tests.genruntimeconfig.cache
 C:\Users\joaoa\source\repos\todo\todo-api\tests\Todo.Application.Tests\obj\Debug\net7.0\ref\Todo.Application.Tests.dll
+C:\Users\joaoa\source\repos\todo\todo-api\tests\Todo.Application.Tests\bin\Debug\net7.0\Castle.Core.dll
+C:\Users\joaoa\source\repos\todo\todo-api\tests\Todo.Application.Tests\bin\Debug\net7.0\Moq.dll

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Todo.Core.Utils;
 using Todo.Domain.Filter;
 using Todo.Domain.Models;
 using System.Security.Claims;
@@ -45,14 +44,9 @@ public class AssignmentListService : BaseService, IAssignmentListService
         };
     }
 
-    public async Task<PagedViewModel<AssignmentViewModel>?> SearchAssignments(string id, AssignmentSearchInputModel inputModel)
+    public async Task<PagedViewModel<AssignmentViewModel>?> SearchAssignments(int id,
+        AssignmentSearchInputModel inputModel)
     {
-        if (!GuidUtils.isValidGuid(id))
-        {
-            Notificator.Handle("O id informado é inválido");
-            return null;
-        }
-
         var filter = Mapper.Map<AssignmentFilter>(inputModel);
         var result = await _assignmentRepository
             .Search(GetUserId(), filter, inputModel.PerPage, inputModel.Page, id);
@@ -67,14 +61,8 @@ public class AssignmentListService : BaseService, IAssignmentListService
         };
     }
 
-    public async Task<AssignmentListViewModel?> GetById(string? id)
+    public async Task<AssignmentListViewModel?> GetById(int? id)
     {
-        if (!GuidUtils.isValidGuid(id))
-        {
-            Notificator.Handle("O id informado é inválido");
-            return null;
-        }
-
         var getAssignmentList = await _assignmentListRepository.GetById(id, GetUserId());
 
         if (getAssignmentList != null) return Mapper.Map<AssignmentListViewModel>(getAssignmentList);
@@ -86,7 +74,7 @@ public class AssignmentListService : BaseService, IAssignmentListService
     public async Task<AssignmentListViewModel?> Create(AddAssignmentListInputModel inputModel)
     {
         var assignmentList = Mapper.Map<AssignmentList>(inputModel);
-        assignmentList.UserId = Guid.Parse(GetUserId());
+        assignmentList.UserId = (int)GetUserId()!;
 
         if (!inputModel.Validar(out var validationResult))
         {
@@ -99,14 +87,8 @@ public class AssignmentListService : BaseService, IAssignmentListService
         return Mapper.Map<AssignmentListViewModel>(assignmentList);
     }
 
-    public async Task<AssignmentListViewModel?> Update(string id, UpdateAssignmentListInputModel inputModel)
+    public async Task<AssignmentListViewModel?> Update(int id, UpdateAssignmentListInputModel inputModel)
     {
-        if (id != inputModel.Id || !Guid.TryParse(id, out _))
-        {
-            Notificator.Handle("O id informado é inválido.");
-            return null;
-        }
-        
         if (!inputModel.Validar(out var validationResult))
         {
             Notificator.Handle(validationResult.Errors);
@@ -128,14 +110,8 @@ public class AssignmentListService : BaseService, IAssignmentListService
         return Mapper.Map<AssignmentListViewModel>(assignmentList);
     }
 
-    public async Task Delete(string id)
+    public async Task Delete(int id)
     {
-        if (!GuidUtils.isValidGuid(id))
-        {
-            Notificator.Handle("O id informado é inválido");
-            return;
-        }
-
         var assignmentList = await _assignmentListRepository.GetById(id, GetUserId());
 
         if (assignmentList == null)
@@ -153,9 +129,9 @@ public class AssignmentListService : BaseService, IAssignmentListService
         await _assignmentListRepository.Delete(assignmentList);
     }
 
-    private string GetUserId()
+    private int? GetUserId()
     {
         var userId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        return userId ?? string.Empty;
+        return userId == null ? null : int.Parse(userId);
     }
 }

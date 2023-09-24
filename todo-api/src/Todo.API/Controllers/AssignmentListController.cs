@@ -35,7 +35,7 @@ public class AssignmentListController : MainController
     [SwaggerOperation(Summary = "Get a to-do list")]
     [ProducesResponseType(typeof(AssignmentListViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(NotFoundResult), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetById(string id)
+    public async Task<IActionResult> GetById(int id)
     {
         var getAssignmentList = await _assignmentListService.GetById(id);
         return OkResponse(getAssignmentList);
@@ -45,7 +45,7 @@ public class AssignmentListController : MainController
     [SwaggerOperation("Search for tasks in a to-do list")]
     [ProducesResponseType(typeof(IEnumerable<AssignmentViewModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(NotFoundResult), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAssignment(string id, [FromQuery] AssignmentSearchInputModel inputModel)
+    public async Task<IActionResult> GetAssignment(int id, [FromQuery] AssignmentSearchInputModel inputModel)
     {
         var getAssignment = await _assignmentListService.SearchAssignments(id, inputModel);
         return OkResponse(getAssignment);
@@ -67,7 +67,7 @@ public class AssignmentListController : MainController
     [ProducesResponseType(typeof(AssignmentListViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BadRequestResult), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(NotFoundResult), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Update(string id, [FromBody] UpdateAssignmentListInputModel inputModel)
+    public async Task<IActionResult> Update(int id, [FromBody] UpdateAssignmentListInputModel inputModel)
     {
         var updateAssignmentList = await _assignmentListService.Update(id, inputModel);
         return OkResponse(updateAssignmentList);
@@ -77,7 +77,7 @@ public class AssignmentListController : MainController
     [SwaggerOperation("Delete a todo-list")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(NotFoundResult) ,StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Delete(string id)
+    public async Task<IActionResult> Delete(int id)
     {
         await _assignmentListService.Delete(id);
         return NoContentResponse();

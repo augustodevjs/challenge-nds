@@ -3,9 +3,11 @@
   <component name="EfCoreDialogsState">
     <option name="keyValueStorage">
       <map>
+        <entry key="Common:189c58e9-2825-4a7c-a8b2-29d8258bd44b:dbContext" value="Todo.Infra.Data.Context.TodoDbContext" />
         <entry key="Common:38846faa-09c8-4897-bba5-0f3cc310f4fb:dbContext" value="Todo.Infra.Data.Context.TodoDbContext" />
         <entry key="Common:buildConfiguration" value="Debug" />
         <entry key="Common:noBuild" value="false" />
+        <entry key="Common:outputFolder" value="Migrations" />
         <entry key="Common:useDefaultConnection" value="true" />
       </map>
     </option>

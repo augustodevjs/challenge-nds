@@ -7,7 +7,7 @@ public class UpdateAssignmentInputModel : Base.Base
 {
     public string Description { get; set; } = null!;
     public DateTime Deadline { get; set; }
-    public string AssignmentListId { get; set; } = null!;
+    public int AssignmentListId { get; set; }
     
     public bool Validar(out ValidationResult validationResult)
     {
@@ -21,21 +21,13 @@ public class UpdateAssignmentInputModel : Base.Base
         validator
             .RuleFor(c => c.Deadline)
             .NotEmpty().WithMessage("O campo de prazo final não pode ser deixado vazio.");
-        
+
         validator
             .RuleFor(c => c.AssignmentListId)
-            .NotEmpty().WithMessage("O campo AssignmentListId não pode ser deixado vazio.")
-            .Must(BeValidGuid).WithMessage("O campo AssignmentListId deve ser um Guid válido.");
+            .NotEmpty().WithMessage("O campo AssignmentListId não pode ser deixado vazio.");
 
         validationResult = validator.Validate(this);
         return validationResult.IsValid;
     }
     
-    private bool BeValidGuid(string value)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-            return false;
-
-        return Guid.TryParse(value, out _);
-    }
 }

@@ -21,7 +21,7 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
         return await DbSet.ToListAsync();
     }
 
-    public virtual async Task<TEntity?> GetById(Guid? id)
+    public virtual async Task<TEntity?> GetById(int? id)
     {
         return await DbSet.FindAsync(id);
     }
@@ -29,22 +29,22 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
     public virtual async Task Create(TEntity entity)
     {
         DbSet.Add(entity);
-        await SaveChanges();
+        await SaveChangesAsync();
     }
 
     public virtual async Task Update(TEntity entity)
     {
         DbSet.Update(entity);
-        await SaveChanges();
+        await SaveChangesAsync();
     }
 
     public virtual async Task Delete(TEntity entity)
     {
         DbSet.Remove(entity);
-        await SaveChanges();
+        await SaveChangesAsync();
     }
 
-    public async Task<int> SaveChanges()
+    public async Task<int> SaveChangesAsync()
     {
         return await Db.SaveChangesAsync();
     }

@@ -34,7 +34,7 @@ public class AssignmentController : MainController
     [SwaggerOperation(Summary = "Get a to-do")]
     [ProducesResponseType(typeof(AssignmentViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(NotFoundResult), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetById(string id)
+    public async Task<IActionResult> GetById(int id)
     {
         var getAssignment = await _assignmentService.GetById(id);
         return OkResponse(getAssignment);
@@ -55,7 +55,7 @@ public class AssignmentController : MainController
     [ProducesResponseType(typeof(AssignmentViewModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BadRequestResult), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(NotFoundResult), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Update(string id, [FromBody] UpdateAssignmentInputModel inputModel)
+    public async Task<IActionResult> Update(int id, [FromBody] UpdateAssignmentInputModel inputModel)
     {
         var updateAssignment = await _assignmentService.Update(id, inputModel);
         return OkResponse(updateAssignment);
@@ -65,7 +65,7 @@ public class AssignmentController : MainController
     [SwaggerOperation("Delete a task")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(NotFoundResult), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Delete(string id)
+    public async Task<IActionResult> Delete(int id)
     {
         await _assignmentService.Delete(id);
         return NoContentResponse();
@@ -75,7 +75,7 @@ public class AssignmentController : MainController
     [SwaggerOperation("Conclud a task")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(NotFoundResult), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Conclude(string id)
+    public async Task<IActionResult> Conclude(int id)
     {
         await _assignmentService.MarkConcluded(id);
         return NoContentResponse();
@@ -85,7 +85,7 @@ public class AssignmentController : MainController
     [SwaggerOperation("Desconclud a task")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(NotFoundResult), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Unconclude(string id)
+    public async Task<IActionResult> Unconclude(int id)
     { 
         await _assignmentService.MarkDesconcluded(id);
         return NoContentResponse();

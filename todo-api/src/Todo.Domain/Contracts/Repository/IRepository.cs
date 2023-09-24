@@ -5,9 +5,9 @@ namespace Todo.Domain.Contracts.Repository;
 public interface IRepository<TEntity> : IDisposable where TEntity : Entity
 {
     Task Create(TEntity entity);
-    Task<TEntity?> GetById(Guid? id);
+    Task<TEntity?> GetById(int? id);
     Task<List<TEntity>> GetAll();
     Task Update(TEntity entity);
     Task Delete(TEntity entity);
-    Task<int> SaveChanges();
+    Task<int> SaveChangesAsync();
 }

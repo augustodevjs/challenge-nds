@@ -17,12 +17,12 @@ public class AssignmentListRepository : Repository<AssignmentList>, IAssignmentL
         _context = context;
     }
 
-    public async Task<IPagedResult<AssignmentList>> Search(string userId, string name, string description,
+    public async Task<IPagedResult<AssignmentList>> Search(int? userId, string name, string description,
         int perPage = 10, int page = 1)
     {
         var query = _context.AssignmentLists
             .AsNoTracking()
-            .Where(c => c.UserId == Guid.Parse(userId))
+            .Where(c => c.UserId == userId)
             .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(name))
@@ -46,10 +46,10 @@ public class AssignmentListRepository : Repository<AssignmentList>, IAssignmentL
         return result;
     }
 
-    public async Task<AssignmentList?> GetById(string? id, string userId)
+    public async Task<AssignmentList?> GetById(int? id, int? userId)
     {
         return await _context.AssignmentLists
             .Include(c => c.Assignments)
-            .FirstOrDefaultAsync(c => id != null && c.Id == Guid.Parse(id) && c.UserId == Guid.Parse(userId));
+            .FirstOrDefaultAsync(c => id != null && c.Id == id && c.UserId == userId);
     }
 }

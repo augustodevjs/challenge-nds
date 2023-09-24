@@ -6,9 +6,9 @@ namespace Todo.Application.Contracts.Services;
 public interface IAssignmentListService
 {
     Task<PagedViewModel<AssignmentListViewModel>> Search(AssignmentListSearchInputModel inputModel);
-    Task<PagedViewModel<AssignmentViewModel>?> SearchAssignments(string id, AssignmentSearchInputModel inputModel);
-    Task<AssignmentListViewModel?> GetById(string? id);
+    Task<PagedViewModel<AssignmentViewModel>?> SearchAssignments(int id, AssignmentSearchInputModel inputModel);
+    Task<AssignmentListViewModel?> GetById(int? id);
     Task<AssignmentListViewModel?> Create(AddAssignmentListInputModel inputModel);
-    Task<AssignmentListViewModel?> Update(string id ,UpdateAssignmentListInputModel inputModel);
-    Task Delete(string id);
+    Task<AssignmentListViewModel?> Update(int id ,UpdateAssignmentListInputModel inputModel);
+    Task Delete(int id);
 }
