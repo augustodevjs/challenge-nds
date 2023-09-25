@@ -8,8 +8,6 @@ public class UserMapping : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
-        builder.HasKey(c => c.Id);
-
         builder
             .Property(c => c.Name)
             .IsRequired()

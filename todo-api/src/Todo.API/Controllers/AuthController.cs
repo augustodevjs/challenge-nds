@@ -1,5 +1,6 @@
 ﻿using Todo.API.Responses;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Todo.Application.Notifications;
 using Todo.Application.DTO.V1.ViewModel;
 using Todo.Application.DTO.V1.InputModel;
@@ -24,11 +25,12 @@ public class AuthController : MainController
     [HttpPost("login")]
     [SwaggerOperation(Summary = "Login")]
     [ProducesResponseType(typeof(TokenViewModel), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(BadRequestResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Login([FromBody] LoginInputModel inputModel)
     {
         var token = await _authService.Login(inputModel);
-        return token != null ? OkResponse(token) : Unauthorized(new[] { "Usuário e/ou senha incorretos" });
+        return OkResponse(token);
     }
 
     [HttpPost("register")]

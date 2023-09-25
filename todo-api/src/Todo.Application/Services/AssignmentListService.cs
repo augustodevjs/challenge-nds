@@ -74,27 +74,27 @@ public class AssignmentListService : BaseService, IAssignmentListService
     public async Task<AssignmentListViewModel?> Create(AddAssignmentListInputModel inputModel)
     {
         var assignmentList = Mapper.Map<AssignmentList>(inputModel);
-        assignmentList.UserId = (int)GetUserId()!;
+        assignmentList.UserId = GetUserId();
 
-        if (!inputModel.Validar(out var validationResult))
-        {
-            Notificator.Handle(validationResult.Errors);
-            return null;
-        }
+        if (!await Validate(assignmentList)) return null;
 
-        await _assignmentListRepository.Create(assignmentList);
-
-        return Mapper.Map<AssignmentListViewModel>(assignmentList);
+        _assignmentListRepository.Create(assignmentList);
+        
+        if(await _assignmentListRepository.UnityOfWork.Commit()) 
+            return Mapper.Map<AssignmentListViewModel>(assignmentList);
+        
+        Notificator.Handle("Não foi possível criar a lista de tarefa");
+        return null;
     }
-
+    
     public async Task<AssignmentListViewModel?> Update(int id, UpdateAssignmentListInputModel inputModel)
     {
-        if (!inputModel.Validar(out var validationResult))
+        if (id != inputModel.Id)
         {
-            Notificator.Handle(validationResult.Errors);
+            Notificator.Handle("Os ids não conferem");
             return null;
         }
-
+        
         var assignmentList = await _assignmentListRepository.GetById(id, GetUserId());
 
         if (assignmentList == null)
@@ -102,12 +102,18 @@ public class AssignmentListService : BaseService, IAssignmentListService
             Notificator.HandleNotFoundResource();
             return null;
         }
-
+        
         Mapper.Map(inputModel, assignmentList);
+        
+        if (!await Validate(assignmentList)) return null;
 
-        await _assignmentListRepository.Update(assignmentList);
-
-        return Mapper.Map<AssignmentListViewModel>(assignmentList);
+        _assignmentListRepository.Update(assignmentList);
+        
+        if(await _assignmentListRepository.UnityOfWork.Commit()) 
+            return Mapper.Map<AssignmentListViewModel>(assignmentList);
+        
+        Notificator.Handle("Não foi possível atualizar a lista de tarefa");
+        return null;
     }
 
     public async Task Delete(int id)
@@ -126,12 +132,30 @@ public class AssignmentListService : BaseService, IAssignmentListService
             return;
         }
 
-        await _assignmentListRepository.Delete(assignmentList);
+        _assignmentListRepository.Delete(assignmentList);
+
+        if (!await _assignmentListRepository.UnityOfWork.Commit())
+        {
+            Notificator.Handle("Não foi possível remover a lista de tarefa");
+        }
+    }
+    
+    private async Task<bool> Validate(AssignmentList assignmentList)
+    {
+        if(!assignmentList.Validar(out var validationResult))
+            Notificator.Handle(validationResult.Errors);
+        
+        var assignmentExistent = await _assignmentListRepository.FirstOrDefault(u => u.Id == assignmentList.Id);
+
+        if (assignmentExistent != null)
+            Notificator.Handle("Já existe uma lista de tarefa cadastrada com essas informaçoes.");
+
+        return !Notificator.HasNotification;
     }
 
-    private int? GetUserId()
+    private int GetUserId()
     {
         var userId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        return userId == null ? null : int.Parse(userId);
+        return Convert.ToInt32(userId);
     }
 }

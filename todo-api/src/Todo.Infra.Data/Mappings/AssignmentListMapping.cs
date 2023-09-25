@@ -8,8 +8,6 @@ public class AssignmentListMapping : IEntityTypeConfiguration<AssignmentList>
 {
     public void Configure(EntityTypeBuilder<AssignmentList> builder)
     {
-        builder.HasKey(c => c.Id);
-
         builder
             .Property(c => c.Name)
             .IsRequired();

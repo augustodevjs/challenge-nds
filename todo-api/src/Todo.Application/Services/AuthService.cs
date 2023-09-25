@@ -54,13 +54,13 @@ public class AuthService : BaseService, IAuthService
 
     public async Task<UserViewModel?> Register(RegisterInputModel inputModel)
     {
+        var user = Mapper.Map<User>(inputModel);
+        
         if (!inputModel.Validar(out var validationResult))
         {
             Notificator.Handle(validationResult.Errors);
             return null;
         }
-        
-        var user = Mapper.Map<User>(inputModel);
 
         var getUser = await _userRepository.GetByEmail(inputModel.Email);
 
@@ -72,9 +72,13 @@ public class AuthService : BaseService, IAuthService
 
         user.Password = _passwordHasher.HashPassword(user, inputModel.Password);
 
-        await _userRepository.Create(user);
+        _userRepository.Create(user);
+        
+        if(await _userRepository.UnityOfWork.Commit()) 
+            return Mapper.Map<UserViewModel>(user);
 
-        return Mapper.Map<UserViewModel>(user);
+        Notificator.Handle("Não foi possível cadastrar o usuário");
+        return null;
     }
 
     private TokenViewModel GenerateToken(User user)

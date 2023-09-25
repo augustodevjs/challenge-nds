@@ -36,12 +36,10 @@
 //     public async Task GetById_AssignmentExistent_ReturnAssignment()
 //     {
 //         // Arrange
-//         var id = Guid.NewGuid().ToString();
-//         var userId = "1";
-//         _assignmentRepositoryMock.Setup(c => c.GetById(id, userId)).ReturnsAsync(new Assignment{ Id = Guid.Parse(id)});
+//         _assignmentRepositoryMock.Setup(c => c.GetById(1, 1)).ReturnsAsync(new Assignment{ Id = 1});
 //
 //         // Act
-//         var assignment = await _assignmentService.GetById(id);
+//         var assignment = await _assignmentService.GetById(1);
 //
 //         // Assert
 //         using (new AssertionScope())

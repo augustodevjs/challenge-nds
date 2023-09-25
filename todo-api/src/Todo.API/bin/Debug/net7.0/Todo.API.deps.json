@@ -628,16 +628,10 @@
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.10",
           "ScottBrady91.AspNetCore.Identity.Argon2PasswordHasher": "1.4.0",
-          "Todo.Core": "1.0.0",
           "Todo.Infra.Data": "1.0.0"
         },
         "runtime": {
           "Todo.Application.dll": {}
-        }
-      },
-      "Todo.Core/1.0.0": {
-        "runtime": {
-          "Todo.Core.dll": {}
         }
       },
       "Todo.Domain/1.0.0": {
@@ -1192,11 +1186,6 @@
       "hashPath": "system.valuetuple.4.5.0.nupkg.sha512"
     },
     "Todo.Application/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Todo.Core/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

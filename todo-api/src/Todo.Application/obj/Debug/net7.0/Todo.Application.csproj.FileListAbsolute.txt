@@ -18,10 +18,8 @@ C:\Users\joaoa\source\repos\todo-api\src\Todo.Application\obj\Debug\net7.0\ref\T
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.Application\bin\Debug\net7.0\Todo.Application.deps.json
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.Application\bin\Debug\net7.0\Todo.Application.dll
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.Application\bin\Debug\net7.0\Todo.Application.pdb
-C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.Application\bin\Debug\net7.0\Todo.Core.dll
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.Application\bin\Debug\net7.0\Todo.Domain.dll
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.Application\bin\Debug\net7.0\Todo.Infra.Data.dll
-C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.Application\bin\Debug\net7.0\Todo.Core.pdb
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.Application\bin\Debug\net7.0\Todo.Infra.Data.pdb
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.Application\bin\Debug\net7.0\Todo.Domain.pdb
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.Application\obj\Debug\net7.0\Todo.Application.csproj.AssemblyReference.cache

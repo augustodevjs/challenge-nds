@@ -1,4 +1,7 @@
-﻿namespace Todo.Domain.Models;
+﻿using Todo.Domain.Validators;
+using FluentValidation.Results;
+
+namespace Todo.Domain.Models;
 
 public class Assignment : Entity
 {
@@ -23,5 +26,11 @@ public class Assignment : Entity
     {
         Concluded = false;
         ConcludedAt = null;
+    }
+
+    public override bool Validar(out ValidationResult validationResult)
+    {
+        validationResult = new AssignmentValidator().Validate(this);
+        return validationResult.IsValid;
     }
 }

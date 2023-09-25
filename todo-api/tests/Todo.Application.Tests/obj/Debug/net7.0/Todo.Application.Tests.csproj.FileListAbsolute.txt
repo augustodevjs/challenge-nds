@@ -115,11 +115,9 @@ C:\Users\joaoa\source\repos\todo\todo-api\tests\Todo.Application.Tests\bin\Debug
 C:\Users\joaoa\source\repos\todo\todo-api\tests\Todo.Application.Tests\bin\Debug\net7.0\runtimes\win-x86\native\libsodium.dll
 C:\Users\joaoa\source\repos\todo\todo-api\tests\Todo.Application.Tests\bin\Debug\net7.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\joaoa\source\repos\todo\todo-api\tests\Todo.Application.Tests\bin\Debug\net7.0\Todo.Application.dll
-C:\Users\joaoa\source\repos\todo\todo-api\tests\Todo.Application.Tests\bin\Debug\net7.0\Todo.Core.dll
 C:\Users\joaoa\source\repos\todo\todo-api\tests\Todo.Application.Tests\bin\Debug\net7.0\Todo.Domain.dll
 C:\Users\joaoa\source\repos\todo\todo-api\tests\Todo.Application.Tests\bin\Debug\net7.0\Todo.Infra.Data.dll
 C:\Users\joaoa\source\repos\todo\todo-api\tests\Todo.Application.Tests\bin\Debug\net7.0\Todo.Application.pdb
-C:\Users\joaoa\source\repos\todo\todo-api\tests\Todo.Application.Tests\bin\Debug\net7.0\Todo.Core.pdb
 C:\Users\joaoa\source\repos\todo\todo-api\tests\Todo.Application.Tests\bin\Debug\net7.0\Todo.Domain.pdb
 C:\Users\joaoa\source\repos\todo\todo-api\tests\Todo.Application.Tests\bin\Debug\net7.0\Todo.Infra.Data.pdb
 C:\Users\joaoa\source\repos\todo\todo-api\tests\Todo.Application.Tests\obj\Debug\net7.0\Todo.Application.Tests.csproj.AssemblyReference.cache

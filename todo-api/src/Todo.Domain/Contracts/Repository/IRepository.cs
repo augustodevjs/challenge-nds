@@ -1,13 +1,16 @@
 ﻿using Todo.Domain.Models;
+using System.Linq.Expressions;
 
 namespace Todo.Domain.Contracts.Repository;
 
-public interface IRepository<TEntity> : IDisposable where TEntity : Entity
+public interface IRepository<T> : IDisposable where T : Entity
 {
-    Task Create(TEntity entity);
-    Task<TEntity?> GetById(int? id);
-    Task<List<TEntity>> GetAll();
-    Task Update(TEntity entity);
-    Task Delete(TEntity entity);
-    Task<int> SaveChangesAsync();
+    public IUnityOfWork UnityOfWork { get; }
+
+    public Task<T?> FirstOrDefault(Expression<Func<T, bool>> expression);
+    void Create(T entity);
+    Task<T?> GetById(int? id);
+    Task<List<T>> GetAll();
+    void Update(T entity);
+    void Delete(T entity);
 }

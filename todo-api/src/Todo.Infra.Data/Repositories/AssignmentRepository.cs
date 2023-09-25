@@ -11,17 +11,14 @@ namespace Todo.Infra.Data.Repositories;
 
 public class AssignmentRepository : Repository<Assignment>, IAssignmentRepository
 {
-    private readonly TodoDbContext _context;
-
-    public AssignmentRepository(TodoDbContext context) : base(context)
+    public AssignmentRepository(ApplicationDbContext context) : base(context)
     {
-        _context = context;
     }
 
     public async Task<IPagedResult<Assignment>> Search(int? userId, AssignmentFilter filter, int perPage = 10,
         int page = 1, int? listId = null)
     {
-        var query = _context.Assignments
+        var query = Context.Assignments
             .AsNoTracking()
             .Where(c => c.UserId == userId)
             .AsQueryable();
@@ -44,7 +41,7 @@ public class AssignmentRepository : Repository<Assignment>, IAssignmentRepositor
 
     public async Task<Assignment?> GetById(int id, int? userId)
     {
-        return await _context.Assignments.FirstOrDefaultAsync(c =>
+        return await Context.Assignments.FirstOrDefaultAsync(c =>
             c.Id == id && c.UserId == userId);
     }
 

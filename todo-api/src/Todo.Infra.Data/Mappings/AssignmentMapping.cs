@@ -8,8 +8,6 @@ public class AssignmentMapping : IEntityTypeConfiguration<Assignment>
 {
     public void Configure(EntityTypeBuilder<Assignment> builder)
     {
-        builder.HasKey(c => c.Id);
-
         builder
             .Property(c => c.Description)
             .IsRequired()

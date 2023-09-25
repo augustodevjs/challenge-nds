@@ -1,56 +1,68 @@
 ﻿using Todo.Domain.Models;
+using Todo.Domain.Contracts;
+using System.Linq.Expressions;
 using Todo.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Todo.Domain.Contracts.Repository;
 
 namespace Todo.Infra.Data.Abstractions;
 
-public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
+public abstract class Repository<T> : IRepository<T> where T: Entity
 {
-    protected readonly TodoDbContext Db;
-    protected readonly DbSet<TEntity> DbSet;
+    private bool _isDisposed;
+    private readonly DbSet<T> _dbSet;
+    protected readonly ApplicationDbContext Context;
 
-    public Repository(TodoDbContext db)
+    protected Repository(ApplicationDbContext context)
     {
-        Db = db;
-        DbSet = db.Set<TEntity>();
+        Context = context;
+        _dbSet = context.Set<T>();
+    }
+    
+    public IUnityOfWork UnityOfWork => Context;
+        
+    public async Task<T?> FirstOrDefault(Expression<Func<T, bool>> expression)
+    {
+        return await _dbSet.AsNoTrackingWithIdentityResolution().Where(expression).FirstOrDefaultAsync();
+    }
+    
+    public virtual async Task<List<T>> GetAll()
+    {
+        return await _dbSet.ToListAsync();
+    }
+    
+    public virtual async Task<T?> GetById(int? id)
+    {
+        return await _dbSet.FindAsync(id);
     }
 
-    public virtual async Task<List<TEntity>> GetAll()
+    public virtual void Create(T entity)
     {
-        return await DbSet.ToListAsync();
+        _dbSet.Add(entity);
     }
 
-    public virtual async Task<TEntity?> GetById(int? id)
+    public virtual void Update(T entity)
     {
-        return await DbSet.FindAsync(id);
+        _dbSet.Update(entity);
     }
 
-    public virtual async Task Create(TEntity entity)
+    public virtual void Delete(T entity)
     {
-        DbSet.Add(entity);
-        await SaveChangesAsync();
+        _dbSet.Remove(entity);
     }
-
-    public virtual async Task Update(TEntity entity)
-    {
-        DbSet.Update(entity);
-        await SaveChangesAsync();
-    }
-
-    public virtual async Task Delete(TEntity entity)
-    {
-        DbSet.Remove(entity);
-        await SaveChangesAsync();
-    }
-
-    public async Task<int> SaveChangesAsync()
-    {
-        return await Db.SaveChangesAsync();
-    }
-
+    
     public void Dispose()
     {
-        Db?.Dispose();
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (_isDisposed) return;
+
+        if (disposing) Context.Dispose();
+
+        _isDisposed = true;
     }
 }
