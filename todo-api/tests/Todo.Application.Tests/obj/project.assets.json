@@ -2380,6 +2380,7 @@
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.10",
           "ScottBrady91.AspNetCore.Identity.Argon2PasswordHasher": "1.4.0",
+          "Todo.Core": "1.0.0",
           "Todo.Infra.Data": "1.0.0"
         },
         "compile": {
@@ -2387,6 +2388,19 @@
         },
         "runtime": {
           "bin/placeholder/Todo.Application.dll": {}
+        }
+      },
+      "Todo.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.10"
+        },
+        "compile": {
+          "bin/placeholder/Todo.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Todo.Core.dll": {}
         }
       },
       "Todo.Domain/1.0.0": {
@@ -7306,6 +7320,11 @@
       "type": "project",
       "path": "../../src/Todo.Application/Todo.Application.csproj",
       "msbuildProject": "../../src/Todo.Application/Todo.Application.csproj"
+    },
+    "Todo.Core/1.0.0": {
+      "type": "project",
+      "path": "../../src/Todo.Core/Todo.Core.csproj",
+      "msbuildProject": "../../src/Todo.Core/Todo.Core.csproj"
     },
     "Todo.Domain/1.0.0": {
       "type": "project",

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Todo.Domain.Filter;
 using Todo.Domain.Models;
-using System.Security.Claims;
+using Todo.Core.Extensions;
 using Microsoft.AspNetCore.Http;
 using Todo.Application.Notifications;
 using Todo.Domain.Contracts.Repository;
@@ -29,7 +29,7 @@ public class AssignmentService : BaseService, IAssignmentService
     public async Task<PagedViewModel<AssignmentViewModel>> Search(AssignmentSearchInputModel inputModel)
     {
         var filter = Mapper.Map<AssignmentFilter>(inputModel);
-        var result = await _assignmentRepository.Search(GetUserId(), filter, inputModel.PerPage, inputModel.Page);
+        var result = await _assignmentRepository.Search(_httpContextAccessor.GetUserId(), filter, inputModel.PerPage, inputModel.Page);
 
         return new PagedViewModel<AssignmentViewModel>
         {
@@ -43,7 +43,8 @@ public class AssignmentService : BaseService, IAssignmentService
 
     public async Task<AssignmentViewModel?> GetById(int id)
     {
-        var getAssignment = await _assignmentRepository.GetById(id, GetUserId());
+        var getAssignment =
+            await _assignmentRepository.GetById(id, _httpContextAccessor.GetUserId());
 
         if (getAssignment != null) return Mapper.Map<AssignmentViewModel>(getAssignment);
 
@@ -54,15 +55,15 @@ public class AssignmentService : BaseService, IAssignmentService
     public async Task<AssignmentViewModel?> Create(AddAssignmentInputModel inputModel)
     {
         var assignment = Mapper.Map<Assignment>(inputModel);
-        assignment.UserId = GetUserId();
+        assignment.UserId = _httpContextAccessor.GetUserId();
 
         if (!await Validate(assignment)) return null;
 
         _assignmentRepository.Create(assignment);
-        
-        if(await _assignmentRepository.UnityOfWork.Commit())
+
+        if (await _assignmentRepository.UnityOfWork.Commit())
             return Mapper.Map<AssignmentViewModel>(assignment);
-        
+
         Notificator.Handle("Não foi possível cadastrar a tarefa");
         return null;
     }
@@ -75,7 +76,7 @@ public class AssignmentService : BaseService, IAssignmentService
             return null;
         }
 
-        var getAssignment = await _assignmentRepository.GetById(id, GetUserId());
+        var getAssignment = await _assignmentRepository.GetById(id, _httpContextAccessor.GetUserId());
 
         if (getAssignment == null)
         {
@@ -91,14 +92,14 @@ public class AssignmentService : BaseService, IAssignmentService
 
         if (await _assignmentRepository.UnityOfWork.Commit())
             return Mapper.Map<AssignmentViewModel>(result);
-          
+
         Notificator.Handle("Não foi possível atualizar a tarefa");
         return null;
     }
 
     public async Task Delete(int id)
     {
-        var getAssignment = await _assignmentRepository.GetById(id, GetUserId());
+        var getAssignment = await _assignmentRepository.GetById(id, _httpContextAccessor.GetUserId());
 
         if (getAssignment == null)
         {
@@ -116,7 +117,7 @@ public class AssignmentService : BaseService, IAssignmentService
 
     public async Task MarkConcluded(int id)
     {
-        var assignment = await _assignmentRepository.GetById(id, GetUserId());
+        var assignment = await _assignmentRepository.GetById(id, _httpContextAccessor.GetUserId());
 
         if (assignment == null)
         {
@@ -125,9 +126,9 @@ public class AssignmentService : BaseService, IAssignmentService
         }
 
         assignment.SetConcluded();
-        
+
         _assignmentRepository.Update(assignment);
-        
+
         if (!await _assignmentRepository.UnityOfWork.Commit())
         {
             Notificator.Handle("Não foi possível marcar a tarefa como concluída");
@@ -136,7 +137,7 @@ public class AssignmentService : BaseService, IAssignmentService
 
     public async Task MarkDesconcluded(int id)
     {
-        var assignment = await _assignmentRepository.GetById(id, GetUserId());
+        var assignment = await _assignmentRepository.GetById(id, _httpContextAccessor.GetUserId());
 
         if (assignment == null)
         {
@@ -147,29 +148,23 @@ public class AssignmentService : BaseService, IAssignmentService
         assignment.SetUnconcluded();
 
         _assignmentRepository.Update(assignment);
-        
+
         if (!await _assignmentRepository.UnityOfWork.Commit())
         {
             Notificator.Handle("Não foi possível marcar a tarefa como não concluída");
         }
     }
-    
+
     private async Task<bool> Validate(Assignment assignment)
     {
-        if(!assignment.Validar(out var validationResult))
+        if (!assignment.Validar(out var validationResult))
             Notificator.Handle(validationResult.Errors);
-        
+
         var assignmentExistent = await _assignmentRepository.FirstOrDefault(u => u.Id == assignment.Id);
 
         if (assignmentExistent != null)
             Notificator.Handle("Já existe uma tarefa cadastrada com essas informações");
 
         return !Notificator.HasNotification;
-    }
-
-    private int GetUserId()
-    {
-        var userId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        return Convert.ToInt32(userId);
     }
 }

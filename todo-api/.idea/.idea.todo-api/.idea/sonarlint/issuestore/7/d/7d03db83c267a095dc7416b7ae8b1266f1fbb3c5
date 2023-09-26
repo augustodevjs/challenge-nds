@@ -1,3 +1,8 @@
 
-csharpsquid:S11867"yAdd a nested comment explaining why this method is empty, throw a 'NotSupportedException' or complete the implementation.(Á×Ç½8ñÍ¬1
-Qcsharpsquid:S26997"-Add at least one assertion to this test case.(Á×Ç½8‘ñÍ¬1
+Bcsharpsquid:S125"Remove this commented out code.(Ş®’8á¾ò¬1
+Wcsharpsquid:S1135"4Complete the task associated to this 'TODO' comment.(ìïƒd8‚á¾ò¬1
+Xcsharpsquid:S1135"4Complete the task associated to this 'TODO' comment.(»Éìø8‚á¾ò¬1
+Xcsharpsquid:S1135"4Complete the task associated to this 'TODO' comment.(µö²8‚á¾ò¬1
+Xcsharpsquid:S1135"4Complete the task associated to this 'TODO' comment.(ü’Ñ”8‚á¾ò¬1
+Xcsharpsquid:S1135"4Complete the task associated to this 'TODO' comment.(ÚÑï×8‚á¾ò¬1
+]csharpsquid:S1135	"4Complete the task associated to this 'TODO' comment.(æûüŒùÿÿÿÿ8‚á¾ò¬1

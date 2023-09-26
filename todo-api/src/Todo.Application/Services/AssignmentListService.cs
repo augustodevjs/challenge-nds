@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Todo.Domain.Filter;
 using Todo.Domain.Models;
-using System.Security.Claims;
+using Todo.Core.Extensions;
 using Microsoft.AspNetCore.Http;
 using Todo.Application.Notifications;
 using Todo.Domain.Contracts.Repository;
@@ -32,7 +32,7 @@ public class AssignmentListService : BaseService, IAssignmentListService
     public async Task<PagedViewModel<AssignmentListViewModel>> Search(AssignmentListSearchInputModel inputModel)
     {
         var result = await _assignmentListRepository
-            .Search(GetUserId(), inputModel.Name, inputModel.Description, inputModel.PerPage, inputModel.Page);
+            .Search(_httpContextAccessor.GetUserId(), inputModel.Name, inputModel.Description, inputModel.PerPage, inputModel.Page);
 
         return new PagedViewModel<AssignmentListViewModel>
         {
@@ -49,7 +49,7 @@ public class AssignmentListService : BaseService, IAssignmentListService
     {
         var filter = Mapper.Map<AssignmentFilter>(inputModel);
         var result = await _assignmentRepository
-            .Search(GetUserId(), filter, inputModel.PerPage, inputModel.Page, id);
+            .Search(_httpContextAccessor.GetUserId(), filter, inputModel.PerPage, inputModel.Page, id);
 
         return new PagedViewModel<AssignmentViewModel>
         {
@@ -63,7 +63,7 @@ public class AssignmentListService : BaseService, IAssignmentListService
 
     public async Task<AssignmentListViewModel?> GetById(int? id)
     {
-        var getAssignmentList = await _assignmentListRepository.GetById(id, GetUserId());
+        var getAssignmentList = await _assignmentListRepository.GetById(id, _httpContextAccessor.GetUserId());
 
         if (getAssignmentList != null) return Mapper.Map<AssignmentListViewModel>(getAssignmentList);
 
@@ -74,7 +74,7 @@ public class AssignmentListService : BaseService, IAssignmentListService
     public async Task<AssignmentListViewModel?> Create(AddAssignmentListInputModel inputModel)
     {
         var assignmentList = Mapper.Map<AssignmentList>(inputModel);
-        assignmentList.UserId = GetUserId();
+        assignmentList.UserId = _httpContextAccessor.GetUserId();
 
         if (!await Validate(assignmentList)) return null;
 
@@ -95,7 +95,7 @@ public class AssignmentListService : BaseService, IAssignmentListService
             return null;
         }
         
-        var assignmentList = await _assignmentListRepository.GetById(id, GetUserId());
+        var assignmentList = await _assignmentListRepository.GetById(id, _httpContextAccessor.GetUserId());
 
         if (assignmentList == null)
         {
@@ -118,7 +118,7 @@ public class AssignmentListService : BaseService, IAssignmentListService
 
     public async Task Delete(int id)
     {
-        var assignmentList = await _assignmentListRepository.GetById(id, GetUserId());
+        var assignmentList = await _assignmentListRepository.GetById(id, _httpContextAccessor.GetUserId());
 
         if (assignmentList == null)
         {
@@ -146,16 +146,10 @@ public class AssignmentListService : BaseService, IAssignmentListService
             Notificator.Handle(validationResult.Errors);
         
         var assignmentExistent = await _assignmentListRepository.FirstOrDefault(u => u.Id == assignmentList.Id);
-
         if (assignmentExistent != null)
             Notificator.Handle("Já existe uma lista de tarefa cadastrada com essas informaçoes.");
 
         return !Notificator.HasNotification;
     }
 
-    private int GetUserId()
-    {
-        var userId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        return Convert.ToInt32(userId);
-    }
 }
