@@ -151,5 +151,4 @@ public class AssignmentListService : BaseService, IAssignmentListService
 
         return !Notificator.HasNotification;
     }
-
 }

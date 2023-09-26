@@ -32,3 +32,5 @@ C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.Application\obj\Debug\net7.0\
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.Application\obj\Debug\net7.0\refint\Todo.Application.dll
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.Application\obj\Debug\net7.0\Todo.Application.pdb
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.Application\obj\Debug\net7.0\ref\Todo.Application.dll
+C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.Application\bin\Debug\net7.0\Todo.Core.dll
+C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.Application\bin\Debug\net7.0\Todo.Core.pdb

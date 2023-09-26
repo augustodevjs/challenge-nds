@@ -144,3 +144,5 @@ C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\obj\Debug\net7.0\refint\T
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\obj\Debug\net7.0\Todo.API.pdb
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\obj\Debug\net7.0\Todo.API.genruntimeconfig.cache
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\obj\Debug\net7.0\ref\Todo.API.dll
+C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\bin\Debug\net7.0\Todo.Core.dll
+C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\bin\Debug\net7.0\Todo.Core.pdb
