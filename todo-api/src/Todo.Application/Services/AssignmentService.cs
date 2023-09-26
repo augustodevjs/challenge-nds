@@ -29,7 +29,8 @@ public class AssignmentService : BaseService, IAssignmentService
     public async Task<PagedViewModel<AssignmentViewModel>> Search(AssignmentSearchInputModel inputModel)
     {
         var filter = Mapper.Map<AssignmentFilter>(inputModel);
-        var result = await _assignmentRepository.Search(_httpContextAccessor.GetUserId(), filter, inputModel.PerPage, inputModel.Page);
+        var result = await _assignmentRepository.Search(_httpContextAccessor.GetUserId(), filter, inputModel.PerPage,
+            inputModel.Page);
 
         return new PagedViewModel<AssignmentViewModel>
         {
@@ -55,7 +56,7 @@ public class AssignmentService : BaseService, IAssignmentService
     public async Task<AssignmentViewModel?> Create(AddAssignmentInputModel inputModel)
     {
         var assignment = Mapper.Map<Assignment>(inputModel);
-        assignment.UserId = _httpContextAccessor.GetUserId();
+        assignment.UserId = _httpContextAccessor.GetUserId() ?? 0;
 
         if (!await Validate(assignment)) return null;
 
@@ -160,7 +161,8 @@ public class AssignmentService : BaseService, IAssignmentService
         if (!assignment.Validar(out var validationResult))
             Notificator.Handle(validationResult.Errors);
 
-        var assignmentExistent = await _assignmentRepository.FirstOrDefault(u => u.Id == assignment.Id);
+        var assignmentExistent = await _assignmentRepository.FirstOrDefault(u =>
+            u.AssignmentListId == assignment.AssignmentListId && u.Description == assignment.Description);
 
         if (assignmentExistent != null)
             Notificator.Handle("Já existe uma tarefa cadastrada com essas informações");

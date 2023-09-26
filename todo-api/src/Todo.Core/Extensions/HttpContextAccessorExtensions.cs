@@ -5,10 +5,10 @@ namespace Todo.Core.Extensions;
 
 public static class HttpContextAccessorExtensions
 {
-    public static int GetUserId(this IHttpContextAccessor? contextAccessor)
+    public static int? GetUserId(this IHttpContextAccessor? contextAccessor)
     {
         var id = contextAccessor?.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-        return int.Parse(id);
+        return id == null ? null : int.Parse(id);
     }
 }

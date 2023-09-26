@@ -74,7 +74,7 @@ public class AssignmentListService : BaseService, IAssignmentListService
     public async Task<AssignmentListViewModel?> Create(AddAssignmentListInputModel inputModel)
     {
         var assignmentList = Mapper.Map<AssignmentList>(inputModel);
-        assignmentList.UserId = _httpContextAccessor.GetUserId();
+        assignmentList.UserId = _httpContextAccessor.GetUserId() ?? 0;
 
         if (!await Validate(assignmentList)) return null;
 

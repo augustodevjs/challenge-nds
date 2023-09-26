@@ -1,4 +1,5 @@
-﻿using Todo.Domain.Models;
+﻿using System.Linq.Expressions;
+using Todo.Domain.Models;
 using Todo.Domain.Filter;
 using Todo.Infra.Data.Paged;
 using System.Security.Claims;
@@ -116,6 +117,101 @@ public class AssignmentServiceTest : BaseServiceTest, IClassFixture<ServicesFixt
             NotFound.Should().BeTrue();
             NotificatorMock.Verify(c => c.HandleNotFoundResource(), Times.Once);
             _assignmentRepositoryMock.Verify(c => c.GetById(1, 1), Times.Once);
+        }
+    }
+
+    [Fact]
+    public async Task Create_Assignment_ReturnAssignmentViewModel()
+    {
+        // Arrange
+        _assignmentRepositoryMock.Setup(c => c.FirstOrDefault(It.IsAny<Expression<Func<Assignment, bool>>>())).ReturnsAsync(null as Assignment);
+        _assignmentRepositoryMock.Setup(c => c.UnityOfWork.Commit()).ReturnsAsync(true);
+
+        var assignmentInputModel = new AddAssignmentInputModel
+        {
+            Description = "Teste"
+        };
+
+        // Act
+        var assignment = await _assignmentService.Create(assignmentInputModel);
+
+        // Assert
+        using (new AssertionScope())
+        {
+            assignment.Should().NotBeNull();
+            Erros.Should().BeEmpty();
+            _assignmentRepositoryMock.Verify(c => c.UnityOfWork.Commit(), Times.Once);
+            NotificatorMock.Verify(c => c.Handle(It.IsAny<string>()), Times.Never);
+            NotificatorMock.Verify(c => c.Handle(It.IsAny<List<ValidationFailure>>()), Times.Never);
+        }
+    }
+
+    [Fact]
+    public async Task Create_Assignment_HandleErrorValidation()
+    {
+        // Arrange
+        _assignmentRepositoryMock.Setup(c => c.FirstOrDefault(It.IsAny<Expression<Func<Assignment, bool>>>())).ReturnsAsync(null as Assignment);
+        var assignmentInputModel = new AddAssignmentInputModel();
+
+        // Act
+        var assignment = await _assignmentService.Create(assignmentInputModel);
+
+        // Assert
+        using (new AssertionScope())
+        {
+            assignment.Should().BeNull();
+            Erros.Should().NotBeEmpty();
+            Erros.Should().Contain("O campo de descrição não pode ser deixado vazio.");
+            NotificatorMock.Verify(c => c.Handle(It.IsAny<List<ValidationFailure>>()), Times.Once);
+        }
+    }
+
+    [Fact]
+    public async Task Create_Assignment_HandleErrorWhenInfoAlreadyExist()
+    {
+        // Arrange
+        var assignment = new Assignment();
+        
+        _assignmentRepositoryMock.Setup(c => c.FirstOrDefault(It.IsAny<Expression<Func<Assignment, bool>>>())).ReturnsAsync(assignment);
+        var assignmentInputModel = new AddAssignmentInputModel();
+
+        // Act
+        var assignmentService = await _assignmentService.Create(assignmentInputModel);
+
+        // Assert
+        using (new AssertionScope())
+        {
+            assignmentService.Should().BeNull();
+            Erros.Should().NotBeEmpty();
+            Erros.Should().Contain("Já existe uma tarefa cadastrada com essas informações");
+            NotificatorMock.Verify(c => c.Handle(It.IsAny<List<ValidationFailure>>()), Times.Once);
+        }
+    }
+    
+    [Fact]
+    public async Task Create_Assignment_HandleErrorUnityOfWorkCommit()
+    {
+        // Arrange
+        _assignmentRepositoryMock.Setup(c => c.FirstOrDefault(It.IsAny<Expression<Func<Assignment, bool>>>())).ReturnsAsync(null as Assignment);
+        _assignmentRepositoryMock.Setup(c => c.UnityOfWork.Commit()).ReturnsAsync(false);
+
+        var assignmentInputModel = new AddAssignmentInputModel
+        {
+            Description = "Teste"
+        };
+
+        // Act
+        var assignment = await _assignmentService.Create(assignmentInputModel);
+
+        // Assert
+        using (new AssertionScope())
+        {
+            assignment.Should().BeNull();
+            Erros.Should().NotBeEmpty();
+            Erros.Should().Contain("Não foi possível cadastrar a tarefa");
+            _assignmentRepositoryMock.Verify(c => c.UnityOfWork.Commit(), Times.Once);
+            NotificatorMock.Verify(c => c.Handle(It.IsAny<string>()), Times.Once);
+            NotificatorMock.Verify(c => c.Handle(It.IsAny<List<ValidationFailure>>()), Times.Never);
         }
     }
 }
