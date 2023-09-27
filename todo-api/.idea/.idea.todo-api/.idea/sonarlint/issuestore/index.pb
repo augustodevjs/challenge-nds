@@ -213,3 +213,11 @@ N
 src/Todo.Core/Todo.Core.csproj,9\f\9feaa866308f010f93d27e54157d29ede607202b
 i
 9src/Todo.Core/Extensions/HttpContextAccessorExtensions.cs,2\7\2758355487b6912d6b8bc239a6527682390e0a22
+j
+:src/Todo.Core/obj/Debug/net7.0/Todo.Core.GlobalUsings.g.cs,2\2\223dea28e306089744b47959f5068578091a815a
+‚
+Rsrc/Todo.Core/obj/Debug/net7.0/Todo.Core.GeneratedMSBuildEditorConfig.editorconfig,d\8\d804770ea0d4283cc1621dee3796f8fd42972e2b
+h
+8src/Todo.Core/obj/Debug/net7.0/Todo.Core.AssemblyInfo.cs,8\c\8cbc24e0ed5663902b54042a66132d4637764163
+p
+@tests/Todo.Application.Tests/Helper/HttpContextAccessorHelper.cs,7\8\78c90235d07051bb3b5a9b27ef834a5afe09eaab
