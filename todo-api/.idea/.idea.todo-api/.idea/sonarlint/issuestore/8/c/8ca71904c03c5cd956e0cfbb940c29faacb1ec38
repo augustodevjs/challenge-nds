@@ -1,0 +1,3 @@
+
+˜csharpsquid:S101"wRename class 'addvalidationtoassignment' to match pascal case naming rules, consider using 'Addvalidationtoassignment'.(±Ï£”úÿÿÿÿ
+›csharpsquid:S1186"yAdd a nested comment explaining why this method is empty, throw a 'NotSupportedException' or complete the implementation.(‰…ùÿÿÿÿ

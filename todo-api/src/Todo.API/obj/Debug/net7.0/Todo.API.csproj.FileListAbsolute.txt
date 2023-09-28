@@ -118,10 +118,12 @@ C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\bin\Debug\net7.0\runtimes
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\bin\Debug\net7.0\runtimes\win-x64\native\libsodium.dll
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\bin\Debug\net7.0\runtimes\win-x86\native\libsodium.dll
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\bin\Debug\net7.0\Todo.Application.dll
+C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\bin\Debug\net7.0\Todo.Core.dll
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\bin\Debug\net7.0\Todo.Domain.dll
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\bin\Debug\net7.0\Todo.Infra.Data.dll
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\bin\Debug\net7.0\Todo.Infra.Data.pdb
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\bin\Debug\net7.0\Todo.Application.pdb
+C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\bin\Debug\net7.0\Todo.Core.pdb
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\bin\Debug\net7.0\Todo.Domain.pdb
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\obj\Debug\net7.0\Todo.API.csproj.AssemblyReference.cache
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\obj\Debug\net7.0\Todo.API.GeneratedMSBuildEditorConfig.editorconfig
@@ -144,5 +146,3 @@ C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\obj\Debug\net7.0\refint\T
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\obj\Debug\net7.0\Todo.API.pdb
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\obj\Debug\net7.0\Todo.API.genruntimeconfig.cache
 C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\obj\Debug\net7.0\ref\Todo.API.dll
-C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\bin\Debug\net7.0\Todo.Core.dll
-C:\Users\joaoa\source\repos\todo\todo-api\src\Todo.API\bin\Debug\net7.0\Todo.Core.pdb
