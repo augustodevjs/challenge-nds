@@ -14,6 +14,6 @@ public class AssignmentValidator : AbstractValidator<Assignment>
         RuleFor(u => u.Deadline).NotEmpty().WithMessage("O campo de prazo final não pode ser deixado vazio.");
         
         RuleFor(u => u.AssignmentListId)
-            .NotEmpty().WithMessage("O campo AssignmentListId não pode ser deixado vazio.");
+            .NotEqual(0).WithMessage("O campo AssignmentListId não pode ter o valor 0.");
     }
 }

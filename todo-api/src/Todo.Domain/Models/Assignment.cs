@@ -5,7 +5,7 @@ namespace Todo.Domain.Models;
 
 public class Assignment : Entity
 {
-    public string Description { get; set; }
+    public string Description { get; set; } = null!;
     public int UserId { get; set; }
     public int? AssignmentListId { get; set; }
     public DateTime? Deadline { get; set; }

@@ -7,7 +7,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile 
     depends_on:
       - database
     container_name: todoapi_services

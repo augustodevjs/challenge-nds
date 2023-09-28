@@ -5,7 +5,6 @@ using System.Security.Claims;
 using System.Linq.Expressions;
 using Microsoft.AspNetCore.Http;
 using Todo.Application.Services;
-using Todo.Application.Tests.Helper;
 using Todo.Application.Tests.Fixtures;
 using Todo.Domain.Contracts.Repository;
 using Todo.Application.DTO.V1.ViewModel;
@@ -16,8 +15,8 @@ namespace Todo.Application.Tests.Services;
 public class AssignmentServiceTest : BaseServiceTest, IClassFixture<ServicesFixtures>
 {
     private readonly AssignmentService _assignmentService;
-    private readonly Mock<IAssignmentRepository> _assignmentRepositoryMock;
     private readonly Mock<IHttpContextAccessor> _httpContextAccessorMock;
+    private readonly Mock<IAssignmentRepository> _assignmentRepositoryMock;
 
     public AssignmentServiceTest(ServicesFixtures servicesFixtures)
     {
@@ -31,24 +30,19 @@ public class AssignmentServiceTest : BaseServiceTest, IClassFixture<ServicesFixt
         );
     }
 
+    #region search
+
     [Fact]
     public async Task Search_ReturnPagedViewModelOfAssignmentViewModel()
     {
         // Arrange
-        SetupMockHttpContext();
+        SetupMocks();
 
         var assignmentSearch = new AssignmentSearchInputModel
         {
             PerPage = 1,
             Page = 1
         };
-
-        _assignmentRepositoryMock
-            .Setup(c => c.Search(1, It.IsAny<AssignmentFilter>(), assignmentSearch.PerPage, assignmentSearch.Page,
-                null)).ReturnsAsync(new PagedResult<Assignment>
-            {
-                Items = new List<Assignment>()
-            });
 
         // Act
         var search = await _assignmentService.Search(assignmentSearch);
@@ -58,21 +52,21 @@ public class AssignmentServiceTest : BaseServiceTest, IClassFixture<ServicesFixt
         using (new AssertionScope())
         {
             search.Should().BeOfType<PagedViewModel<AssignmentViewModel>>();
-            _assignmentRepositoryMock.Verify(c => c.Search(1, It.IsAny<AssignmentFilter>(), assignmentSearch.PerPage,
-                assignmentSearch.Page,
-                null), Times.Once);
+            _assignmentRepositoryMock.Verify(c => c.Search(It.IsAny<int>(), It.IsAny<AssignmentFilter>(),
+                assignmentSearch.PerPage,
+                assignmentSearch.Page, null), Times.Once);
         }
     }
+
+    #endregion
+
+    #region getById
 
     [Fact]
     public async Task GetById_AssignmentExistent_ReturnAssignment()
     {
         // Arrange
-        const int id = 1;
-        SetupMockHttpContext();
-
-        var assignment = new Assignment { Id = id };
-        _assignmentRepositoryMock.Setup(c => c.GetById(id, 1)).ReturnsAsync(assignment);
+        SetupMocks();
 
         // Act
         var assignmentService = await _assignmentService.GetById(1);
@@ -84,7 +78,7 @@ public class AssignmentServiceTest : BaseServiceTest, IClassFixture<ServicesFixt
             assignmentService.Should().NotBeNull();
             assignmentService.Should().BeOfType<AssignmentViewModel>();
             NotificatorMock.Verify(c => c.HandleNotFoundResource(), Times.Never);
-            _assignmentRepositoryMock.Verify(c => c.GetById(1, 1), Times.Once);
+            _assignmentRepositoryMock.Verify(c => c.GetById(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
         }
     }
 
@@ -92,12 +86,10 @@ public class AssignmentServiceTest : BaseServiceTest, IClassFixture<ServicesFixt
     public async Task GetById_AssignmentNotExistent_ReturnNotFoundResource()
     {
         // Arrange
-        SetupMockHttpContext();
-
-        _assignmentRepositoryMock.Setup(c => c.GetById(1, 1)).ReturnsAsync(null as Assignment);
+        SetupMocks();
 
         // Act
-        var assignment = await _assignmentService.GetById(1);
+        var assignment = await _assignmentService.GetById(2);
 
         // Assert
         using (new AssertionScope())
@@ -105,21 +97,24 @@ public class AssignmentServiceTest : BaseServiceTest, IClassFixture<ServicesFixt
             assignment.Should().BeNull();
             NotFound.Should().BeTrue();
             NotificatorMock.Verify(c => c.HandleNotFoundResource(), Times.Once);
-            _assignmentRepositoryMock.Verify(c => c.GetById(1, 1), Times.Once);
+            _assignmentRepositoryMock.Verify(c => c.GetById(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
         }
     }
+
+    #endregion
+
+    #region create
 
     [Fact]
     public async Task Create_Assignment_ReturnAssignmentViewModel()
     {
         // Arrange
-        _assignmentRepositoryMock.Setup(c => c.FirstOrDefault(It.IsAny<Expression<Func<Assignment, bool>>>()))
-            .ReturnsAsync(null as Assignment);
-        _assignmentRepositoryMock.Setup(c => c.UnityOfWork.Commit()).ReturnsAsync(true);
+        SetupMocks(false);
 
         var assignmentInputModel = new AddAssignmentInputModel
         {
-            Description = "Teste"
+            Description = "Teste",
+            AssignmentListId = 1
         };
 
         // Act
@@ -140,8 +135,7 @@ public class AssignmentServiceTest : BaseServiceTest, IClassFixture<ServicesFixt
     public async Task Create_Assignment_HandleErrorValidation()
     {
         // Arrange
-        _assignmentRepositoryMock.Setup(c => c.FirstOrDefault(It.IsAny<Expression<Func<Assignment, bool>>>()))
-            .ReturnsAsync(null as Assignment);
+        SetupMocks(false);
         var assignmentInputModel = new AddAssignmentInputModel();
 
         // Act
@@ -161,10 +155,7 @@ public class AssignmentServiceTest : BaseServiceTest, IClassFixture<ServicesFixt
     public async Task Create_Assignment_HandleErrorWhenInfoAlreadyExist()
     {
         // Arrange
-        var assignment = new Assignment();
-
-        _assignmentRepositoryMock.Setup(c => c.FirstOrDefault(It.IsAny<Expression<Func<Assignment, bool>>>()))
-            .ReturnsAsync(assignment);
+        SetupMocks();
         var assignmentInputModel = new AddAssignmentInputModel();
 
         // Act
@@ -173,8 +164,8 @@ public class AssignmentServiceTest : BaseServiceTest, IClassFixture<ServicesFixt
         // Assert
         using (new AssertionScope())
         {
-            assignmentService.Should().BeNull();
             Erros.Should().NotBeEmpty();
+            assignmentService.Should().BeNull();
             Erros.Should().Contain("Já existe uma tarefa cadastrada com essas informações");
             NotificatorMock.Verify(c => c.Handle(It.IsAny<List<ValidationFailure>>()), Times.Once);
         }
@@ -184,13 +175,12 @@ public class AssignmentServiceTest : BaseServiceTest, IClassFixture<ServicesFixt
     public async Task Create_Assignment_HandleErrorUnityOfWorkCommit()
     {
         // Arrange
-        _assignmentRepositoryMock.Setup(c => c.FirstOrDefault(It.IsAny<Expression<Func<Assignment, bool>>>()))
-            .ReturnsAsync(null as Assignment);
-        _assignmentRepositoryMock.Setup(c => c.UnityOfWork.Commit()).ReturnsAsync(false);
+        SetupMocks(false, false);
 
         var assignmentInputModel = new AddAssignmentInputModel
         {
-            Description = "Teste"
+            Description = "Teste",
+            AssignmentListId = 1
         };
 
         // Act
@@ -208,25 +198,24 @@ public class AssignmentServiceTest : BaseServiceTest, IClassFixture<ServicesFixt
         }
     }
 
+    #endregion
+
+    #region delete
+
     [Fact]
     public async Task Delete_Assignment()
     {
         // Arrange
-        const int id = 1;
-        SetupMockHttpContext();
-        
-        var assignment = new Assignment { Id = id };
-        _assignmentRepositoryMock.Setup(c => c.UnityOfWork.Commit()).ReturnsAsync(true);
-        _assignmentRepositoryMock.Setup(c => c.GetById(id, 1)).ReturnsAsync(assignment);
+        SetupMocks();
 
         // Act
-        await _assignmentService.Delete(id);
+        await _assignmentService.Delete(1);
 
         // Assert
         using (new AssertionScope())
         {
             Erros.Should().BeEmpty();
-            _assignmentRepositoryMock.Verify(c => c.GetById(id, 1), Times.Once);
+            _assignmentRepositoryMock.Verify(c => c.GetById(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
             _assignmentRepositoryMock.Verify(c => c.UnityOfWork.Commit(), Times.Once);
         }
     }
@@ -235,20 +224,17 @@ public class AssignmentServiceTest : BaseServiceTest, IClassFixture<ServicesFixt
     public async Task Delete_Assignment_ReturnHandleNotFoundResource()
     {
         // Arrange
-        const int id = 1;
-        SetupMockHttpContext();
-
-        _assignmentRepositoryMock.Setup(c => c.GetById(id, 1)).ReturnsAsync(null as Assignment);
+        SetupMocks();
 
         // Act
-        await _assignmentService.Delete(id);
+        await _assignmentService.Delete(2);
 
         // Assert
         using (new AssertionScope())
         {
             NotFound.Should().BeTrue();
             NotificatorMock.Verify(c => c.HandleNotFoundResource(), Times.Once);
-            _assignmentRepositoryMock.Verify(c => c.GetById(id, 1), Times.Once);
+            _assignmentRepositoryMock.Verify(c => c.GetById(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
             _assignmentRepositoryMock.Verify(c => c.UnityOfWork.Commit(), Times.Never);
         }
     }
@@ -257,39 +243,33 @@ public class AssignmentServiceTest : BaseServiceTest, IClassFixture<ServicesFixt
     public async Task Delete_Assignment_ReturnErrorUnitOfWorkCommit()
     {
         // Arrange
-        const int id = 1;
-        SetupMockHttpContext();
-
-        var assignment = new Assignment { Id = id };
-        _assignmentRepositoryMock.Setup(c => c.UnityOfWork.Commit()).ReturnsAsync(false);
-        _assignmentRepositoryMock.Setup(c => c.GetById(id, 1)).ReturnsAsync(assignment);
+        SetupMocks(true, false);
 
         // Act
-        await _assignmentService.Delete(id);
+        await _assignmentService.Delete(1);
 
         // Assert
         using (new AssertionScope())
         {
             Erros.Should().NotBeEmpty();
             Erros.Should().Contain("Não foi possível remover a tarefa");
-            _assignmentRepositoryMock.Verify(c => c.GetById(id, 1), Times.Once);
+            _assignmentRepositoryMock.Verify(c => c.GetById(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
             _assignmentRepositoryMock.Verify(c => c.UnityOfWork.Commit(), Times.Once);
         }
     }
+
+    #endregion
+
+    #region markConcluded
 
     [Fact]
     public async Task MarkConcluded_Assignment_ReturnAssignmentConcluded()
     {
         // Arrange
-        const int id = 1;
-        SetupMockHttpContext();
-
-        var assignment = new Assignment { Id = id };
-        _assignmentRepositoryMock.Setup(c => c.UnityOfWork.Commit()).ReturnsAsync(true);
-        _assignmentRepositoryMock.Setup(c => c.GetById(id, 1)).ReturnsAsync(assignment);
+        SetupMocks();
 
         // Act
-        await _assignmentService.MarkConcluded(id);
+        await _assignmentService.MarkConcluded(1);
 
         // Assert
         using (new AssertionScope())
@@ -298,7 +278,7 @@ public class AssignmentServiceTest : BaseServiceTest, IClassFixture<ServicesFixt
             NotificatorMock.Verify(c => c.HandleNotFoundResource(), Times.Never);
             NotificatorMock.Verify(c => c.Handle(It.IsAny<string>()), Times.Never);
             _assignmentRepositoryMock.Verify(c => c.UnityOfWork.Commit(), Times.Once);
-            _assignmentRepositoryMock.Verify(c => c.Update(assignment), Times.Once);
+            _assignmentRepositoryMock.Verify(c => c.Update(It.IsAny<Assignment>()), Times.Once);
         }
     }
 
@@ -306,20 +286,17 @@ public class AssignmentServiceTest : BaseServiceTest, IClassFixture<ServicesFixt
     public async Task MarkConcluded_Assignment_ReturnNotFoundResource()
     {
         // Arrange
-        const int id = 1;
-        SetupMockHttpContext();
-
-        _assignmentRepositoryMock.Setup(c => c.GetById(id, 1)).ReturnsAsync(null as Assignment);
+        SetupMocks();
 
         // Act
-        await _assignmentService.MarkConcluded(id);
+        await _assignmentService.MarkConcluded(2);
 
         // Assert
         using (new AssertionScope())
         {
             NotFound.Should().BeTrue();
             NotificatorMock.Verify(c => c.HandleNotFoundResource(), Times.Once);
-            _assignmentRepositoryMock.Verify(c => c.GetById(id, 1), Times.Once);
+            _assignmentRepositoryMock.Verify(c => c.GetById(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
             _assignmentRepositoryMock.Verify(c => c.UnityOfWork.Commit(), Times.Never);
         }
     }
@@ -328,40 +305,34 @@ public class AssignmentServiceTest : BaseServiceTest, IClassFixture<ServicesFixt
     public async Task MarkConcluded_Assignment_ReturnErrorUnitOfWorkCommit()
     {
         // Arrange
-        const int id = 1;
-        SetupMockHttpContext();
-
-        var assignment = new Assignment { Id = id };
-        _assignmentRepositoryMock.Setup(c => c.GetById(id, 1)).ReturnsAsync(assignment);
-        _assignmentRepositoryMock.Setup(c => c.UnityOfWork.Commit()).ReturnsAsync(false);
+        SetupMocks(true, false);
 
         // Act
-        await _assignmentService.MarkConcluded(id);
+        await _assignmentService.MarkConcluded(1);
 
         // Assert
         using (new AssertionScope())
         {
             Erros.Should().NotBeEmpty();
             Erros.Should().Contain("Não foi possível marcar a tarefa como concluída");
-            _assignmentRepositoryMock.Verify(c => c.GetById(id, 1), Times.Once);
+            _assignmentRepositoryMock.Verify(c => c.GetById(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
             NotificatorMock.Verify(c => c.HandleNotFoundResource(), Times.Never);
             _assignmentRepositoryMock.Verify(c => c.UnityOfWork.Commit(), Times.Once);
         }
     }
-    
-        [Fact]
+
+    #endregion
+
+    #region markDesconcluded
+
+    [Fact]
     public async Task MarkDesconcluded_Assignment_ReturnAssignmentDesconcluded()
     {
         // Arrange
-        const int id = 1;
-        SetupMockHttpContext();
-
-        var assignment = new Assignment { Id = id };
-        _assignmentRepositoryMock.Setup(c => c.UnityOfWork.Commit()).ReturnsAsync(true);
-        _assignmentRepositoryMock.Setup(c => c.GetById(id, 1)).ReturnsAsync(assignment);
+        SetupMocks();
 
         // Act
-        await _assignmentService.MarkDesconcluded(id);
+        await _assignmentService.MarkDesconcluded(1);
 
         // Assert
         using (new AssertionScope())
@@ -370,7 +341,7 @@ public class AssignmentServiceTest : BaseServiceTest, IClassFixture<ServicesFixt
             NotificatorMock.Verify(c => c.HandleNotFoundResource(), Times.Never);
             NotificatorMock.Verify(c => c.Handle(It.IsAny<string>()), Times.Never);
             _assignmentRepositoryMock.Verify(c => c.UnityOfWork.Commit(), Times.Once);
-            _assignmentRepositoryMock.Verify(c => c.Update(assignment), Times.Once);
+            _assignmentRepositoryMock.Verify(c => c.Update(It.IsAny<Assignment>()), Times.Once);
         }
     }
 
@@ -378,20 +349,17 @@ public class AssignmentServiceTest : BaseServiceTest, IClassFixture<ServicesFixt
     public async Task MarkDesconcluded_Assignment_ReturnNotFoundResource()
     {
         // Arrange
-        const int id = 1;
-        SetupMockHttpContext();
-
-        _assignmentRepositoryMock.Setup(c => c.GetById(id, 1)).ReturnsAsync(null as Assignment);
+        SetupMocks();
 
         // Act
-        await _assignmentService.MarkDesconcluded(id);
+        await _assignmentService.MarkDesconcluded(2);
 
         // Assert
         using (new AssertionScope())
         {
             NotFound.Should().BeTrue();
             NotificatorMock.Verify(c => c.HandleNotFoundResource(), Times.Once);
-            _assignmentRepositoryMock.Verify(c => c.GetById(id, 1), Times.Once);
+            _assignmentRepositoryMock.Verify(c => c.GetById(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
             _assignmentRepositoryMock.Verify(c => c.UnityOfWork.Commit(), Times.Never);
         }
     }
@@ -400,34 +368,216 @@ public class AssignmentServiceTest : BaseServiceTest, IClassFixture<ServicesFixt
     public async Task MarkDesconcluded_Assignment_ReturnErrorUnitOfWorkCommit()
     {
         // Arrange
-        const int id = 1;
-        SetupMockHttpContext();
-
-        var assignment = new Assignment { Id = id };
-        _assignmentRepositoryMock.Setup(c => c.GetById(id, 1)).ReturnsAsync(assignment);
-        _assignmentRepositoryMock.Setup(c => c.UnityOfWork.Commit()).ReturnsAsync(false);
+        SetupMocks(true, false);
 
         // Act
-        await _assignmentService.MarkDesconcluded(id);
+        await _assignmentService.MarkDesconcluded(1);
 
         // Assert
         using (new AssertionScope())
         {
             Erros.Should().NotBeEmpty();
             Erros.Should().Contain("Não foi possível marcar a tarefa como não concluída");
-            _assignmentRepositoryMock.Verify(c => c.GetById(id, 1), Times.Once);
+            _assignmentRepositoryMock.Verify(c => c.GetById(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
             NotificatorMock.Verify(c => c.HandleNotFoundResource(), Times.Never);
             _assignmentRepositoryMock.Verify(c => c.UnityOfWork.Commit(), Times.Once);
         }
     }
 
-    private void SetupMockHttpContext()
+    #endregion
+
+    #region update
+
+    [Fact]
+    public async Task Update_Assignment_ReturnUpdatedAssignmentViewModel()
+    {
+        // Arrange
+        SetupMocks(false, true);
+        var assignmentInputModel = new UpdateAssignmentInputModel { Id = 1, Description = "Teste", AssignmentListId = 1};
+
+        // Act
+        var assignment = await _assignmentService.Update(1, assignmentInputModel);
+
+        // Assert
+        using (new AssertionScope())
+        {
+            Erros.Should().BeEmpty();
+            NotFound.Should().BeFalse();
+            assignment.Should().NotBeNull();
+            assignment.Should().BeOfType<AssignmentViewModel>();
+            _assignmentRepositoryMock.Verify(c => c.UnityOfWork.Commit(), Times.Once);
+            _assignmentRepositoryMock.Verify(c => c.Update(It.IsAny<Assignment>()), Times.Once);
+            _assignmentRepositoryMock.Verify(c => c.GetById(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
+            
+            NotificatorMock.Verify(c => c.Handle(It.IsAny<string>()), Times.Never);
+            NotificatorMock.Verify(c => c.Handle(It.IsAny<List<ValidationFailure>>()), Times.Never);
+        }
+    }
+
+    [Fact]
+    public async Task Update_InvalidId_ReturnHandleError()
+    {
+        // Arrange
+        SetupMocks();
+
+        // Act
+        var assignment = await _assignmentService.Update(1, new UpdateAssignmentInputModel { Id = 2 });
+
+        // Assert
+        using (new AssertionScope())
+        {
+            assignment.Should().BeNull();
+            Erros.Should().Contain("Os ids não conferem");
+            _assignmentRepositoryMock.Verify(c => c.UnityOfWork.Commit(), Times.Never);
+            _assignmentRepositoryMock.Verify(c => c.GetById(It.IsAny<int>(), It.IsAny<int>()), Times.Never);
+            _assignmentRepositoryMock.Verify(c => c.Update(It.IsAny<Assignment>()), Times.Never);
+        }
+    }
+
+    [Fact]
+    public async Task Update_Assignment_ReturnNotFoundResource()
+    {
+        // Arrange
+        SetupMocks();
+
+        // Act
+        var assignment = await _assignmentService.Update(2, new UpdateAssignmentInputModel { Id = 2 });
+
+        // Assert
+        using (new AssertionScope())
+        {
+            Erros.Should().BeEmpty();
+            NotFound.Should().BeTrue();
+            assignment.Should().BeNull();
+            _assignmentRepositoryMock.Verify(c => c.UnityOfWork.Commit(), Times.Never);
+            _assignmentRepositoryMock.Verify(c => c.GetById(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
+            _assignmentRepositoryMock.Verify(c => c.Update(It.IsAny<Assignment>()), Times.Never);
+        }
+    }
+
+    [Fact]
+    public async Task Update_Assignment_ReturnHandleErrorValidation()
+    {
+        // Arrange
+        SetupMocks(false);
+        var assignmentInputModel = new UpdateAssignmentInputModel { Id = 1, Description = "", AssignmentListId = 0};
+
+        // Act
+        var assignment = await _assignmentService.Update(1, assignmentInputModel);
+
+        // Assert
+        using (new AssertionScope())
+        {
+            assignment.Should().BeNull();
+            Erros.Should().NotBeEmpty();
+            Erros.Should().HaveCountGreaterThan(2);
+            NotFound.Should().BeFalse();
+            _assignmentRepositoryMock.Verify(c => c.GetById(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
+            _assignmentRepositoryMock.Verify(c => c.Update(It.IsAny<Assignment>()), Times.Never);
+            _assignmentRepositoryMock.Verify(c => c.UnityOfWork.Commit(), Times.Never);
+            
+            NotificatorMock.Verify(c => c.Handle(It.IsAny<string>()), Times.Never);
+            NotificatorMock.Verify(c => c.Handle(It.IsAny<List<ValidationFailure>>()), Times.Once);
+        }
+    }
+    
+    [Fact]
+    public async Task Update_Assignment_ReturnHandleErrorAssignmentExistent()
+    {
+        // Arrange
+        SetupMocks();
+        var assignmentInputModel = new UpdateAssignmentInputModel { Id = 1, Description = "Teste", AssignmentListId = 1};
+
+        // Act
+        var assignment = await _assignmentService.Update(1, assignmentInputModel);
+
+        // Assert
+        using (new AssertionScope())
+        {
+            assignment.Should().BeNull();
+            Erros.Should().NotBeEmpty();
+            Erros.Should().Contain("Já existe uma tarefa cadastrada com essas informações");
+            NotFound.Should().BeFalse();
+            _assignmentRepositoryMock.Verify(c => c.GetById(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
+            _assignmentRepositoryMock.Verify(c => c.Update(It.IsAny<Assignment>()), Times.Never);
+            _assignmentRepositoryMock.Verify(c => c.UnityOfWork.Commit(), Times.Never);
+            
+            NotificatorMock.Verify(c => c.Handle(It.IsAny<string>()), Times.Once);
+            NotificatorMock.Verify(c => c.Handle(It.IsAny<List<ValidationFailure>>()), Times.Never);
+        }
+    }
+    
+    [Fact]
+    public async Task Update_Assignment_ReturnHandleErrorUpdateAssignment()
+    {
+        // Arrange
+        SetupMocks(false, false);
+        var assignmentInputModel = new UpdateAssignmentInputModel { Id = 1, Description = "Teste", AssignmentListId = 1};
+
+        // Act
+        var assignment = await _assignmentService.Update(1, assignmentInputModel);
+
+        // Assert
+        using (new AssertionScope())
+        {
+            assignment.Should().BeNull();
+            Erros.Should().NotBeEmpty();
+            Erros.Should().Contain("Não foi possível atualizar a tarefa");
+            NotFound.Should().BeFalse();
+            _assignmentRepositoryMock.Verify(c => c.GetById(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
+            _assignmentRepositoryMock.Verify(c => c.Update(It.IsAny<Assignment>()), Times.Once);
+            _assignmentRepositoryMock.Verify(c => c.UnityOfWork.Commit(), Times.Once);
+            
+            NotificatorMock.Verify(c => c.Handle(It.IsAny<string>()), Times.Once);
+            NotificatorMock.Verify(c => c.Handle(It.IsAny<List<ValidationFailure>>()), Times.Never);
+        }
+    }
+
+    #endregion
+
+    #region mock
+
+    private void SetupMockContextAcessor()
     {
         var claims = new[]
         {
             new Claim(ClaimTypes.NameIdentifier, "1")
         };
 
-        HttpContextAccessorHelper.SetupHttpContextWithClaims(_httpContextAccessorMock, claims);
+        var context = new DefaultHttpContext
+        {
+            User = new ClaimsPrincipal(new ClaimsIdentity(claims))
+        };
+
+        _httpContextAccessorMock.Setup(c => c.HttpContext).Returns(context);
     }
+
+    private void SetupMocks(bool firstDefault = true, bool commit = true)
+    {
+        SetupMockContextAcessor();
+
+        var assignemnt = new Assignment { Id = 1 };
+
+        _assignmentRepositoryMock
+            .Setup(c => c.GetById(It.Is<int>(x => x == 1), 1))
+            .ReturnsAsync(new Assignment { Id = 1 });
+
+        _assignmentRepositoryMock
+            .Setup(c => c.GetById(It.Is<int>(x => x != 1), 1))
+            .ReturnsAsync(null as Assignment);
+
+        _assignmentRepositoryMock
+            .Setup(c => c.Search(1, It.IsAny<AssignmentFilter>(), It.Is<int>(x => x == 1), It.Is<int>(x => x == 1),
+                null)).ReturnsAsync(new PagedResult<Assignment>
+            {
+                Items = new List<Assignment>()
+            });
+
+        _assignmentRepositoryMock.Setup(c => c.FirstOrDefault(It.IsAny<Expression<Func<Assignment, bool>>>()))
+            .ReturnsAsync(firstDefault ? assignemnt : null);
+
+        _assignmentRepositoryMock.Setup(c => c.UnityOfWork.Commit()).ReturnsAsync(commit);
+    }
+
+    #endregion
 }

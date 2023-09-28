@@ -6,8 +6,8 @@ namespace Todo.Domain.Models;
 
 public class AssignmentList : Entity
 {
-    public string Name { get; set; }
-    public string Description { get; set; }
+    public string Name { get; set; } = null!;
+    public string Description { get; set; } = null!;
     public int UserId { get; set; }
 
     // EF Relation

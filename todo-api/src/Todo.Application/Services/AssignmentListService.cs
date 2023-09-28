@@ -54,7 +54,7 @@ public class AssignmentListService : BaseService, IAssignmentListService
         return new PagedViewModel<AssignmentViewModel>
         {
             Items = Mapper.Map<List<AssignmentViewModel>>(result.Items),
-            Total = result.Total,
+            Total = result.Total,       
             Page = result.Page,
             PerPage = result.PerPage,
             PageCount = result.PageCount
