@@ -2,13 +2,11 @@
 	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Todo_002EInfra_002EData_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Todo_002E_002A_002ETests_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\joaoa\AppData\Local\JetBrains\Rider2023.2\resharper-host\temp\Rider\vAny\CoverageData\_todo-api.1959498389\Snapshot\snapshot.utdcvr</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2911f72b_002Dc731_002D469a_002Db68a_002D9e9304f58517/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Update_Assignment_ReturnHandleErrorValidation #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::C1A51F34-DDFB-460A-B909-BD823C10189C::net7.0::Todo.Application.Tests.Services.AssignmentServiceTest.Update_Assignment_ReturnHandleErrorValidation&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2911f72b_002Dc731_002D469a_002Db68a_002D9e9304f58517/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Update_Assignment_ReturnHandleErrorValidation #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Solution /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8f086414_002D8464_002D4f88_002Db0c1_002D505eb2724598/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="SetConcluded_MustSetConcludedAndConcludedAt" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8f086414_002D8464_002D4f88_002Db0c1_002D505eb2724598/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="SetConcluded_MustSetConcludedAndConcludedAt" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Solution /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d11124e0_002D1fbc_002D4f0b_002Da2e6_002D9c6c82a23fcc/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Update_Assignment_ReturnHandleErrorValidation" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;

@@ -25,7 +25,8 @@ public class AuthService : BaseService, IAuthService
         INotificator notificator,
         IConfiguration configuration,
         IUserRepository userRepository,
-        IPasswordHasher<User> passwordHasher) : base(mapper, notificator)
+        IPasswordHasher<User> passwordHasher
+    ) : base(mapper, notificator)
     {
         _configuration = configuration;
         _userRepository = userRepository;
@@ -39,23 +40,23 @@ public class AuthService : BaseService, IAuthService
             Notificator.Handle(validationResult.Errors);
             return null;
         }
-        
+
         var user = await _userRepository.GetByEmail(inputModel.Email);
 
-        if (user == null || _passwordHasher.VerifyHashedPassword(user, user.Password, inputModel.Password) !=
+        if (user != null && _passwordHasher.VerifyHashedPassword(user, user.Password!, inputModel.Password) ==
             PasswordVerificationResult.Success)
         {
-            Notificator.Handle("Usuário ou senha estão incorretos.");
-            return null;
+            return GenerateToken(user);
         }
 
-        return GenerateToken(user);
+        Notificator.Handle("Usuário ou senha estão incorretos.");
+        return null;
     }
 
     public async Task<UserViewModel?> Register(RegisterInputModel inputModel)
     {
         var user = Mapper.Map<User>(inputModel);
-        
+
         if (!inputModel.Validar(out var validationResult))
         {
             Notificator.Handle(validationResult.Errors);
@@ -73,8 +74,8 @@ public class AuthService : BaseService, IAuthService
         user.Password = _passwordHasher.HashPassword(user, inputModel.Password);
 
         _userRepository.Create(user);
-        
-        if(await _userRepository.UnityOfWork.Commit()) 
+
+        if (await _userRepository.UnityOfWork.Commit())
             return Mapper.Map<UserViewModel>(user);
 
         Notificator.Handle("Não foi possível cadastrar o usuário");

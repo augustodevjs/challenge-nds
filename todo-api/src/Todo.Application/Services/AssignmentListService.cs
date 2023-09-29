@@ -22,7 +22,8 @@ public class AssignmentListService : BaseService, IAssignmentListService
         INotificator notificator,
         IHttpContextAccessor httpContextAccessor,
         IAssignmentRepository assignmentRepository,
-        IAssignmentListRepository assignmentListRepository) : base(mapper, notificator)
+        IAssignmentListRepository assignmentListRepository
+    ) : base(mapper, notificator)
     {
         _httpContextAccessor = httpContextAccessor;
         _assignmentRepository = assignmentRepository;
@@ -31,9 +32,8 @@ public class AssignmentListService : BaseService, IAssignmentListService
 
     public async Task<PagedViewModel<AssignmentListViewModel>> Search(AssignmentListSearchInputModel inputModel)
     {
-        var result = await _assignmentListRepository
-            .Search(_httpContextAccessor.GetUserId(), inputModel.Name, inputModel.Description, inputModel.PerPage,
-                inputModel.Page);
+        var result = await _assignmentListRepository.Search(_httpContextAccessor.GetUserId(), inputModel.Name,
+            inputModel.Description, inputModel.PerPage, inputModel.Page);
 
         return new PagedViewModel<AssignmentListViewModel>
         {

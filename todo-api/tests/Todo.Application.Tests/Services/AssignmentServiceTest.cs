@@ -21,7 +21,7 @@
 //     public AssignmentServiceTest(ServicesFixtures servicesFixtures)
 //     {
 //         _httpContextAccessorMock = new Mock<IHttpContextAccessor>();
-//         _assignmentRepositoryMock = new Mock<IAssignmentRepository>();
+//         _assignmentRepositoryMock = new Mock<IAssignmentRepository>();)
 //         _assignmentService = new AssignmentService(
 //             servicesFixtures.Mapper,
 //             NotificatorMock.Object,
@@ -560,7 +560,7 @@
 //
 //         _assignmentRepositoryMock
 //             .Setup(c => c.GetById(It.Is<int>(x => x == 1), 1))
-//             .ReturnsAsync(new Assignment { Id = 1 });
+//             .ReturnsAsync(assignemnt);
 //
 //         _assignmentRepositoryMock
 //             .Setup(c => c.GetById(It.Is<int>(x => x != 1), 1))

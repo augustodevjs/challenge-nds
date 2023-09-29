@@ -1,6 +1,5 @@
 ﻿using Todo.API.Responses;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Todo.Application.Notifications;
 using Todo.Application.DTO.V1.ViewModel;
 using Todo.Application.DTO.V1.InputModel;
