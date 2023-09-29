@@ -60,7 +60,7 @@ public class AssignmentRepository : Repository<Assignment>, IAssignmentRepositor
         if (filter.EndDeadline.HasValue)
             query = query.Where(c => c.Deadline != null && c.Deadline.Value <= filter.EndDeadline.Value);
 
-        if (!listId.HasValue)
+        if (listId.HasValue)
         {
             query = query
                 .Where(c => c.AssignmentListId == listId)

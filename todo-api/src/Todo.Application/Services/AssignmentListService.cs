@@ -48,9 +48,19 @@ public class AssignmentListService : BaseService, IAssignmentListService
     public async Task<PagedViewModel<AssignmentViewModel>?> SearchAssignments(int id,
         AssignmentSearchInputModel inputModel)
     {
+        var httpAccessor = _httpContextAccessor.GetUserId();
         var filter = Mapper.Map<AssignmentFilter>(inputModel);
+
+        var getAssignment = await _assignmentListRepository.GetById(id, httpAccessor);
+
+        if (getAssignment == null)
+        {
+            Notificator.HandleNotFoundResource();
+            return null;
+        }
+
         var result = await _assignmentRepository
-            .Search(_httpContextAccessor.GetUserId(), filter, inputModel.PerPage, inputModel.Page, id);
+            .Search(httpAccessor, filter, inputModel.PerPage, inputModel.Page, id);
 
         return new PagedViewModel<AssignmentViewModel>
         {
@@ -147,9 +157,10 @@ public class AssignmentListService : BaseService, IAssignmentListService
             Notificator.Handle(validationResult.Errors);
 
         var assignmentExistent = await _assignmentListRepository.FirstOrDefault(u =>
-             u.Name == assignmentList.Name && u.Description == assignmentList.Description);
+            u.Name == assignmentList.Name);
+
         if (assignmentExistent != null)
-            Notificator.Handle("Já existe uma lista de tarefa cadastrada com essas informaçoes.");
+            Notificator.Handle("Já existe uma lista de tarefa com esse nome.");
 
         return !Notificator.HasNotification;
     }
