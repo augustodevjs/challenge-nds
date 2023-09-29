@@ -15,5 +15,6 @@ public static class DependecyInjection
         services.ResolveDependecies(builder);
         services.AddAuthConfiguration(configuration);
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        services.Configure<ApiBehaviorOptions>(o => o.SuppressModelStateInvalidFilter = true);
     }
 }

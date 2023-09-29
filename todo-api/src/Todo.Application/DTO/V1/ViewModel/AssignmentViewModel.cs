@@ -7,7 +7,4 @@ public class AssignmentViewModel : Base.Base
     public DateTime Deadline { get; set; }
     public bool Concluded { get; set; }
     public DateTime? ConcludedAt { get; set; }
-    public int UserId { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
 }
