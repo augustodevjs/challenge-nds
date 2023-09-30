@@ -82,8 +82,8 @@ public class AuthServiceTest : BaseServiceTest, IClassFixture<ServicesFixtures>
         result.Should().BeNull();
         Erros.Should().NotBeEmpty();
         Erros.Should().Contain("Usuário ou senha estão incorretos.");
-        NotificatorMock.Verify(c => c.Handle(It.IsAny<List<ValidationFailure>>()), Times.Never);
         NotificatorMock.Verify(c => c.Handle(It.IsAny<string>()), Times.Once);
+        NotificatorMock.Verify(c => c.Handle(It.IsAny<List<ValidationFailure>>()), Times.Never);
     }
 
     #endregion
