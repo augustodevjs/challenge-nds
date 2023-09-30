@@ -28,6 +28,7 @@ public class AssignmentListMapping : IEntityTypeConfiguration<AssignmentList>
         
         builder
             .HasMany(c => c.Assignments)
-            .WithOne(c => c.AssignmentList);
+            .WithOne(c => c.AssignmentList)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

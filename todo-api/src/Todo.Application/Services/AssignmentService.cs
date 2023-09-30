@@ -62,28 +62,7 @@ public class AssignmentService : BaseService, IAssignmentService
         var assignment = Mapper.Map<Assignment>(inputModel);
         assignment.UserId = _httpContextAccessor.GetUserId() ?? 0;
 
-        if (!assignment.Validar(out var validationResult))
-        {
-            Notificator.Handle(validationResult.Errors);
-            return null;
-        }
-
-        var existingAssignmentList =
-            await _assignmentListRepository.FirstOrDefault(u => u.Id == assignment.AssignmentListId);
-
-        if (existingAssignmentList == null)
-        {
-            Notificator.Handle("Não existe essa lista de tarefa");
-            return null;
-        }
-
-        var existingAssignment =
-            await _assignmentRepository.FirstOrDefault(u => u.Description == assignment.Description);
-
-        if (existingAssignment != null)
-        {
-            Notificator.Handle("Já existe uma tarefa cadastrada com essas informações");
-        }
+        if (!await Validate(assignment)) return null;
 
         _assignmentRepository.Create(assignment);
 
@@ -113,27 +92,7 @@ public class AssignmentService : BaseService, IAssignmentService
 
         var result = Mapper.Map(inputModel, getAssignment);
 
-        if (!result.Validar(out var validationResult))
-        {
-            Notificator.Handle(validationResult.Errors);
-            return null;
-        }
-
-        var existingAssignmentList =
-            await _assignmentListRepository.FirstOrDefault(u => u.Id == result.AssignmentListId);
-
-        if (existingAssignmentList == null)
-        {
-            Notificator.Handle("Não existe essa lista de tarefa");
-            return null;
-        }
-
-        var existingAssignment = await _assignmentRepository.FirstOrDefault(u => u.Description == result.Description);
-
-        if (existingAssignment != null)
-        {
-            Notificator.Handle("Já existe uma tarefa cadastrada com essas informações");
-        }
+        if (!await Validate(result)) return null;
 
         _assignmentRepository.Update(getAssignment);
 
@@ -204,22 +163,25 @@ public class AssignmentService : BaseService, IAssignmentService
 
     private async Task<bool> Validate(Assignment assignment)
     {
-        if (!assignment.Validar(out var validationResult))
+        if(!assignment.Validar(out var validationResult)) 
             Notificator.Handle(validationResult.Errors);
+        
+        var existingAssignmentList =
+            await _assignmentListRepository.FirstOrDefault(u => u.Id == assignment.AssignmentListId);
 
-        var assignmentExistentId =
-            await _assignmentRepository.FirstOrDefault(u => u.AssignmentListId == assignment.AssignmentListId);
-
-        if (assignmentExistentId == null)
+        if (existingAssignmentList == null)
         {
-            Notificator.Handle("Não existe esse essa lista de tarefa");
+            Notificator.Handle("Não existe essa lista de tarefa.");
         }
+        
+        var existingAssignment =
+            await _assignmentRepository.FirstOrDefault(u =>
+                u.Description == assignment.Description && u.AssignmentListId == assignment.AssignmentListId);
 
-        var assignmentExistent =
-            await _assignmentRepository.FirstOrDefault(u => u.Description == assignment.Description);
-
-        if (assignmentExistent != null)
-            Notificator.Handle("Já existe uma tarefa cadastrada com essas informações");
+        if (existingAssignment != null)
+        {
+            Notificator.Handle("Já existe uma tarefa cadastrada com essas informações.");
+        }
 
         return !Notificator.HasNotification;
     }
