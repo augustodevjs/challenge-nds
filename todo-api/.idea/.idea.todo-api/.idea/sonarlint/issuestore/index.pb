@@ -223,3 +223,7 @@ h
 Vsrc/Todo.Infra.Data/Migrations/20230928204330_add validation to assignment.Designer.cs,e\c\ec6fd9129e5847ffec282664440523adc29ebc37
 }
 Msrc/Todo.Infra.Data/Migrations/20230928204330_add validation to assignment.cs,8\c\8ca71904c03c5cd956e0cfbb940c29faacb1ec38
+h
+8tests/Todo.Application.Tests/Services/AuthServiceTest.cs,b\c\bc94f22c4f8c4446a1c668c0935871099803c43a
+r
+Btests/Todo.Application.Tests/Services/AssignmentListServiceTest.cs,d\f\dff3e086ec9e810296bd8565e4368e592c90b43d

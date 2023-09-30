@@ -147,7 +147,7 @@ public class AssignmentListService : BaseService, IAssignmentListService
 
         if (!await _assignmentListRepository.UnityOfWork.Commit())
         {
-            Notificator.Handle("Não foi possível remover a lista de tarefa");
+            Notificator.Handle("Não foi possível remover a lista de tarefa.");
         }
     }
 
