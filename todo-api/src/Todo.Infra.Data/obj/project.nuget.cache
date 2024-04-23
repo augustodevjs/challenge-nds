@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "yKk17uDxfxOXHobeCTG7pVeyDw5F9YRT+TpM7fM+IWrn4SJfVucQfI79gdMS4jZeSyvsCzTgWmWCRru4VMCx6Q==",
+  "dgSpecHash": "oddYGbzF4AcE8FsCVry809XSJqDpGRMsqvg+K6gZTFaK3AFiZorq+zy1AXt3a1TWzFQqbGyzZ287Z4dAndDb5w==",
   "success": true,
   "projectFilePath": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.Infra.Data\\Todo.Infra.Data.csproj",
   "expectedPackageFiles": [

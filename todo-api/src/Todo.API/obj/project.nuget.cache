@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "2hl6Aond66CVRi+S4GqwqOMYMtlmzrIN5Fcz8PbLyAF1Ey3K6bcxDLQYwqYYtZTp0rfJy7EBkb/NiF8AJ2PUIg==",
+  "dgSpecHash": "t2BLq2uUuOlzn5yVmkkhIYzsx2yjET28NF0siTuKQmwKtCyNF3b4e1h5X0+pFo0z3+wKqrVKYeOna+Q73TLDAw==",
   "success": true,
   "projectFilePath": "C:\\Users\\joaoa\\source\\repos\\todo\\todo-api\\src\\Todo.API\\Todo.API.csproj",
   "expectedPackageFiles": [
@@ -56,6 +56,7 @@
     "C:\\Users\\joaoa\\.nuget\\packages\\microsoft.net.http.headers\\2.2.0\\microsoft.net.http.headers.2.2.0.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\microsoft.netcore.platforms\\2.0.0\\microsoft.netcore.platforms.2.0.0.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\joaoa\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.5\\microsoft.visualstudio.azure.containers.tools.targets.1.19.5.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\microsoft.win32.registry\\4.5.0\\microsoft.win32.registry.4.5.0.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\joaoa\\.nuget\\packages\\mysqlconnector\\2.2.5\\mysqlconnector.2.2.5.nupkg.sha512",
